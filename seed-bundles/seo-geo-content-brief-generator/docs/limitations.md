@@ -1,6 +1,7 @@
 # Limitations
 
-- Search volume and ranking data are not included by default.
-- Generated briefs should be reviewed before publishing.
-- Factual claims need source verification.
-
+- 검색량, 순위, 경쟁도 데이터는 포함되지 않는다. 외부 SEO 도구로 검증해야 한다.
+- 모의(mock) 모드는 템플릿 골격만 제공하므로 내용은 직접 채워야 한다.
+- 생성된 브리프는 게시 전 반드시 검토해야 한다.
+- 사실 주장([확인 필요] 표시 포함)은 출처 확인이 필요하다.
+- AI 검색(GEO) 대응 문장의 실제 인용 여부는 보장되지 않는다.

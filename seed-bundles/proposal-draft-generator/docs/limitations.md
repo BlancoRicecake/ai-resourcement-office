@@ -1,6 +1,7 @@
 # Limitations
 
-- Legal and contractual terms require human review.
-- Budget and timeline are draft estimates.
-- Confidential client information should be redacted before use.
-
+- 법적·계약적 문구는 반드시 사람(필요시 법률 전문가)이 검토해야 한다.
+- 예산과 일정은 초안 추정치이며 확정값이 아니다.
+- 모의(mock) 모드는 템플릿 골격만 제공하므로 내용은 직접 채워야 한다.
+- 고객사 기밀 정보는 입력 전에 제거하거나 익명화해야 한다.
+- 생성된 초안을 검토 없이 고객에게 발송해서는 안 된다.

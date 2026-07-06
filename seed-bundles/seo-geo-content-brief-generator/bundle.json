@@ -5,10 +5,17 @@
   "category": "마케팅",
   "difficulty": "Beginner",
   "runtime": "Local",
-  "requiredKeys": ["OPENAI_API_KEY"],
-  "estimatedCost": "$0.01-$0.08 per brief",
-  "includes": ["mini SaaS", "agent instructions", "brief template", "example output"],
+  "requiredKeys": ["OPENAI_API_KEY (선택: 없으면 무료 mock 모드)"],
+  "estimatedCost": "$0 (mock 모드) / $0.01-$0.08 per brief (gpt-4o-mini)",
+  "includes": [
+    "mini SaaS (Python stdlib 단일 파일, 웹 UI + CLI)",
+    "agent instructions",
+    "skills",
+    "harness guide",
+    "brief template",
+    "example output"
+  ],
+  "requirements": "Python 3.8+ (pip 설치 불필요)",
   "downloadUrl": "",
   "disclaimer": "Users run this package with their own environment, API keys, and budget."
 }
-
