@@ -28,7 +28,7 @@ Included:
 
 - Static web directory
 - Worker and bundle detail cards
-- Download/GitHub link placeholders
+- Download/GitHub links
 - Standard bundle schema
 - Safety and cost guidance
 - First 3 seed bundle specs

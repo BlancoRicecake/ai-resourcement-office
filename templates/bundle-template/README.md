@@ -1,31 +1,46 @@
-# Bundle Name
+# [번들 이름]
 
-Short description of the mini SaaS and AI worker.
+[입력]을 넣으면 [출력]을 만드는 미니 SaaS 번들입니다.
 
-## What This Package Includes
+## Quick Start
 
-- Mini SaaS source code in `app/`
-- AI worker profile and instructions in `worker/`
-- Skill documents in `worker/skills/`
-- Harness and test cases in `worker/harness/`
-- Optional MCP examples in `worker/mcp/`
-- Sample inputs and outputs in `examples/`
+Python 3.8+만 있으면 됩니다. pip 설치가 필요 없습니다.
 
-## Requirements
+```bash
+python app/app.py
+```
 
-- Runtime:
-- Required API keys:
-- Optional tools:
+브라우저에서 `http://127.0.0.1:[포트]` 가 열립니다.
+API 키가 없어도 무료 모의(mock) 모드로 바로 체험할 수 있습니다.
 
-## Setup
+LLM 모드를 쓰려면:
 
-1. Copy `.env.example` to `.env`.
-2. Add your own API keys.
-3. Install dependencies.
-4. Run the app.
+1. `.env.example`을 `.env`로 복사
+2. `OPENAI_API_KEY=` 뒤에 본인 키 입력
+3. 앱 재시작
 
-## Responsibility
+CLI 실행:
 
-This package is not hosted by AI Resourcement Office. You run it in your own
-environment, with your own API keys and budget.
+```bash
+python app/app.py --cli examples/input/[샘플 파일] -o [출력 파일]
+```
 
+## AI Worker
+
+[워커 이름] — `worker/agent.md` (지시문), `worker/skills/` (작업 절차),
+`worker/harness/` (Claude Code 등에서 구동하는 방법)
+
+## 구성
+
+```txt
+app/        미니 SaaS (단일 파일 웹앱 + CLI)
+worker/     에이전트 지시문, 스킬, 하네스, MCP 가이드
+examples/   샘플 입력 + 실제 실행으로 생성한 출력 예시
+docs/       빌드 로그, 비용/보안/한계 가이드
+```
+
+## User Responsibility
+
+이 패키지는 호스팅 서비스가 아닙니다. 사용자는 자신의 환경과 API 키로 직접
+실행하며, 모델 호출 비용과 데이터 보안은 사용자 책임입니다. 실행 전
+`docs/security-notes.md`와 `docs/cost-guide.md`를 확인하세요.
