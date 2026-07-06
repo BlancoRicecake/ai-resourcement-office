@@ -394,7 +394,9 @@ def run_cli(argv):
     mode = result.get("model") if result["mode"] == "llm" else "mock"
     print(f"[생성 완료] 모드: {mode}", file=sys.stderr)
     if output_path:
-        Path(output_path).write_text(result["proposal_markdown"] + "\n", encoding="utf-8")
+        out = Path(output_path)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(result["proposal_markdown"] + "\n", encoding="utf-8")
         print(f"[저장] {output_path}", file=sys.stderr)
     else:
         print(result["proposal_markdown"])

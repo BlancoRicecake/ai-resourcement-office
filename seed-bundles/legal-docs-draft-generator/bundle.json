@@ -1,0 +1,21 @@
+{
+  "slug": "legal-docs-draft-generator",
+  "title": "온라인 서비스 법률 문서 초안 생성기",
+  "worker": "법률 문서 초안 직원",
+  "category": "법무",
+  "difficulty": "Beginner",
+  "runtime": "Local",
+  "requiredKeys": ["OPENAI_API_KEY (선택: 없으면 무료 mock 모드)"],
+  "estimatedCost": "$0 (mock 모드) / $0.05-$0.25 per document set (gpt-4o-mini)",
+  "includes": [
+    "mini SaaS (Python stdlib 단일 파일, 웹 UI + CLI)",
+    "agent instructions",
+    "skills",
+    "harness guide",
+    "sample input",
+    "legal docs example"
+  ],
+  "requirements": "Python 3.8+ (pip 설치 불필요)",
+  "downloadUrl": "https://github.com/BlancoRicecake/ai-resourcement-office/releases/latest/download/legal-docs-draft-generator.zip",
+  "disclaimer": "This package is not legal advice. Drafts must be reviewed by a qualified lawyer. Users run this package with their own environment, API keys, and budget."
+}

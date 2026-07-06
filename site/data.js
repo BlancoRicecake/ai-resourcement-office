@@ -29,6 +29,16 @@ window.AIRO_DATA = {
       skills: ["요구사항 정리", "제안서 구성", "일정/견적 초안"],
       tools: ["OpenAI API", "Markdown"],
       output: "제안서 초안"
+    },
+    {
+      name: "법률 문서 초안 직원",
+      slug: "legal-docs-draft-worker",
+      category: "법무",
+      summary:
+        "서비스 정보를 받아 이용약관, 개인정보처리방침, 면책조항 초안을 상황에 맞게 만든다. 법률 자문이 아닌 변호사 검토용 초안.",
+      skills: ["약관 구조화", "개인정보처리방침 작성", "면책조항 작성"],
+      tools: ["OpenAI API", "Markdown"],
+      output: "법률 문서 초안 세트"
     }
   ],
   bundles: [
@@ -73,6 +83,20 @@ window.AIRO_DATA = {
       description:
         "고객 문제, 제공 서비스, 일정, 예산 정보를 받아 포함/제외 범위와 견적 항목까지 담은 제안서 초안을 만드는 미니 SaaS.",
       downloadUrl: "https://github.com/BlancoRicecake/ai-resourcement-office/releases/latest/download/proposal-draft-generator.zip"
+    },
+    {
+      title: "온라인 서비스 법률 문서 초안 생성기",
+      slug: "legal-docs-draft-generator",
+      worker: "법률 문서 초안 직원",
+      category: "법무",
+      difficulty: "초급",
+      runtime: "로컬 실행 (Python 3.8+, pip 불필요)",
+      requiredKeys: ["OPENAI_API_KEY (선택)"],
+      estimatedCost: "$0 (mock 모드) / $0.05-$0.25 per set",
+      includes: ["웹 UI + CLI", "무료 mock 모드", "agent.md", "skills", "법률 문서 예시"],
+      description:
+        "서비스 정보를 입력하면 이용약관, 개인정보처리방침, 면책조항 초안을 무료/유료·개인정보 수집 여부에 맞게 생성. 변호사 검토용 초안이며 법률 자문이 아님.",
+      downloadUrl: "https://github.com/BlancoRicecake/ai-resourcement-office/releases/latest/download/legal-docs-draft-generator.zip"
     }
   ]
 };
