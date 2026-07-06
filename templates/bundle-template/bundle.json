@@ -1,0 +1,14 @@
+{
+  "slug": "bundle-slug",
+  "title": "Bundle Title",
+  "worker": "Worker Name",
+  "category": "Category",
+  "difficulty": "Beginner",
+  "runtime": "Local",
+  "requiredKeys": ["OPENAI_API_KEY"],
+  "estimatedCost": "$0.01-$0.10 per sample run",
+  "includes": ["mini SaaS", "agent instructions", "skills", "harness", "examples"],
+  "downloadUrl": "",
+  "disclaimer": "Users run this package with their own environment, API keys, and budget."
+}
+

@@ -1,0 +1,11 @@
+{
+  "name": "리뷰 분석 직원",
+  "role": "CSV 고객 리뷰를 분석해 감성, 주요 이슈, 개선 요청, 요약 리포트를 만든다.",
+  "recommendedModels": ["GPT-5", "Claude", "Gemini"],
+  "inputs": ["review CSV", "product/service context"],
+  "outputs": ["sentiment table", "issue summary", "recommendation report"],
+  "tools": ["OpenAI API", "local filesystem"],
+  "skills": ["CSV analysis", "sentiment classification", "report writing"],
+  "limitations": ["Large CSV files can increase model cost.", "Generated insights must be reviewed by the user."]
+}
+

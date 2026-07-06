@@ -1,0 +1,11 @@
+# 실제 API 키 파일은 절대 커밋하지 않는다 (.env.example만 커밋)
+.env
+seed-bundles/*/.env
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+Thumbs.db
+.DS_Store

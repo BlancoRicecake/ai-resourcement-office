@@ -1,0 +1,11 @@
+{
+  "name": "SEO/GEO 브리프 직원",
+  "role": "키워드와 제품 설명을 받아 검색과 AI 답변에 대응하는 콘텐츠 브리프를 만든다.",
+  "recommendedModels": ["GPT-5", "Claude", "Gemini"],
+  "inputs": ["keyword", "product description", "target audience"],
+  "outputs": ["title ideas", "content outline", "FAQ", "meta description", "AI-search-ready claims"],
+  "tools": ["OpenAI API"],
+  "skills": ["content planning", "FAQ generation", "AEO/GEO optimization"],
+  "limitations": ["Search volume data is not included unless the user connects an external API."]
+}
+

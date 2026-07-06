@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI력 사무소 | AI Resourcement Office</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="#top" aria-label="AI력 사무소 홈">
+          <span class="brand-mark">AI</span>
+          <span>
+            <strong>AI력 사무소</strong>
+            <small>AI Resourcement Office</small>
+          </span>
+        </a>
+        <div class="nav-links" aria-label="주요 메뉴">
+          <a href="#workers">직원</a>
+          <a href="#bundles">번들</a>
+          <a href="#standard">표준</a>
+          <a href="#safety">주의사항</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">무료 다운로드형 AI 직원 패키지</p>
+          <h1>AI 직원을 실행해주는 곳이 아니라, 직접 세팅할 수 있게 나눠주는 곳.</h1>
+          <p class="lead">
+            미니 SaaS 코드, 에이전트 지시문, 스킬, 하네스, MCP 예시, 샘플 산출물을
+            하나의 패키지로 공유합니다. 실행 비용과 인프라는 사용자가 직접 관리합니다.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#bundles">번들 보기</a>
+            <a class="button" href="#standard">패키지 표준</a>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="운영 원칙">
+          <div>
+            <span class="metric">0</span>
+            <span>호스팅 실행</span>
+          </div>
+          <div>
+            <span class="metric">3</span>
+            <span>v0.1 시드 직원</span>
+          </div>
+          <div>
+            <span class="metric">100%</span>
+            <span>사용자 소유 API 키</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section" id="workers">
+        <div class="section-heading">
+          <p class="eyebrow">Workers</p>
+          <h2>첫 AI 직원 3명</h2>
+        </div>
+        <div class="grid" id="workerGrid"></div>
+      </section>
+
+      <section class="section" id="bundles">
+        <div class="section-heading">
+          <p class="eyebrow">Bundles</p>
+          <h2>다운로드할 패키지</h2>
+        </div>
+        <div class="toolbar" aria-label="필터">
+          <button class="filter active" type="button" data-filter="all">전체</button>
+          <button class="filter" type="button" data-filter="고객분석">고객분석</button>
+          <button class="filter" type="button" data-filter="마케팅">마케팅</button>
+          <button class="filter" type="button" data-filter="문서자동화">문서자동화</button>
+        </div>
+        <div class="grid" id="bundleGrid"></div>
+      </section>
+
+      <section class="section split" id="standard">
+        <div>
+          <p class="eyebrow">Bundle Standard</p>
+          <h2>AI력 Bundle v0.1</h2>
+          <p>
+            모든 번들은 같은 구조를 따릅니다. 사용자는 README를 보고 자기 환경에서
+            실행하고, 필요한 비용은 자신의 API/클라우드 계정에서 지불합니다.
+          </p>
+        </div>
+        <div class="file-tree" aria-label="번들 폴더 구조">
+          <code>bundle-name/</code>
+          <code>README.md</code>
+          <code>bundle.json</code>
+          <code>.env.example</code>
+          <code>app/</code>
+          <code>worker/agent.md</code>
+          <code>worker/skills/</code>
+          <code>worker/harness/</code>
+          <code>worker/mcp/</code>
+          <code>examples/</code>
+          <code>docs/cost-guide.md</code>
+          <code>docs/security-notes.md</code>
+        </div>
+      </section>
+
+      <section class="section safety" id="safety">
+        <div>
+          <p class="eyebrow">Safety</p>
+          <h2>처음부터 고정할 고지</h2>
+        </div>
+        <p>
+          AI력 사무소는 실행형 호스팅 서비스를 제공하지 않습니다. 다운로드 후 설치,
+          실행, API 비용, MCP 권한, 데이터 보안, 결과 검증은 사용자 책임입니다.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>AI력 사무소 v0.1</span>
+      <span>Download-first AI worker packages</span>
+    </footer>
+
+    <script src="./data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
+

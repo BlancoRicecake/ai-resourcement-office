@@ -1,0 +1,11 @@
+{
+  "name": "Worker Name",
+  "role": "Describe the worker role.",
+  "recommendedModels": ["GPT-5", "Claude", "Gemini"],
+  "inputs": [],
+  "outputs": [],
+  "tools": [],
+  "skills": [],
+  "limitations": []
+}
+

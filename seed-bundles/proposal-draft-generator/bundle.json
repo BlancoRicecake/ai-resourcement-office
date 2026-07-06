@@ -1,0 +1,14 @@
+{
+  "slug": "proposal-draft-generator",
+  "title": "고객 요구사항 기반 제안서 초안 생성기",
+  "worker": "제안서 초안 직원",
+  "category": "문서자동화",
+  "difficulty": "Beginner-Intermediate",
+  "runtime": "Local",
+  "requiredKeys": ["OPENAI_API_KEY"],
+  "estimatedCost": "$0.03-$0.20 per draft",
+  "includes": ["mini SaaS", "agent instructions", "proposal outline", "sample brief"],
+  "downloadUrl": "",
+  "disclaimer": "Users run this package with their own environment, API keys, and budget."
+}
+
