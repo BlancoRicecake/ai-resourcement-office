@@ -2,6 +2,9 @@
 
 AI Resourcement Office is a download-first directory for AI worker packages.
 
+- Web directory: https://blancoricecake.github.io/ai-resourcement-office/site/
+- Repository: https://github.com/BlancoRicecake/ai-resourcement-office
+
 The project does not host or run agents for users. It shares reusable packages
 that help users set up AI workers in their own environment with their own API
 keys, tools, cloud accounts, and security policies.
