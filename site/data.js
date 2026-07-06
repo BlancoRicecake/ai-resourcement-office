@@ -38,12 +38,12 @@ window.AIRO_DATA = {
       worker: "리뷰 분석 직원",
       category: "고객분석",
       difficulty: "초급",
-      runtime: "로컬 실행",
-      requiredKeys: ["OPENAI_API_KEY"],
-      estimatedCost: "$0.01-$0.10 per sample run",
-      includes: ["mini SaaS", "agent.md", "skills", "sample CSV", "report example"],
+      runtime: "로컬 실행 (Python 3.8+, pip 불필요)",
+      requiredKeys: ["OPENAI_API_KEY (선택)"],
+      estimatedCost: "$0 (mock 모드) / $0.01-$0.10 per run",
+      includes: ["웹 UI + CLI", "무료 mock 모드", "agent.md", "skills", "sample CSV 20행", "실행 리포트 예시"],
       description:
-        "고객 리뷰 CSV를 업로드하면 감성 분류와 핵심 이슈를 요약한 리포트를 생성하는 미니 SaaS.",
+        "고객 리뷰 CSV를 업로드하면 감성 분류와 핵심 이슈를 요약한 리포트를 생성하는 미니 SaaS. API 키 없이도 무료로 체험 가능.",
       downloadUrl: "../seed-bundles/csv-review-insight-generator/"
     },
     {
@@ -52,12 +52,12 @@ window.AIRO_DATA = {
       worker: "SEO/GEO 브리프 직원",
       category: "마케팅",
       difficulty: "초급",
-      runtime: "로컬 실행",
-      requiredKeys: ["OPENAI_API_KEY"],
-      estimatedCost: "$0.01-$0.08 per brief",
-      includes: ["mini SaaS", "agent.md", "brief template", "example output"],
+      runtime: "로컬 실행 (Python 3.8+, pip 불필요)",
+      requiredKeys: ["OPENAI_API_KEY (선택)"],
+      estimatedCost: "$0 (mock 모드) / $0.01-$0.08 per brief",
+      includes: ["웹 UI + CLI", "무료 mock 모드", "agent.md", "skills", "브리프 예시"],
       description:
-        "키워드와 제품 설명을 입력하면 제목 후보, 문서 구조, FAQ, 메타 설명을 생성하는 미니 SaaS.",
+        "키워드와 제품 설명을 입력하면 제목 후보, 목차, FAQ, 메타 설명, AI 검색(GEO) 대응 문장을 생성하는 미니 SaaS.",
       downloadUrl: "../seed-bundles/seo-geo-content-brief-generator/"
     },
     {
@@ -65,13 +65,13 @@ window.AIRO_DATA = {
       slug: "proposal-draft-generator",
       worker: "제안서 초안 직원",
       category: "문서자동화",
-      difficulty: "초급-중급",
-      runtime: "로컬 실행",
-      requiredKeys: ["OPENAI_API_KEY"],
-      estimatedCost: "$0.03-$0.20 per draft",
-      includes: ["mini SaaS", "agent.md", "proposal outline", "sample brief"],
+      difficulty: "초급",
+      runtime: "로컬 실행 (Python 3.8+, pip 불필요)",
+      requiredKeys: ["OPENAI_API_KEY (선택)"],
+      estimatedCost: "$0 (mock 모드) / $0.03-$0.20 per draft",
+      includes: ["웹 UI + CLI", "무료 mock 모드", "agent.md", "skills", "제안서 초안 예시"],
       description:
-        "고객 문제, 제공 서비스, 일정, 예산 정보를 받아 제안서 목차와 초안을 만드는 미니 SaaS.",
+        "고객 문제, 제공 서비스, 일정, 예산 정보를 받아 포함/제외 범위와 견적 항목까지 담은 제안서 초안을 만드는 미니 SaaS.",
       downloadUrl: "../seed-bundles/proposal-draft-generator/"
     }
   ]
