@@ -56,7 +56,7 @@ function renderBundles(category = "all") {
           </div>
           <div class="card-footer">
             <span>${bundle.estimatedCost}</span>
-            <a href="${bundle.downloadUrl}">폴더 보기</a>
+            <a href="${bundle.downloadUrl}">zip 다운로드</a>
           </div>
         </article>
       `

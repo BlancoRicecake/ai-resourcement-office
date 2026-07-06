@@ -44,7 +44,7 @@ window.AIRO_DATA = {
       includes: ["웹 UI + CLI", "무료 mock 모드", "agent.md", "skills", "sample CSV 20행", "실행 리포트 예시"],
       description:
         "고객 리뷰 CSV를 업로드하면 감성 분류와 핵심 이슈를 요약한 리포트를 생성하는 미니 SaaS. API 키 없이도 무료로 체험 가능.",
-      downloadUrl: "https://github.com/BlancoRicecake/ai-resourcement-office/tree/main/seed-bundles/csv-review-insight-generator"
+      downloadUrl: "https://github.com/BlancoRicecake/ai-resourcement-office/releases/latest/download/csv-review-insight-generator.zip"
     },
     {
       title: "SEO/GEO 콘텐츠 브리프 생성기",
@@ -58,7 +58,7 @@ window.AIRO_DATA = {
       includes: ["웹 UI + CLI", "무료 mock 모드", "agent.md", "skills", "브리프 예시"],
       description:
         "키워드와 제품 설명을 입력하면 제목 후보, 목차, FAQ, 메타 설명, AI 검색(GEO) 대응 문장을 생성하는 미니 SaaS.",
-      downloadUrl: "https://github.com/BlancoRicecake/ai-resourcement-office/tree/main/seed-bundles/seo-geo-content-brief-generator"
+      downloadUrl: "https://github.com/BlancoRicecake/ai-resourcement-office/releases/latest/download/seo-geo-content-brief-generator.zip"
     },
     {
       title: "고객 요구사항 기반 제안서 초안 생성기",
@@ -72,7 +72,7 @@ window.AIRO_DATA = {
       includes: ["웹 UI + CLI", "무료 mock 모드", "agent.md", "skills", "제안서 초안 예시"],
       description:
         "고객 문제, 제공 서비스, 일정, 예산 정보를 받아 포함/제외 범위와 견적 항목까지 담은 제안서 초안을 만드는 미니 SaaS.",
-      downloadUrl: "https://github.com/BlancoRicecake/ai-resourcement-office/tree/main/seed-bundles/proposal-draft-generator"
+      downloadUrl: "https://github.com/BlancoRicecake/ai-resourcement-office/releases/latest/download/proposal-draft-generator.zip"
     }
   ]
 };

@@ -16,6 +16,6 @@
     "report example"
   ],
   "requirements": "Python 3.8+ (pip 설치 불필요)",
-  "downloadUrl": "https://github.com/BlancoRicecake/ai-resourcement-office/tree/main/seed-bundles/csv-review-insight-generator",
+  "downloadUrl": "https://github.com/BlancoRicecake/ai-resourcement-office/releases/latest/download/csv-review-insight-generator.zip",
   "disclaimer": "Users run this package with their own environment, API keys, and budget."
 }

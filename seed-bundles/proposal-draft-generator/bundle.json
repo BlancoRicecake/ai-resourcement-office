@@ -16,6 +16,6 @@
     "sample brief"
   ],
   "requirements": "Python 3.8+ (pip 설치 불필요)",
-  "downloadUrl": "https://github.com/BlancoRicecake/ai-resourcement-office/tree/main/seed-bundles/proposal-draft-generator",
+  "downloadUrl": "https://github.com/BlancoRicecake/ai-resourcement-office/releases/latest/download/proposal-draft-generator.zip",
   "disclaimer": "Users run this package with their own environment, API keys, and budget."
 }

@@ -6,6 +6,9 @@ seed-bundles/*/.env
 __pycache__/
 *.pyc
 
+# 릴리스 산출물 (릴리스 에셋으로만 배포)
+dist/
+
 # OS
 Thumbs.db
 .DS_Store
