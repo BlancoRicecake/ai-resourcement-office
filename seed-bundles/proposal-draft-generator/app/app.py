@@ -223,30 +223,50 @@ INDEX_HTML = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>제안서 초안 생성기</title>
 <style>
-  :root { color-scheme: light dark; }
+  @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&display=swap");
+  :root { color-scheme: light dark;
+    --bg: #faf9f5; --surface: #ffffff; --ink: #1f1e1d; --muted: #6e6a63;
+    --line: #e5e1d8; --accent: #c9603d; }
+  @media (prefers-color-scheme: dark) { :root {
+    --bg: #262624; --surface: #30302e; --ink: #f5f4ef; --muted: #aaa69d;
+    --line: #43423e; --accent: #d97757; } }
   * { box-sizing: border-box; }
-  body { font-family: 'Segoe UI', 'Malgun Gothic', sans-serif; max-width: 880px;
-         margin: 0 auto; padding: 24px 16px 64px; line-height: 1.6; }
-  h1 { font-size: 1.5rem; }
-  .card { border: 1px solid #8884; border-radius: 12px; padding: 16px 20px; margin: 16px 0; }
-  input[type=text], textarea { width: 100%; border-radius: 8px; border: 1px solid #8886; padding: 8px 10px;
+  body { font-family: 'Pretendard Variable', Pretendard, 'Segoe UI',
+           'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+         background: var(--bg); color: var(--ink); max-width: 880px;
+         margin: 0 auto; padding: 32px 16px 64px; line-height: 1.65; }
+  .eyebrow { margin: 0; color: var(--accent); font-size: 0.78rem; font-weight: 800;
+             letter-spacing: 1.4px; text-transform: uppercase; }
+  h1 { font-family: 'Noto Serif KR', 'Apple SD Gothic Neo', serif;
+       font-size: 1.65rem; font-weight: 900; letter-spacing: -0.3px; margin: 6px 0 12px; }
+  .card { border: 1px solid var(--line); border-radius: 16px; background: var(--surface);
+          padding: 20px 24px; margin: 18px 0;
+          box-shadow: 0 1px 2px rgba(31,30,29,.04), 0 8px 24px -12px rgba(31,30,29,.12); }
+  input[type=text], textarea { width: 100%; border-radius: 10px; border: 1px solid var(--line);
+    background: var(--bg); color: var(--ink); padding: 9px 12px;
     font-family: inherit; font-size: 0.95rem; }
   textarea { min-height: 70px; }
-  label { font-weight: 600; display: block; margin: 12px 0 4px; }
-  label small { font-weight: 400; color: #888; }
-  button { background: #2563eb; color: #fff; border: 0; border-radius: 8px;
-           padding: 10px 22px; font-size: 1rem; cursor: pointer; }
+  label { font-weight: 700; display: block; margin: 14px 0 6px; }
+  label small { font-weight: 400; color: var(--muted); }
+  button { background: var(--accent); color: #fff; border: 0; border-radius: 999px;
+           padding: 11px 26px; font-size: 0.98rem; font-weight: 700; cursor: pointer;
+           font-family: inherit; }
+  button:hover { filter: brightness(1.06); }
   button:disabled { opacity: 0.5; cursor: wait; }
-  .muted { color: #888; font-size: 0.85rem; }
-  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px;
-           font-size: 0.8rem; font-weight: 600; }
-  .badge.mock { background: #f59e0b22; color: #b45309; }
-  .badge.llm { background: #10b98122; color: #047857; }
-  pre { white-space: pre-wrap; background: #8881; padding: 14px; border-radius: 8px; }
+  .muted { color: var(--muted); font-size: 0.85rem; }
+  .badge { display: inline-block; padding: 3px 12px; border-radius: 999px;
+           font-size: 0.8rem; font-weight: 700; }
+  .badge.mock { background: #f0b35a33; color: #a16207; }
+  .badge.llm { background: #5e736033; color: #4c7a52; }
+  @media (prefers-color-scheme: dark) {
+    .badge.mock { color: #f0b35a; } .badge.llm { color: #a3b8a4; } }
+  pre { white-space: pre-wrap; background: var(--bg); border: 1px solid var(--line);
+        padding: 16px; border-radius: 10px; }
   #error { color: #dc2626; font-weight: 600; }
 </style>
 </head>
 <body>
+<p class="eyebrow">AI력 사무소 · AI Resourcement Office</p>
 <h1>고객 요구사항 기반 제안서 초안 생성기</h1>
 <p class="muted">고객 문제와 제공 서비스를 입력하면 목차, 범위, 일정, 견적 항목을 담은
 제안서 초안을 생성합니다. 가격·일정·계약 조건은 반드시 사람이 검토해야 합니다.
