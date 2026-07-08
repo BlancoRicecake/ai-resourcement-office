@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "mkdir -p public && cp -R site/. public/",
+  "buildCommand": "rm -rf public && mkdir -p public && cp -R site/. public/ && find public -type d -name .omc -prune -exec rm -rf {} +",
   "outputDirectory": "public",
   "cleanUrls": true,
   "trailingSlash": false,
