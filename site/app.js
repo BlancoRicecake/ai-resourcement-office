@@ -3,6 +3,7 @@ const { workers, teams } = window.AIRO_DATA;
 const workerGrid = document.querySelector("#workerGrid");
 const teamGrid = document.querySelector("#teamGrid");
 const workerBySlug = Object.fromEntries(workers.map((worker) => [worker.slug, worker]));
+const teamBySlug = Object.fromEntries(teams.map((team) => [team.slug, team]));
 
 const agentSprites = {
   "review-analysis-worker": {
@@ -429,11 +430,113 @@ function renderTeamMembers(team) {
     .join("");
 }
 
+function renderTeamFlow(team) {
+  if (!team.flow || !team.flow.length) {
+    return "";
+  }
+
+  return `<ol class="team-flow">${team.flow
+    .map((step) => {
+      const from = workerBySlug[step.from];
+      const to = step.to === "team" ? null : workerBySlug[step.to];
+      const fromName = from ? from.name : step.from;
+      const toName = to ? to.name : "팀 전체 · 기획자 · 작가 · 제작자";
+
+      return `
+        <li class="flow-step${to ? "" : " is-loop"}">
+          <div class="flow-endpoints">
+            <span class="flow-agent">
+              ${from ? pixelAgent(from) : ""}
+              <span>${fromName}</span>
+            </span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+            <span class="flow-agent">
+              ${to ? pixelAgent(to) : `<span class="flow-team-badge" aria-hidden="true">TEAM ↺</span>`}
+              <span>${toName}</span>
+            </span>
+          </div>
+          <div class="flow-detail">
+            <span class="flow-label">${step.label}</span>
+            <p>${step.desc}</p>
+          </div>
+        </li>
+      `;
+    })
+    .join("")}</ol>`;
+}
+
+function openTeamModal(slug) {
+  const team = teamBySlug[slug];
+
+  if (!team) {
+    return;
+  }
+
+  modalBody.innerHTML = `
+    <div class="modal-hero">
+      <div>
+        <span class="category-chip">${team.category}</span>
+        <h3 id="workerModalTitle">${team.title}</h3>
+        <p>${team.summary}</p>
+        <div class="modal-meta">
+          <span>${team.includes.join(" · ")}</span>
+          <strong>${team.version}</strong>
+        </div>
+        <div class="modal-hire"><a class="hire-button" href="${team.downloadUrl}" download data-hire aria-label="${team.title} 팀 zip 다운로드">${downloadIcon}<span>팀 zip 다운로드</span></a></div>
+      </div>
+    </div>
+    <section class="modal-section">
+      <p class="modal-eyebrow">TEAM ROSTER · 팀 구성원</p>
+      <ul class="team-roster modal-roster" aria-label="${team.title} 구성원">
+        ${renderTeamMembers(team)}
+      </ul>
+    </section>
+    <section class="modal-section">
+      <p class="modal-eyebrow">INTERACTION · 에이전트 상호작용 흐름</p>
+      ${renderTeamFlow(team)}
+    </section>
+  `;
+
+  lastFocused = document.activeElement;
+  modal.hidden = false;
+  document.body.style.overflow = "hidden";
+  modal.querySelector(".modal-close").focus();
+}
+
+teamGrid.addEventListener("click", (event) => {
+  if (event.target.closest("[data-hire]")) {
+    return;
+  }
+
+  const card = event.target.closest(".team-card");
+
+  if (card) {
+    openTeamModal(card.dataset.slug);
+  }
+});
+
+teamGrid.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" && event.key !== " ") {
+    return;
+  }
+
+  if (event.target.closest("[data-hire]")) {
+    return;
+  }
+
+  const card = event.target.closest(".team-card");
+
+  if (card) {
+    event.preventDefault();
+    openTeamModal(card.dataset.slug);
+  }
+});
+
 function renderTeams() {
   teamGrid.innerHTML = teams
     .map(
       (team) => `
-        <article class="card team-card">
+        <article class="card team-card" data-slug="${team.slug}" role="button" tabindex="0" aria-haspopup="dialog" aria-label="${team.title} 상호작용 보기">
           <div class="card-top">
             <div>
               <span class="category-chip">${team.category}</span>
@@ -456,7 +559,10 @@ function renderTeams() {
           </div>
           <div class="card-footer">
             <span>${team.requiredKeys.join(" + ")}</span>
-            <a href="${team.downloadUrl}" download>팀 zip 다운로드 ↓</a>
+            <span class="team-footer-actions">
+              <span class="card-cta" aria-hidden="true">에이전트 상호작용 보기 →</span>
+              <a href="${team.downloadUrl}" download data-hire>팀 zip 다운로드 ↓</a>
+            </span>
           </div>
         </article>
       `

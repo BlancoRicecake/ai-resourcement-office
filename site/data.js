@@ -7,7 +7,7 @@ window.AIRO_DATA = {
       summary:
         "채널 방향, 타깃 시청자, 주제 후보, 시리즈 구조, 영상 목적을 설계한다.",
       skills: ["채널 전략", "주제 발굴", "시리즈 기획"],
-      tools: ["OpenAI API", "YouTube Studio 입력값"],
+      tools: ["YouTube Studio 입력값"],
       output: "영상 기획 브리프",
       downloadUrl: "./downloads/youtube-content-planner.zip",
       details: {
@@ -51,7 +51,7 @@ window.AIRO_DATA = {
       summary:
         "후킹, 구성, 멘트, 전환 문장, CTA를 담은 촬영 가능한 영상 원고를 작성한다.",
       skills: ["후킹 작성", "원고 구성", "CTA 설계"],
-      tools: ["OpenAI API", "Markdown"],
+      tools: ["Markdown"],
       output: "유튜브 영상 원고",
       downloadUrl: "./downloads/youtube-script-writer.zip",
       details: {
@@ -90,7 +90,7 @@ window.AIRO_DATA = {
       summary:
         "촬영 구성, B-roll, 화면 큐, 편집 가이드, 썸네일 방향을 정리한다.",
       skills: ["촬영 큐", "편집 가이드", "썸네일 방향"],
-      tools: ["OpenAI API", "Production checklist"],
+      tools: ["Production checklist"],
       output: "제작 가이드",
       downloadUrl: "./downloads/youtube-video-producer.zip",
       details: {
@@ -134,7 +134,7 @@ window.AIRO_DATA = {
       summary:
         "업로드 메타데이터, 제목/썸네일 실험, YouTube Studio 지표 분석, 다음 영상 개선안을 만든다.",
       skills: ["업로드 패키징", "지표 분석", "개선안 작성"],
-      tools: ["OpenAI API", "YouTube Studio 수동 입력"],
+      tools: ["YouTube Studio 수동 입력"],
       output: "채널 운영 리포트",
       downloadUrl: "./downloads/youtube-channel-manager.zip",
       details: {
@@ -178,7 +178,7 @@ window.AIRO_DATA = {
       summary:
         "직무 설명, 채용 공고, 업무 범위를 분석해 역할 정의, 필요 역량, 평가 기준을 정리한다.",
       skills: ["직무 분석", "역량 정의", "평가 기준 설계"],
-      tools: ["OpenAI API", "Job description"],
+      tools: ["Job description"],
       output: "직무 분석 리포트",
       details: {
         workflow: [
@@ -212,7 +212,7 @@ window.AIRO_DATA = {
       summary:
         "컨텐츠 기획자, 영상 원고 작가, 영상 제작자, 채널 매니저가 함께 유튜브 콘텐츠를 기획부터 성과 회고까지 운영하는 팀.",
       runtime: "로컬 실행 (문서 기반 팀 패키지, API 연동은 후속 버전)",
-      requiredKeys: ["OPENAI_API_KEY (선택)"],
+      requiredKeys: ["필수 키 없음 · OpenAI는 선택(무료 모드)"],
       status: "무료 다운로드",
       includes: ["4명 AI 직원", "agent.md", "workflow", "sample briefs", "ops checklist"],
       members: [
@@ -220,6 +220,32 @@ window.AIRO_DATA = {
         "youtube-script-writer",
         "youtube-video-producer",
         "youtube-channel-manager"
+      ],
+      flow: [
+        {
+          from: "youtube-content-planner",
+          to: "youtube-script-writer",
+          label: "기획 브리프",
+          desc: "주제·타깃 시청자·핵심 약속·CTA를 확정해 원고 작가에게 넘긴다."
+        },
+        {
+          from: "youtube-script-writer",
+          to: "youtube-video-producer",
+          label: "컨펌된 원고",
+          desc: "후킹·구성·멘트에 장면·예상 시간·화면 큐를 붙여 영상 제작자에게 넘긴다."
+        },
+        {
+          from: "youtube-video-producer",
+          to: "youtube-channel-manager",
+          label: "제작 가이드",
+          desc: "촬영 구성·B-roll·자막 포인트·썸네일 방향을 채널 매니저에게 넘긴다."
+        },
+        {
+          from: "youtube-channel-manager",
+          to: "team",
+          label: "성과 개선 지시",
+          desc: "업로드 후 CTR·평균 시청 지속·이탈 구간을 분석해, 개선 1-3개를 기획자·작가·제작자에게 피드백한다. (다음 사이클로 순환)"
+        }
       ],
       downloadUrl: "./downloads/youtube-content-pd-team.zip"
     }
