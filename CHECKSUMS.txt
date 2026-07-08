@@ -1,0 +1,10 @@
+# AI력 사무소 팀 패키지 SHA-256 체크섬
+# 다운로드한 파일이 원본과 동일한지 검증하는 값입니다.
+# 검증 방법은 SECURITY.md 참고.
+
+1c58e174343a083132069973e4cfb1e5e427aa6575159329bff882346acdccfd  ai-office-starter-team.zip
+32f731ab91d6e92bec73486192680fae6d87f3b9a2dcccf5f8c6635a440ea26a  youtube-content-pd-team.zip
+8577fba154b27a0709e74e7a426a60e13b549d82ba0cc89f501bcb409fc05038  youtube-channel-manager.zip
+cce3ab7df57630f2c100632944c0a2c284aabedbbf07ff047b45ad1cbab4ae33  youtube-content-planner.zip
+dda9406b87fecb956820a3cc991906fe8e4594aff29a277c1c122a91157172cd  youtube-script-writer.zip
+6bfcc2cceb9696cac5dfb01fe0ea6d12c02b2d8696b529e8fa55a77975488d72  youtube-video-producer.zip

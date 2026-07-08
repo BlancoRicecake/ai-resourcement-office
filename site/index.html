@@ -6,17 +6,17 @@
     <title>AI력 사무소 | AI Resourcement Office</title>
     <meta
       name="description"
-      content="무료 다운로드형 AI 직원 패키지 디렉토리. 미니 SaaS, 에이전트 지시문, 스킬, 샘플 산출물을 하나의 번들로 제공합니다. API 키 없이 mock 모드로 무료 체험."
+      content="무료 다운로드형 AI 직원 팀 디렉토리. 미니 SaaS, 에이전트 지시문, 스킬, 샘플 산출물을 팀 패키지로 제공합니다."
     />
     <meta name="theme-color" content="#faf9f5" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#262624" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="AI력 사무소" />
-    <meta property="og:title" content="AI력 사무소 | 무료 다운로드형 AI 직원 패키지" />
+    <meta property="og:title" content="AI력 사무소 | 무료 다운로드형 AI 직원 팀" />
     <meta
       property="og:description"
-      content="AI 직원을 실행해주는 곳이 아니라, 직접 세팅할 수 있게 나눠주는 곳. Python만 있으면 실행되는 AI 워커 번들을 무료로 배포합니다."
+      content="AI 직원을 실행해주는 곳이 아니라, 직접 세팅할 수 있게 나눠주는 곳. Python만 있으면 실행되는 AI 직원 팀을 무료로 배포합니다."
     />
     <meta property="og:url" content="https://aigent-office.com/" />
     <meta property="og:image" content="https://aigent-office.com/og.png" />
@@ -40,7 +40,8 @@
         </a>
         <div class="nav-links" aria-label="주요 메뉴">
           <a href="#workers">직원</a>
-          <a href="#bundles">번들</a>
+          <a href="#teams">팀</a>
+          <a href="./guide.html">채용 가이드</a>
           <a href="#standard">표준</a>
           <a href="#safety">주의사항</a>
           <a class="nav-github" href="https://github.com/BlancoRicecake/ai-resourcement-office" target="_blank" rel="noopener">GitHub</a>
@@ -55,11 +56,11 @@
           <h1>AI 에이전트 인력 사무소<br /><em>: AI력 사무소</em></h1>
           <p class="lead">
             미니 SaaS 코드, 에이전트 지시문, 스킬, 하네스, MCP 예시, 샘플 산출물을
-            하나의 패키지로 공유합니다. 실행 비용과 인프라는 사용자가 직접 관리합니다.
+            하나의 팀 패키지로 공유합니다. 실행 비용과 인프라는 사용자가 직접 관리합니다.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#bundles">번들 보기</a>
-            <a class="button" href="#standard">패키지 표준</a>
+            <a class="button primary" href="#teams">팀 보기</a>
+            <a class="button" href="#standard">팀 표준</a>
           </div>
         </div>
         <aside class="status-panel" aria-label="운영 현황">
@@ -69,11 +70,11 @@
           </div>
           <div class="status-metrics">
             <div>
-              <span class="metric">0</span>
+              <span class="metric" id="visitorCount">0</span>
               <span>누적 방문자 수</span>
             </div>
             <div>
-              <span class="metric">4</span>
+              <span class="metric">5</span>
               <span>보유 중인 AI 직원</span>
             </div>
             <div>
@@ -92,48 +93,40 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">01 / WORKERS</p>
-            <h2>첫 AI 직원 4명</h2>
+            <h2>AI 에이전트 직원</h2>
           </div>
-          <p>각 직원은 지시문·스킬·하네스가 담긴 번들로 배포됩니다.</p>
         </div>
         <div class="grid" id="workerGrid"></div>
       </section>
 
-      <section class="section" id="bundles">
+      <section class="section" id="teams">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">02 / BUNDLES</p>
-            <h2>다운로드할 패키지</h2>
+            <p class="eyebrow">02 / TEAMS</p>
+            <h2>AI 에이전트 팀</h2>
           </div>
         </div>
-        <div class="toolbar" aria-label="필터">
-          <button class="filter active" type="button" data-filter="all">전체</button>
-          <button class="filter" type="button" data-filter="고객분석">고객분석</button>
-          <button class="filter" type="button" data-filter="마케팅">마케팅</button>
-          <button class="filter" type="button" data-filter="문서자동화">문서자동화</button>
-          <button class="filter" type="button" data-filter="법무">법무</button>
-        </div>
-        <div class="grid" id="bundleGrid"></div>
+        <div class="team-grid" id="teamGrid"></div>
       </section>
 
       <section class="section split" id="standard">
         <div>
           <p class="eyebrow">03 / STANDARD</p>
-          <h2>AI력 Bundle v0.1</h2>
+          <h2>AI력 Team Bundle v0.1</h2>
           <p>
-            모든 번들은 같은 구조를 따릅니다. 사용자는 README를 보고 자기 환경에서
+            모든 팀 패키지는 같은 구조를 따릅니다. 사용자는 README를 보고 자기 환경에서
             실행하고, 필요한 비용은 자신의 API·클라우드 계정에서 지불합니다.
           </p>
         </div>
-        <div class="terminal" aria-label="번들 폴더 구조">
+        <div class="terminal" aria-label="팀 패키지 폴더 구조">
           <div class="terminal-head">
             <span></span>
             <span></span>
             <span></span>
-            <small>bundle-name/</small>
+            <small>team-name/</small>
           </div>
           <div class="file-tree">
-            <code>bundle-name/</code>
+            <code>team-name/</code>
             <code>README.md</code>
             <code>bundle.json</code>
             <code>.env.example</code>
@@ -170,7 +163,18 @@
       </span>
     </footer>
 
+    <div class="modal" id="workerModal" role="dialog" aria-modal="true" aria-labelledby="workerModalTitle" hidden>
+      <div class="modal-overlay"></div>
+      <div class="modal-panel" role="document">
+        <button class="modal-close" type="button" aria-label="닫기">✕</button>
+        <div class="modal-body"></div>
+      </div>
+    </div>
+
     <script src="./data.js"></script>
     <script src="./app.js"></script>
+    <script src="./analytics.js"></script>
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script defer src="./visitor-count.js"></script>
   </body>
 </html>

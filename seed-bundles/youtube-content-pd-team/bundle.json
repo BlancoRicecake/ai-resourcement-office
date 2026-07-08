@@ -1,0 +1,16 @@
+{
+  "slug": "youtube-content-pd-team",
+  "title": "유튜브 콘텐츠 PD팀",
+  "category": "유튜브 기획·제작·운영",
+  "version": "0.1.0",
+  "runtime": "Document workflow",
+  "requiredKeys": ["OPENAI_API_KEY (선택)"],
+  "members": [
+    "youtube-content-planner",
+    "youtube-script-writer",
+    "youtube-video-producer",
+    "youtube-channel-manager"
+  ],
+  "downloadUrl": "./downloads/youtube-content-pd-team.zip",
+  "disclaimer": "Users run this team with their own environment, accounts, and review process."
+}

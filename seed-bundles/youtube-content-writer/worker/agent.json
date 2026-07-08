@@ -1,0 +1,25 @@
+{
+  "name": "유튜브 컨텐츠 작가",
+  "slug": "youtube-content-writer",
+  "version": "0.1.0",
+  "role": "YouTube video script writer",
+  "inputs": [
+    "video_topic",
+    "target_audience",
+    "format",
+    "tone",
+    "business_context",
+    "output_mode"
+  ],
+  "outputs": [
+    "title_candidates",
+    "hook_options",
+    "timed_content_draft",
+    "production_cues",
+    "cta",
+    "filming_checklist"
+  ],
+  "default_model": "gpt-4o-mini",
+  "entrypoint": "app/app.py",
+  "skill": "worker/skills/write-youtube-content.md"
+}

@@ -1,0 +1,21 @@
+{
+  "slug": "youtube-content-writer",
+  "title": "유튜브 컨텐츠 작가",
+  "worker": "유튜브 컨텐츠 작가",
+  "category": "콘텐츠",
+  "difficulty": "Beginner",
+  "runtime": "Local",
+  "requiredKeys": ["OPENAI_API_KEY (선택: 없으면 무료 템플릿 모드)"],
+  "estimatedCost": "무료 템플릿 모드 또는 사용자가 선택한 모델 제공자 과금",
+  "includes": [
+    "mini SaaS (Python stdlib 단일 파일, 웹 UI + CLI)",
+    "agent instructions",
+    "skills",
+    "harness guide",
+    "sample video brief",
+    "content draft example"
+  ],
+  "requirements": "Python 3.8+ (pip 설치 불필요)",
+  "downloadUrl": "https://github.com/BlancoRicecake/ai-resourcement-office/releases/latest/download/youtube-content-writer.zip",
+  "disclaimer": "Users run this package with their own environment, API keys, and budget."
+}

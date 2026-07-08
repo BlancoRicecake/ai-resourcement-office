@@ -4,6 +4,19 @@
 .env.*.local
 seed-bundles/*/.env
 
+# 비밀 키 / 인증서 / 자격증명 (실수로도 커밋 금지)
+*.pem
+*.key
+*.pfx
+*.p12
+*_rsa
+*_ed25519
+id_rsa*
+credentials.json
+secrets.json
+*.secret
+.vercel-oidc-token
+
 # Python
 __pycache__/
 *.pyc
