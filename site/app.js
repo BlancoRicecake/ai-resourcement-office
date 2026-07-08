@@ -11,10 +11,13 @@ function pill(text) {
 function renderWorkers() {
   workerGrid.innerHTML = workers
     .map(
-      (worker) => `
+      (worker, index) => `
         <article class="card">
+          <div class="card-top">
+            <span class="category-chip">${worker.category}</span>
+            <span class="card-no">W-${String(index + 1).padStart(2, "0")}</span>
+          </div>
           <div>
-            <p class="eyebrow">${worker.category}</p>
             <h3>${worker.name}</h3>
             <p>${worker.summary}</p>
           </div>
@@ -23,7 +26,7 @@ function renderWorkers() {
           </div>
           <div class="card-footer">
             <span>${worker.tools.join(" + ")}</span>
-            <strong>${worker.output}</strong>
+            <strong>→ ${worker.output}</strong>
           </div>
         </article>
       `
@@ -40,23 +43,24 @@ function renderBundles(category = "all") {
   bundleGrid.innerHTML = visible
     .map(
       (bundle) => `
-        <article class="card">
+        <article class="card bundle-card">
+          <div class="card-top">
+            <div>
+              <span class="category-chip">${bundle.category}</span>
+              <span class="bundle-difficulty">${bundle.difficulty}</span>
+            </div>
+          </div>
           <div>
-            <p class="eyebrow">${bundle.category}</p>
             <h3>${bundle.title}</h3>
             <p>${bundle.description}</p>
-          </div>
-          <div class="card-meta">
-            ${pill(bundle.difficulty)}
-            ${pill(bundle.runtime)}
-            ${bundle.requiredKeys.map(pill).join("")}
           </div>
           <div class="tags">
             ${bundle.includes.map(pill).join("")}
           </div>
+          <div class="runtime">${bundle.runtime}</div>
           <div class="card-footer">
             <span>${bundle.estimatedCost}</span>
-            <a href="${bundle.downloadUrl}">zip 다운로드</a>
+            <a href="${bundle.downloadUrl}" target="_blank" rel="noopener">zip 다운로드 ↓</a>
           </div>
         </article>
       `
@@ -74,4 +78,3 @@ filters.forEach((button) => {
 
 renderWorkers();
 renderBundles();
-

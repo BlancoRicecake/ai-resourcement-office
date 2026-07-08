@@ -18,12 +18,14 @@
       property="og:description"
       content="AI 직원을 실행해주는 곳이 아니라, 직접 세팅할 수 있게 나눠주는 곳. Python만 있으면 실행되는 AI 워커 번들을 무료로 배포합니다."
     />
-    <meta property="og:url" content="https://blancoricecake.github.io/ai-resourcement-office/site/" />
-    <meta property="og:image" content="https://blancoricecake.github.io/ai-resourcement-office/site/og.png" />
+    <meta property="og:url" content="https://aigent-office.com/" />
+    <meta property="og:image" content="https://aigent-office.com/og.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="ko_KR" />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -33,7 +35,7 @@
           <span class="brand-mark">AI</span>
           <span>
             <strong>AI력 사무소</strong>
-            <small>AI Resourcement Office</small>
+            <small>AI RESOURCEMENT OFFICE</small>
           </span>
         </a>
         <div class="nav-links" aria-label="주요 메뉴">
@@ -48,10 +50,9 @@
 
     <main id="top">
       <section class="hero">
-        <div class="stamp" aria-hidden="true">무료 배포<br />FREE<br />v0.1</div>
         <div class="hero-copy">
-          <p class="eyebrow">무료 다운로드형 AI 직원 패키지</p>
-          <h1>AI 직원을 실행해주는 곳이 아니라, <em>직접 세팅할 수 있게 나눠주는 곳.</em></h1>
+          <p class="eyebrow line">FREE · DOWNLOAD &amp; USE IT &amp; MAKE IT YOUR OWN STYLE</p>
+          <h1>AI 에이전트 인력 사무소<br /><em>: AI력 사무소</em></h1>
           <p class="lead">
             미니 SaaS 코드, 에이전트 지시문, 스킬, 하네스, MCP 예시, 샘플 산출물을
             하나의 패키지로 공유합니다. 실행 비용과 인프라는 사용자가 직접 관리합니다.
@@ -61,34 +62,49 @@
             <a class="button" href="#standard">패키지 표준</a>
           </div>
         </div>
-        <aside class="hero-panel" aria-label="운영 원칙">
-          <div>
-            <span class="metric">0</span>
-            <span>호스팅 실행</span>
+        <aside class="status-panel" aria-label="운영 현황">
+          <div class="status-head">
+            <span>OFFICE STATUS</span>
+            <strong><span aria-hidden="true"></span>v0.1 LIVE</strong>
           </div>
-          <div>
-            <span class="metric">4</span>
-            <span>배포 중인 AI 직원</span>
+          <div class="status-metrics">
+            <div>
+              <span class="metric">0</span>
+              <span>누적 방문자 수</span>
+            </div>
+            <div>
+              <span class="metric">4</span>
+              <span>보유 중인 AI 직원</span>
+            </div>
+            <div>
+              <span class="metric">100%</span>
+              <span>사용자 소유 API 키</span>
+            </div>
           </div>
-          <div>
-            <span class="metric">100%</span>
-            <span>사용자 소유 API 키</span>
+          <div class="free-note">
+            <span aria-hidden="true">무료<br />FREE</span>
+            <p>누구나 무료로 내려받아<br /><strong>내 환경에서</strong> 실행합니다.</p>
           </div>
         </aside>
       </section>
 
       <section class="section" id="workers">
         <div class="section-heading">
-          <p class="eyebrow">Workers</p>
-          <h2>첫 AI 직원 3명</h2>
+          <div>
+            <p class="eyebrow">01 / WORKERS</p>
+            <h2>첫 AI 직원 4명</h2>
+          </div>
+          <p>각 직원은 지시문·스킬·하네스가 담긴 번들로 배포됩니다.</p>
         </div>
         <div class="grid" id="workerGrid"></div>
       </section>
 
       <section class="section" id="bundles">
         <div class="section-heading">
-          <p class="eyebrow">Bundles</p>
-          <h2>다운로드할 패키지</h2>
+          <div>
+            <p class="eyebrow">02 / BUNDLES</p>
+            <h2>다운로드할 패키지</h2>
+          </div>
         </div>
         <div class="toolbar" aria-label="필터">
           <button class="filter active" type="button" data-filter="all">전체</button>
@@ -102,37 +118,45 @@
 
       <section class="section split" id="standard">
         <div>
-          <p class="eyebrow">Bundle Standard</p>
+          <p class="eyebrow">03 / STANDARD</p>
           <h2>AI력 Bundle v0.1</h2>
           <p>
             모든 번들은 같은 구조를 따릅니다. 사용자는 README를 보고 자기 환경에서
-            실행하고, 필요한 비용은 자신의 API/클라우드 계정에서 지불합니다.
+            실행하고, 필요한 비용은 자신의 API·클라우드 계정에서 지불합니다.
           </p>
         </div>
-        <div class="file-tree" aria-label="번들 폴더 구조">
-          <code>bundle-name/</code>
-          <code>README.md</code>
-          <code>bundle.json</code>
-          <code>.env.example</code>
-          <code>app/</code>
-          <code>worker/agent.md</code>
-          <code>worker/skills/</code>
-          <code>worker/harness/</code>
-          <code>worker/mcp/</code>
-          <code>examples/</code>
-          <code>docs/cost-guide.md</code>
-          <code>docs/security-notes.md</code>
+        <div class="terminal" aria-label="번들 폴더 구조">
+          <div class="terminal-head">
+            <span></span>
+            <span></span>
+            <span></span>
+            <small>bundle-name/</small>
+          </div>
+          <div class="file-tree">
+            <code>bundle-name/</code>
+            <code>README.md</code>
+            <code>bundle.json</code>
+            <code>.env.example</code>
+            <code>app/</code>
+            <code>worker/agent.md</code>
+            <code>worker/skills/</code>
+            <code>worker/harness/</code>
+            <code>worker/mcp/</code>
+            <code>examples/</code>
+            <code>docs/cost-guide.md</code>
+            <code>docs/security-notes.md</code>
+          </div>
         </div>
       </section>
 
       <section class="section safety" id="safety">
         <div>
-          <p class="eyebrow">Safety</p>
-          <h2>처음부터 고정할 고지</h2>
+          <p class="eyebrow">04 / SAFETY</p>
+          <h2>고지사항</h2>
         </div>
         <p>
           AI력 사무소는 실행형 호스팅 서비스를 제공하지 않습니다. 다운로드 후 설치,
-          실행, API 비용, MCP 권한, 데이터 보안, 결과 검증은 사용자 책임입니다.
+          실행, API 비용, MCP 권한, 데이터 보안, 결과 검증은 <strong>사용자 책임</strong>입니다.
         </p>
       </section>
     </main>
@@ -150,4 +174,3 @@
     <script src="./app.js"></script>
   </body>
 </html>
-
