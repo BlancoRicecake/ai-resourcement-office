@@ -473,7 +473,7 @@ function openTeamModal(slug) {
   }
 
   modalBody.innerHTML = `
-    <div class="modal-hero">
+    <div class="modal-hero modal-hero--team">
       <div>
         <span class="category-chip">${team.category}</span>
         <h3 id="workerModalTitle">${team.title}</h3>

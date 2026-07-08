@@ -1034,6 +1034,15 @@ h3 {
   border-bottom: 1px solid var(--line);
 }
 
+/* 팀 모달: 대표 캐릭터가 없으므로 한 칸(전체 너비)으로 */
+.modal-hero--team {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.modal-hero--team h3 {
+  margin-top: 0;
+}
+
 .modal-hero h3 {
   margin: 12px 0 0;
   font-family: "Noto Serif KR", serif;
