@@ -1,0 +1,22 @@
+{
+  "slug": "web-copy-analyzer",
+  "title": "웹 카피 분석기",
+  "worker": "카피라이팅 분석가",
+  "category": "카피분석",
+  "difficulty": "Intermediate",
+  "runtime": "Local",
+  "requiredKeys": ["없음 (호스트 코딩 에이전트/LLM이 판단 담당)"],
+  "estimatedCost": "$0 (결정론 툴은 무료 — 진단·리라이트 판단에 쓰는 호스트 모델의 토큰 비용은 별도)",
+  "includes": [
+    "미리 빌드된 CLI + MCP 서버 (dist/cli.js, dist/mcp.js)",
+    "에이전트 지시문 (worker/agent.md)",
+    "자기학습 지식 그래프 (worker/knowledge/, 12개 시드 노드)",
+    "skills (worker/skills/)",
+    "harness 가이드 (worker/harness/)",
+    "Claude Code 플러그인 (plugin/)",
+    "예시 입출력 (examples/)"
+  ],
+  "requirements": "Node.js 18.17+ (prebuilt dist/ 실행은 설치 불필요, 소스에서 빌드하려면 npm install 필요)",
+  "downloadUrl": "https://github.com/BlancoRicecake/ai-resourcement-office/releases/latest/download/web-copy-analyzer.zip",
+  "disclaimer": "사용자는 자신의 환경과 모델(코딩 에이전트/MCP 클라이언트)로 직접 실행합니다. 판단(진단·리라이트)은 호스트 LLM의 몫이며 그 토큰 비용도 사용자 부담입니다. 산출물은 의사결정 보조 자료이며 최종 판단은 사용자의 책임입니다."
+}

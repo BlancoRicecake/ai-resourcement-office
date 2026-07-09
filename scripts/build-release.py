@@ -7,6 +7,9 @@
 결과: dist/<slug>.zip (번들별 1개)
 
 - .env, __pycache__, *.pyc는 제외한다 (실키/캐시가 배포물에 섞이지 않도록).
+- node_modules, .git, .DS_Store도 제외한다 (TS/Node 번들의 의존성·VCS·OS 잡파일이
+  배포물에 섞이지 않도록). dist/(프리빌드 CLI/MCP 번들)는 포함한다 — esbuild 자립
+  번들이라 node_modules 없이 zero-install로 실행된다.
 - zip 내부 최상위 폴더는 번들 slug로 고정되어, 풀면 바로 폴더가 생긴다.
 
 릴리스 발행 예시:
@@ -21,7 +24,7 @@ ROOT = Path(__file__).resolve().parent.parent
 BUNDLES_DIR = ROOT / "seed-bundles"
 DIST_DIR = ROOT / "dist"
 
-EXCLUDE_NAMES = {".env", "__pycache__"}
+EXCLUDE_NAMES = {".env", "__pycache__", "node_modules", ".git", ".DS_Store", ".omc"}
 EXCLUDE_SUFFIXES = {".pyc"}
 
 

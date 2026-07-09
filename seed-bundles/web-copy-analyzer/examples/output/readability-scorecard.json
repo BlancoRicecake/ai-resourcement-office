@@ -1,0 +1,45 @@
+{
+  "language": "ko",
+  "english_dependent_metrics_applicable": false,
+  "readability": {
+    "grade_level": -9.25,
+    "avg_sentence_len": 15.71
+  },
+  "structure_checklist": [
+    {
+      "item": "headline_present",
+      "pass": true
+    },
+    {
+      "item": "single_primary_cta",
+      "pass": true
+    },
+    {
+      "item": "trust_signal_present",
+      "pass": false
+    },
+    {
+      "item": "footer_present",
+      "pass": true
+    }
+  ],
+  "cta_inventory": [
+    {
+      "text": "시작하기",
+      "dom_index": 6
+    }
+  ],
+  "headline_length": {
+    "chars": 91,
+    "words": 21
+  },
+  "we_you_ratio": {
+    "we": 0,
+    "you": 0,
+    "ratio": 0
+  },
+  "jargon_density": {
+    "jargon_terms": 0,
+    "per_100_words": 0
+  }
+}

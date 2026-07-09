@@ -21,6 +21,9 @@ secrets.json
 __pycache__/
 *.pyc
 
+# Node.js
+node_modules/
+
 # 릴리스 산출물 (릴리스 에셋으로만 배포)
 dist/
 

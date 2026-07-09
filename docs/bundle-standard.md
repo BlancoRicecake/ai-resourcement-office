@@ -1,69 +1,10 @@
-# AI력 Bundle v0.1 Standard
+# (흡수됨) AI력 Bundle Standard
 
-Each bundle is a downloadable package that includes a mini SaaS and the AI
-worker setup used to build or operate it.
+이 문서(v0.1)는 **`agent-factory/bundle-standard.md`(v0.2)**로 흡수·승격되었습니다.
+v0.1은 "미니 SaaS + 워커" Python 앱 전제였고, v0.2는 폴더-번들이 정본이며
+특정 언어·모델에 종속되지 않습니다. 최신 표준은 새 문서를 참고하세요:
 
-## Required Structure
+→ [`agent-factory/bundle-standard.md`](../agent-factory/bundle-standard.md)
 
-```txt
-bundle-name/
-  README.md
-  bundle.json
-  .env.example
-  LICENSE
-
-  app/
-    Mini SaaS source code
-
-  worker/
-    agent.json
-    agent.md
-    skills/
-    harness/
-    mcp/
-
-  examples/
-    input/
-    output/
-
-  docs/
-    build-log.md
-    cost-guide.md
-    security-notes.md
-    limitations.md
-```
-
-## Required Metadata
-
-`bundle.json` must include:
-
-- slug
-- title
-- worker name
-- category
-- difficulty
-- runtime mode
-- required API keys
-- estimated cost
-- included assets
-- download URL
-- disclaimer
-
-## Difficulty Levels
-
-- Beginner: API key and one command are enough.
-- Intermediate: package install, local runtime, and basic config are required.
-- Advanced: MCP, database, deployment, or cloud setup is required.
-
-## Publishing Checklist
-
-- README exists.
-- `.env.example` exists.
-- No real API keys or secrets are committed.
-- Sample input and output exist.
-- Cost guide exists.
-- Security notes exist.
-- Limitations are documented.
-- Original SaaS brand, UI, and copy are not cloned.
-- Local execution path is clear.
-
+(`seed-bundles/legal-docs-draft-generator/docs/build-log.md`가 이 경로를
+참조하므로, 링크가 끊기지 않도록 이 파일은 남겨둡니다.)

@@ -1,0 +1,20 @@
+{
+  "name": "<워커 이름>",
+  "role": "<한 문장 역할 설명 — 무엇을 입력받아 무엇을 판단·산출하는가>",
+  "recommendedModels": ["Claude", "GPT-5", "Gemini"],
+  "inputs": ["<입력 1>", "<입력 2>"],
+  "outputs": ["<출력 1>", "<출력 2>"],
+  "tools": [
+    "<결정론 CLI/MCP 툴 이름 — agent.md ③ 워크플로에 등장하는 이름과 1:1 대응>",
+    "remember",
+    "save_workflow",
+    "search_knowledge",
+    "knowledge_neighbors",
+    "learn_knowledge"
+  ],
+  "skills": ["<worker/skills/의 절차 이름 요약>"],
+  "limitations": [
+    "<이 워커가 다루지 않는 범위>",
+    "<절대 규칙 요약 — agent.md ④와 일치시킬 것>"
+  ]
+}
