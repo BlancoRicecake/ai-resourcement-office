@@ -34,8 +34,10 @@ python app/app.py --cli examples/input/sample.csv -o report.md
 ## 구성
 
 ```txt
+AGENTS.md   폴더 연결 진입점 (지시문 로드 순서 안내)
 app/        미니 SaaS (단일 파일 웹앱 + CLI)
 worker/     에이전트 지시문, 스킬, 하네스, MCP 가이드
+memory/     누적 학습 메모리 (운영 원칙, 사용자 선호, 프로젝트 맥락, 인사이트)
 examples/   샘플 CSV 20행 + 실제 실행으로 생성한 리포트
 docs/       빌드 로그, 비용/보안/한계 가이드
 ```

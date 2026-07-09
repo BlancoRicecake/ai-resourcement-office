@@ -11,11 +11,13 @@
 
 ## 포함 파일
 
+- `AGENTS.md`: 폴더 연결 진입점 (런타임이 폴더를 열 때 자동으로 읽는 지시문 로드 순서 안내)
 - `worker/agent.md`: Claude, Codex 등에 넣어 사용할 수 있는 직원 지시문
 - `worker/agent.json`: 직원 메타데이터
 - `examples/input/request.md`: 예시 요청
 - `examples/output/job-role-blueprint.md`: 예시 산출물
 - `docs/`: 비용, 보안, 한계, 제작 기록
+- `memory/`: 운영 원칙, 사용자 선호, 프로젝트 맥락, 설계 기준, 설계서 이력을 저장하는 메모리 파일
 
 ## 사용 방법
 

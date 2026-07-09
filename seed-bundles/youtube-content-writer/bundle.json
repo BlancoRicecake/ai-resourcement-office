@@ -1,5 +1,6 @@
 {
   "slug": "youtube-content-writer",
+  "version": "1.0.0",
   "title": "유튜브 컨텐츠 작가",
   "worker": "유튜브 컨텐츠 작가",
   "category": "콘텐츠",
@@ -12,6 +13,7 @@
     "agent instructions",
     "skills",
     "harness guide",
+    "memory files",
     "sample video brief",
     "content draft example"
   ],

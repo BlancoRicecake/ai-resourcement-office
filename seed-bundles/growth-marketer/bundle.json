@@ -1,5 +1,6 @@
 {
   "slug": "growth-marketer",
+  "version": "1.0.0",
   "title": "성장 실험 설계서 생성기",
   "worker": "그로스 마케터",
   "category": "마케팅",

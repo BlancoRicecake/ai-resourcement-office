@@ -1,5 +1,6 @@
 {
   "slug": "proposal-draft-generator",
+  "version": "1.0.0",
   "title": "고객 요구사항 기반 제안서 초안 생성기",
   "worker": "제안서 초안 직원",
   "category": "문서자동화",
@@ -12,6 +13,7 @@
     "agent instructions",
     "skills",
     "harness guide",
+    "memory files",
     "proposal outline",
     "sample brief"
   ],

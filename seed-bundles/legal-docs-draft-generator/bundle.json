@@ -1,5 +1,6 @@
 {
   "slug": "legal-docs-draft-generator",
+  "version": "1.0.0",
   "title": "온라인 서비스 법률 문서 초안 생성기",
   "worker": "법률 문서 초안 직원",
   "category": "법무",
@@ -12,6 +13,7 @@
     "agent instructions",
     "skills",
     "harness guide",
+    "memory files",
     "sample input",
     "legal docs example"
   ],

@@ -1,5 +1,6 @@
 {
   "slug": "csv-review-insight-generator",
+  "version": "1.0.0",
   "title": "CSV 리뷰 분석 리포트 생성기",
   "worker": "리뷰 분석 직원",
   "category": "고객분석",
@@ -12,6 +13,7 @@
     "agent instructions",
     "skills",
     "harness guide",
+    "memory files",
     "sample CSV (20행)",
     "report example"
   ],

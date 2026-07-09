@@ -1,5 +1,6 @@
 {
   "slug": "seo-geo-content-brief-generator",
+  "version": "1.0.0",
   "title": "SEO/GEO 콘텐츠 브리프 생성기",
   "worker": "SEO/GEO 브리프 직원",
   "category": "마케팅",
@@ -12,6 +13,7 @@
     "agent instructions",
     "skills",
     "harness guide",
+    "memory files",
     "brief template",
     "example output"
   ],
