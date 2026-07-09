@@ -1,36 +1,5 @@
-# Safety and Responsibility
+# (흡수됨) Safety and Responsibility
 
-AI Resourcement Office shares downloadable setup packages. It does not host,
-run, monitor, or guarantee the packages.
-
-## User Responsibilities
-
-Users must review and manage:
-
-- API keys
-- Model usage fees
-- Cloud/server costs
-- Third-party API terms
-- MCP permissions
-- Local file access
-- Personal or company data
-- Generated output accuracy
-
-## Package Rules
-
-Every package must:
-
-- Use `.env.example`, never a real `.env` file.
-- Explain required API keys.
-- Explain likely cost drivers.
-- Explain whether data leaves the local machine.
-- Explain MCP permissions if MCP is included.
-- Provide sample inputs and outputs.
-- State known limitations.
-
-## Recommended Warning Text
-
-This package is not a hosted service. Run it only after reviewing the code,
-permissions, API costs, and data handling behavior. Any API, model, server, or
-third-party service cost is paid by the user.
-
+이 문서의 내용(사용자 책임, 패키지 규칙, 경고 문구)은
+**[`agent-factory/verification.md`](../agent-factory/verification.md)**로
+흡수·승격되었습니다. 최신 내용과 검증 게이트는 그 문서를 참고하세요.
