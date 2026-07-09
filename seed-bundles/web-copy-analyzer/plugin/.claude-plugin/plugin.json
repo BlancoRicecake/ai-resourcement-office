@@ -1,0 +1,22 @@
+{
+  "name": "web-copy-analyzer",
+  "version": "0.1.0",
+  "description": "Web Copy Analyzer — landing-page conversion-copy consultant. Bundles the web-copy-analyzer MCP server (persona-aware diagnosis/rewrite/compare) and a named agent generated from worker/agent.md. Installing this plugin registers the MCP server and the named agent together. One of several install paths for this bundle (see ../worker/harness/README.md) — not the primary form.",
+  "author": {
+    "name": "ai-resourcement-office"
+  },
+  "license": "MIT",
+  "keywords": [
+    "copywriting",
+    "landing-page",
+    "conversion",
+    "mcp",
+    "named-agent"
+  ],
+  "mcpServers": {
+    "web-copy-analyzer": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/../app/dist/mcp.js"]
+    }
+  }
+}
