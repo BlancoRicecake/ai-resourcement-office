@@ -717,6 +717,73 @@ h3 {
   border-bottom: 1px solid var(--line);
 }
 
+.guide-manifesto {
+  display: grid;
+  place-items: center;
+}
+
+.manifesto-card {
+  position: relative;
+  overflow: hidden;
+  width: min(760px, 100%);
+  border: 1px solid var(--line-strong);
+  border-radius: 22px;
+  background:
+    radial-gradient(120% 140% at 100% 0%, var(--sage-soft) 0%, transparent 46%),
+    radial-gradient(120% 140% at 0% 100%, var(--accent-soft) 0%, transparent 44%),
+    var(--surface);
+  padding: 52px 48px 48px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.manifesto-card .eyebrow {
+  margin-bottom: 26px;
+}
+
+.manifesto-lead {
+  margin: 0;
+  font-family: "Noto Serif KR", serif;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.manifesto-lead em {
+  color: var(--accent);
+  font-style: normal;
+}
+
+.manifesto-body {
+  max-width: 560px;
+  margin: 22px auto 0;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.95;
+}
+
+.manifesto-quote {
+  position: relative;
+  max-width: 560px;
+  margin: 34px auto 0;
+  padding-top: 30px;
+  border-top: 1px dashed var(--line-strong);
+  font-family: "Noto Serif KR", serif;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.85;
+  color: var(--sage);
+}
+
+.manifesto-quote::before {
+  content: "🌱";
+  display: block;
+  margin-bottom: 12px;
+  font-size: 26px;
+  line-height: 1;
+}
+
 .tags {
   display: flex;
   flex-wrap: wrap;
@@ -1430,6 +1497,22 @@ h3 {
   .worker-main {
     grid-template-columns: 72px minmax(0, 1fr);
     gap: 16px;
+  }
+
+  .manifesto-card {
+    padding: 38px 24px 34px;
+  }
+
+  .manifesto-lead {
+    font-size: 25px;
+  }
+
+  .manifesto-body {
+    font-size: 16px;
+  }
+
+  .manifesto-quote {
+    font-size: 17.5px;
   }
 
   .modal-body {

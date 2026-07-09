@@ -1,0 +1,24 @@
+{
+  "slug": "agent-training-camp",
+  "title": "에이전트 수습·지식 적재 훈련소",
+  "worker": "에이전트 훈련소",
+  "category": "에이전트 제작",
+  "difficulty": "Intermediate",
+  "runtime": "Claude/Codex Local",
+  "requiredKeys": [],
+  "estimatedCost": "Depends on the user's selected model, platform plan, and optional research API usage",
+  "includes": [
+    "agent instructions",
+    "3-phase training pipeline",
+    "legal ingestion rules",
+    "synthesis-to-practice rules",
+    "memory loading rules",
+    "source credibility rules",
+    "memory files",
+    "sample input",
+    "sample output",
+    "docs"
+  ],
+  "downloadUrl": "./downloads/agent-training-camp.zip",
+  "disclaimer": "Users run this package with their own environment, model account, research API keys, and filesystem permissions. Users are responsible for copyright compliance and expert review of high-risk domain knowledge."
+}

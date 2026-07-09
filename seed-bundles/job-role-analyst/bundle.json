@@ -1,0 +1,13 @@
+{
+  "slug": "job-role-analyst",
+  "title": "직무 기반 에이전트 설계서 생성기",
+  "worker": "직무 분석가",
+  "category": "에이전트 설계",
+  "difficulty": "Beginner",
+  "runtime": "Claude/Codex Local",
+  "requiredKeys": [],
+  "estimatedCost": "Depends on the user's selected model or platform plan",
+  "includes": ["agent instructions", "job-role blueprint template", "sample input", "sample output", "docs"],
+  "downloadUrl": "",
+  "disclaimer": "Users run this package with their own environment, model account, API keys, and budget."
+}

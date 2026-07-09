@@ -1,0 +1,23 @@
+{
+  "slug": "growth-marketer",
+  "title": "성장 실험 설계서 생성기",
+  "worker": "그로스 마케터",
+  "category": "마케팅",
+  "difficulty": "Beginner-Intermediate",
+  "runtime": "Claude/Codex Local",
+  "requiredKeys": [],
+  "estimatedCost": "Depends on the user's selected model, platform plan, and optional ad budget",
+  "includes": [
+    "agent instructions",
+    "memory files",
+    "revenue horizon rules",
+    "growth experiment template",
+    "sample input",
+    "sample output",
+    "docs",
+    "research-first rules",
+    "academic foundations"
+  ],
+  "downloadUrl": "./downloads/growth-marketer.zip",
+  "disclaimer": "Users run this package with their own environment, model account, API keys, ad accounts, memory files, and budget."
+}
