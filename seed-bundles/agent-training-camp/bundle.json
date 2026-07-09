@@ -1,5 +1,6 @@
 {
   "slug": "agent-training-camp",
+  "version": "1.0.0",
   "title": "에이전트 수습·지식 적재 훈련소",
   "worker": "에이전트 훈련소",
   "category": "에이전트 제작",
@@ -9,11 +10,12 @@
   "estimatedCost": "Depends on the user's selected model, platform plan, and optional research API usage",
   "includes": [
     "agent instructions",
-    "3-phase training pipeline",
+    "4-phase training pipeline",
     "legal ingestion rules",
     "synthesis-to-practice rules",
     "memory loading rules",
     "source credibility rules",
+    "graduation exam rules",
     "memory files",
     "sample input",
     "sample output",

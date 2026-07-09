@@ -21,23 +21,27 @@
 - 번역한 실무 지침만 신임 에이전트의 `memory/`에 적재 후보로 정리한다.
 - 원문은 버리고 출처만 근거로 남겨 저작권 리스크를 낮춘다.
 
-## 3단계 훈련 파이프라인
+## 4단계 훈련 파이프라인
 
 1. **흡수 (Reader)**: 오픈 액세스 논문·리포트에서 아이디어·방법론만 추출한다.
 2. **실무적 합성 (Synthesizer)**: 학술 개념을 대상 산업의 실무 액션으로 번역한다.
 3. **적재 (Writer)**: 원문은 버리고 번역한 실무 지침만 메모리에 적재한다.
+4. **졸업 시험 (Examiner)**: 대상 직무에서 그때그때 시험을 생성·채점해 실전 투입 가능 여부를 판정한다. 고정 문제은행은 없다.
 
 ## 포함 파일
 
+- `AGENTS.md`: 폴더 연결 진입점 (런타임이 폴더를 열 때 자동으로 읽는 지시문 로드 순서 안내)
 - `worker/agent.md`: Claude/Codex에 넣어 사용하는 직원 지시문
 - `worker/agent.json`: 직원 메타데이터
 - `worker/skills/legal-ingestion-rules.md`: 합법적 지식 수집 규칙
 - `worker/skills/synthesis-to-practice-rules.md`: 학술→실무 번역 규칙
 - `worker/skills/memory-loading-rules.md`: 메모리 적재 규칙
 - `worker/skills/source-credibility-rules.md`: 소스 공신력 판단 규칙
+- `worker/skills/graduation-exam-rules.md`: 직무 맞춤 졸업 시험 생성·채점 규칙
 - `memory/`: 훈련소의 운영 원칙, 사용자 선호, 커리큘럼, 리서치 근거, 결정 이력
 - `examples/input/request.md`: 예시 요청
 - `examples/output/training-plan.md`: 예시 훈련 계획서
+- `examples/output/graduation-exam.md`: 예시 졸업 시험지·채점표
 - `docs/`: 비용, 보안, 한계, 제작 기록
 
 ## 사용 방법
@@ -46,7 +50,8 @@
 2. 훈련시킬 신임 에이전트의 직무, 대상 산업/비즈니스 모델, 번들 경로를 제공한다.
 3. 훈련소가 만든 `훈련 계획서`(커리큘럼, 소스, 실무 번역, 메모리 적재 후보)를 검토한다.
 4. 승인한 지식만 신임 에이전트의 `memory/` 파일에 적재한다.
-5. 훈련이 끝난 에이전트를 실전에 투입한다.
+5. 훈련소가 만든 졸업 시험을 신임 에이전트에게 치르게 하고, 산출물을 훈련소가 채점한다.
+6. 전 과제 통과로 졸업한 에이전트를 실전에 투입한다. 불합격이면 처방(추가 훈련, 지시문 수정 제안)을 따른다.
 
 ## 예시 입력
 
