@@ -1,0 +1,25 @@
+{
+  "slug": "agent-tech-specialist",
+  "version": "1.0.0",
+  "title": "에이전트 기술 동향·자문 참모",
+  "worker": "에이전트 기술 전문가",
+  "category": "에이전트 제작",
+  "difficulty": "Intermediate",
+  "runtime": "Claude/Codex Local",
+  "requiredKeys": [],
+  "estimatedCost": "Depends on the user's selected model, platform plan, and optional web search usage",
+  "includes": [
+    "agent instructions",
+    "tech radar rules",
+    "advisory rules",
+    "refresher training rules",
+    "source credibility rules",
+    "memory files",
+    "tech radar log template",
+    "sample input",
+    "sample output",
+    "docs"
+  ],
+  "downloadUrl": "./downloads/agent-tech-specialist.zip",
+  "disclaimer": "Users run this package with their own environment, model account, and web search capability. Tech trend findings are signals, not guarantees; users are responsible for verifying information and approving any adoption or bundle updates."
+}
