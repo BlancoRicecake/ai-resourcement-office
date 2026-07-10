@@ -78,6 +78,7 @@ AI력 사무소 운영 파이프라인:
 - 실무 지침 → 신임 에이전트의 `memory/CURRICULUM.md`(또는 도메인 지식 파일) 후보
 - 출처·근거 → `memory/RESEARCH.md` 후보 (참고문헌만, 원문 없음)
 - 훈련 이력·결정 → `memory/DECISIONS.md` 후보
+- 세션·직무를 넘어 재사용 가능한 일반화된 지식은 CURRICULUM.md 항목으로만 남기지 않고, 신임 에이전트의 `memory/knowledge/` 노드 후보(+ `INDEX.md` 갱신 후보)로도 함께 정리한다. 원 CURRICULUM.md 항목에는 `→ [[node-id]]`를 남긴다.
 - 확정은 사용자 승인 후에만. 기존 메모리는 덮어쓰지 않고 병합 후보로 제시한다.
 
 자세한 규칙: `worker/skills/memory-loading-rules.md`.
