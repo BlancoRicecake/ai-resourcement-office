@@ -13,6 +13,35 @@ research → design → implement → verify → publish → (1로 돌아가 반
 각 단계는 **목적 · 입력 · 게이트(무엇이 참이어야 다음으로 가는가) · 담당(에이전트/모델)**
 으로 정의한다.
 
+## 조직 역할 그림 (v0.3)
+
+이 5단계 뒤에는 실제로 번들을 만들고 유지하는 팀 내부의 역할 분담이 있다.
+직무 분석가와 에이전트 메이커가 새 직원을 설계·제작하면, 에이전트 훈련소가
+`memory/`를 지식으로 채워 콜드스타트를 없애고, 에이전트 기술 전문가가
+파이프라인 전체에 최신 제작 기술을 공급한다.
+
+```
+직무 분석가 → 에이전트 메이커 → 에이전트 훈련소(memory 적재·졸업시험) → 실전 투입
+  (design)      (implement)              ↑ (design~verify 사이)
+                                          |
+                              에이전트 기술 전문가 (전 단계 지원: 기술 자문 + 보수 교육 제안서)
+```
+
+- **직무 분석가**: research/design 단계에서 도메인 휴리스틱과 문제 상황을
+  분석한다(§1의 `architect`/`analyst` 역할과 겹친다).
+- **에이전트 메이커**: implement 단계에서 `template/`을 채워 "빈 직원"을
+  만든다(§2의 `executor` 역할).
+- **에이전트 훈련소**(`seed-bundles/agent-training-camp/`): 새로 만들어진
+  에이전트가 실전 투입되기 전, 3단계 합법 지식 파이프라인(흡수→실무적
+  합성→적재)으로 `memory/`(특히 `<JOB>.md`, `DECISIONS.md`)를 미리 채우고,
+  마지막에 직무 맞춤 졸업 시험으로 실전 투입 가능 여부를 판정한다. 그래프가
+  아니라 **`memory/`를 채운다** — 코드형(그래프 강화) 번들이면 이 지식을
+  seed 그래프 노드로도 승격할 수 있다(부록 A).
+- **에이전트 기술 전문가**(`seed-bundles/agent-tech-specialist/`): 특정
+  단계를 맡지 않고 파이프라인 전체를 지원한다 — 기술 동향을 추적해 팀
+  번들이 전제하는 기술이 낡으면 `보수 교육 제안서`(diff 형태의 규칙 업데이트
+  후보)를 만든다. 다른 번들 파일을 직접 고치지 않고 제안서로만 만든다.
+
 ## 0. 리서치 (매일, 상시)
 
 - **목적**: 지금 인기를 얻는 SaaS/워크플로 하나를 골라 기능을 분해·분석한다.
@@ -41,20 +70,30 @@ research → design → implement → verify → publish → (1로 돌아가 반
 
 ## 2. Implement (구현)
 
-- **목적**: design.md를 실제 코드·문서로 옮긴다. 결정론 로직(`app/core`)을
-  먼저 만들고, CLI(`app/cli.ts`)/MCP(`app/mcp/`) 두 어댑터가 그 core를
-  공유하게 한다. `worker/agent.md`, `worker/knowledge/`(seed 노드),
-  `worker/skills/`, `bundle.json`, `docs/*`를 채운다.
+- **목적**: design.md를 실제 문서·(선택)코드로 옮긴다. 기본은
+  순수-마크마운 번들: `AGENTS.md` 진입점, `worker/agent.md`(직무 지침 +
+  메모리 사용 원칙), `memory/{MEMORY,USER,PROJECT,DECISIONS,<JOB>}.md`,
+  `worker/skills/`, `bundle.json`(+`version`), `docs/*`를 채운다.
+  결정론 도구가 꼭 필요한 과제만 `app/core`를 만들고 CLI(`app/cli.ts`)/
+  MCP(`app/mcp/`) 두 어댑터가 그 core를 공유하게 한다(선택 강화).
 - **입력**: 통과된 design.md, `agent-factory/template/`(스켈레톤),
-  `seed-bundles/web-copy-analyzer/`(레퍼런스 코드).
-- **게이트**: (a) core에 없는 로직이 어댑터에 새로 생기지 않았는가, (b) 지식
-  그래프 seed가 검증 게이트(dangling 링크 0, self-loop/중복 없음, `graph.json`
-  동기화)를 통과하는가, (c) 자기학습 강령이 `agent.md` §5에 존재하는가, (d)
-  샘플 input과 **실제 실행으로 얻은** output이 있는가(날조 금지).
-- **담당**: `executor`(복잡한 작업은 Opus 라우팅). **파일 쓰기는 메인
-  스레드가 아니라 executor에게 위임해 비용을 메인 컨텍스트 밖에 둔다.**
-  executor를 순차로 여러 번 spawn할 때는 이전 세션이 남긴 tsserver 프로세스가
-  누적되지 않도록 정리한 뒤 다음 spawn을 시작한다.
+  순수-마크다운 레퍼런스는 `seed-bundles/youtube-content-writer/`, 코드형
+  레퍼런스는 `seed-bundles/web-copy-analyzer/`. 신임 에이전트의 지식
+  선적재가 필요하면 `seed-bundles/agent-training-camp/`(3단계 합법
+  지식 파이프라인)로 `memory/`를 채운다.
+- **게이트**: (a) `AGENTS.md`가 로드 순서·도구 스코프·범위 밖 규칙을
+  갖췄는가, (b) `memory/` 표준 파일이 존재하고 `agent.md`에 학습 루프
+  규칙(업데이트 후보 제안·자동확정 금지)이 있는가, (c) (그래프 강화 시만)
+  지식 그래프 seed가 검증 게이트(dangling 링크 0, self-loop/중복 없음,
+  `graph.json` 동기화)를 통과하는가, (d) (코드형만) core에 없는 로직이
+  어댑터에 새로 생기지 않았는가, (e) 샘플 input과 **실제 실행으로 얻은**
+  output이 있는가(날조 금지).
+- **담당**: `executor`(복잡한 작업은 Opus 라우팅), 지식 선적재는
+  `agent-training-camp` 패턴, 기술 스택 선택은 `agent-tech-specialist`
+  자문. **파일 쓰기는 메인 스레드가 아니라 executor에게 위임해 비용을
+  메인 컨텍스트 밖에 둔다.** executor를 순차로 여러 번 spawn할 때는 이전
+  세션이 남긴 tsserver 프로세스가 누적되지 않도록 정리한 뒤 다음 spawn을
+  시작한다.
 
 ## 3. Verify (검증)
 
@@ -74,10 +113,12 @@ research → design → implement → verify → publish → (1로 돌아가 반
 
 - **목적**: 검증을 통과한 번들을 실제로 내놓는다.
 - **입력**: verify를 통과한 번들.
-- **게이트**: `scripts/build-release.py`로 zip 빌드 성공, GitHub Release
-  생성, `site/data.js` 카탈로그 등록. **npm publish/사이트 배포처럼 되돌리기
-  어려운 행위는 자동 실행하지 않고 사람이 최종 승인한다**(**사람 개입 지점
-  2**).
+- **게이트**: `bundle.json`의 `version`을 semver로 올렸는가(신규 번들은
+  `1.0.0`, 기존 번들의 다음 버전은 slug를 고정한 채 patch/minor/major 규칙을
+  따름 — `bundle-standard.md` §5), `scripts/build-release.py`로 zip 빌드
+  성공, GitHub Release 생성, `site/data.js` 카탈로그 등록. **npm
+  publish/사이트 배포처럼 되돌리기 어려운 행위는 자동 실행하지 않고 사람이
+  최종 승인한다**(**사람 개입 지점 2**).
 - **담당**: 빌드는 executor/스크립트가 수행, 최종 배포 승인은 사람.
 
 ## 1로 돌아가 반복

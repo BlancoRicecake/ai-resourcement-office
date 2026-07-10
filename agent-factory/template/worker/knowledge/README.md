@@ -1,5 +1,9 @@
 # worker/knowledge/ — seed 지식 그래프 작성 가이드
 
+> **지식 그래프는 선택적 강화(코드형 번들만)다.** 순수-마크다운 번들은
+> `memory/`로 충분하며 이 폴더를 채우지 않아도 된다 —
+> `agent-factory/bundle-standard.md` v0.3 부록 A 참고.
+
 여기에 이 워커의 **검증된, 읽기 전용 큐레이션 지식**을 마크다운 노드로
 채운다. 자세한 설계 배경은 `agent-factory/knowledge-arch.md`를 먼저 읽는다.
 

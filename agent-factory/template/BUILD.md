@@ -1,5 +1,12 @@
 # BUILD.md — 엔진 코드는 여기 없다, 복사해서 시작한다
 
+> **지식 그래프는 선택적 강화(코드형 번들만)다.** 순수-마크다운 번들은
+> `memory/`로 충분하며, 이 문서가 다루는 `app/core`·성장 레이어·지식 그래프
+> 엔진은 결정론 도구가 꼭 필요한 코드형 번들에서만 가져다 쓴다 —
+> `agent-factory/bundle-standard.md` v0.3 부록 A 참고. 순수-마크다운
+> 번들이면 이 문서는 건너뛰고 `worker/agent.md` + `memory/` + `AGENTS.md`만
+> 채우면 된다.
+
 이 `template/`은 **린 스켈레톤**이다. 지식 그래프 엔진, 성장 레이어, 빌드
 도구는 여기에 중복 구현하지 않는다 — `seed-bundles/web-copy-analyzer/`가
 정본 구현(reference implementation)이므로, 새 번들을 만들 때는 그 폴더의

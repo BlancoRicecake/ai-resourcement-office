@@ -1,5 +1,6 @@
 {
   "slug": "<slug>",
+  "version": "1.0.0",
   "title": "<번들 제목>",
   "worker": "<워커 이름>",
   "category": "<카테고리>",
