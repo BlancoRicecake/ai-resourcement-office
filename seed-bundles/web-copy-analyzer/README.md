@@ -75,12 +75,19 @@ node app/dist/cli.js parse-sections '{"html":"<html>...</html>"}'
 ## 구성
 
 ```txt
+AGENTS.md       폴더 진입점 — 로드 순서·도구 스코프·범위 밖 규칙
+memory/         학습 루프 (MEMORY/USER/PROJECT/DECISIONS/COPY-PATTERNS, 순수 마크다운 기반)
 app/            결정론 코어(파싱/채점/prep) + MCP 서버 + CLI (dist/ 프리빌드)
-worker/         agent.md, knowledge/, skills/, harness/, mcp/
+worker/         agent.md, knowledge/(그래프 강화), skills/, harness/, mcp/
 plugin/         Claude Code 플러그인 (named agent + MCP 번들)
 examples/       샘플 페르소나·랜딩페이지 HTML + 실제 실행 결과
 docs/           빌드 로그, 비용/보안/한계 가이드
 ```
+
+학습 루프는 두 표현으로 하나다: `memory/`는 어떤 코딩 에이전트든 런타임 0으로 읽는
+**기반**(완료 후 `메모리 업데이트 후보` 제안, 자동 확정 금지)이고, `worker/knowledge/`
+지식 그래프 + 성장 레이어(`~/.web-copy-analyzer/`)는 CLI/MCP로 자동화하는 **런타임 강화**다.
+자세한 로드 순서는 `AGENTS.md` 참고.
 
 ## 안전·한계
 
