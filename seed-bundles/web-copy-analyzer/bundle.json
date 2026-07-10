@@ -1,6 +1,6 @@
 {
   "slug": "web-copy-analyzer",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "title": "웹 카피 분석기",
   "worker": "카피라이팅 분석가",
   "category": "카피분석",
@@ -10,10 +10,10 @@
   "estimatedCost": "$0 (결정론 툴은 무료 — 진단·리라이트 판단에 쓰는 호스트 모델의 토큰 비용은 별도)",
   "includes": [
     "폴더 진입점 (AGENTS.md)",
-    "학습 루프 메모리 (memory/ — MEMORY/USER/PROJECT/DECISIONS/COPY-PATTERNS)",
-    "미리 빌드된 CLI + MCP 서버 (dist/cli.js, dist/mcp.js)",
+    "학습 루프 메모리 (memory/ — MEMORY/USER/PROJECT/DECISIONS/PERSONAS/COPY-PATTERNS)",
+    "지식 노드 (memory/knowledge/ — 12개 노드 + INDEX, 엔진 없는 그래프)",
+    "미리 빌드된 CLI + MCP 서버 (dist/cli.js, dist/mcp.js — 결정론 분석 도구 6종)",
     "에이전트 지시문 (worker/agent.md)",
-    "자기학습 지식 그래프 강화 (worker/knowledge/, 12개 시드 노드)",
     "skills (worker/skills/)",
     "harness 가이드 (worker/harness/)",
     "Claude Code 플러그인 (plugin/)",

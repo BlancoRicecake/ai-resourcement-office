@@ -5,23 +5,17 @@
   "inputs": ["사이트 URL 또는 HTML", "타깃 유저 페르소나(직무/목표/불안/구매 트리거/어휘)"],
   "outputs": ["섹션별 반응 진단(above-the-fold 포함)", "before/after 리라이트 보고서", "보존 검증 결과(후기·증언 원문 보존)"],
   "tools": [
-    "save_persona",
-    "list_personas",
-    "get_persona",
-    "delete_persona",
     "fetch_page",
     "parse_sections",
     "readability_scorecard",
     "diagnose_section",
     "rewrite_section",
-    "compare_report",
-    "remember",
-    "save_workflow"
+    "compare_report"
   ],
   "skills": ["persona-driven copy diagnosis", "above-the-fold heuristics", "clarity/trust/relevance/CTA attribution", "voice-preserving rewrite", "testimonial preservation"],
   "limitations": [
     "문구와 페이지 구성만 판단한다 — 시각 디자인, 인터랙션 UX, 실측 전환/행동 데이터는 다루지 않는다.",
-    "저장된 타깃 페르소나 없이는 진단을 시작하지 않는다(추측 페르소나 금지).",
+    "타깃 페르소나 없이는 진단을 시작하지 않는다(memory/PERSONAS.md에서 선택/인터뷰, 추측 페르소나 금지).",
     "고객 후기·증언 원문은 절대 다시 쓰지 않는다.",
     "없는 수치·전환율·법적/규제 주장을 창작하지 않는다."
   ]

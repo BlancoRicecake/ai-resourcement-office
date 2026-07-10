@@ -29,7 +29,7 @@ test("loadCustomTools: registers a well-formed custom tool script", async () => 
   assert.equal(result.failures.length, 0);
   assert.equal(result.loaded.length, 1);
   assert.equal(result.loaded[0]?.definition.name, "custom_ping");
-  assert.deepEqual(await result.loaded[0]?.execute({}, {} as never), { pong: true });
+  assert.deepEqual(await result.loaded[0]?.execute({}), { pong: true });
 });
 
 test("문제표 #15: a broken custom-tool script is skipped with a load-failure message, doesn't crash the loader", async () => {

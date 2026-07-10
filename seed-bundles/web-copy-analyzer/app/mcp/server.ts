@@ -1,12 +1,15 @@
 /**
- * MCP stdio server (design.md §산출물 3층 ②, implement-skill's three
- * requirements): exposes the 12 tools, emits the AGENTS.md+growth-layer
- * merged persona as both `instructions` (initialize response) and the
- * `persona://merged` resource, and loads custom-tools/.
+ * MCP stdio server: exposes the 6 deterministic analysis tools, emits the
+ * bundled worker/agent.md as the `instructions` (initialize response), and
+ * loads custom-tools/.
  *
  * This module is transport-agnostic (createServer returns an unconnected
  * Server so tests can wire it to an InMemoryTransport); mcp/bin.ts is the
  * actual stdio process entrypoint.
+ *
+ * There is no growth/persona store and no persona://merged resource: persona
+ * is an explicit tool input, and self-learning lives in the bundle's memory/
+ * files (read by the host agent), not in a runtime store.
  */
 
 import { fileURLToPath } from "node:url";
@@ -15,14 +18,11 @@ import { existsSync } from "node:fs";
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import {
   CallToolRequestSchema,
-  ListResourcesRequestSchema,
   ListToolsRequestSchema,
-  ReadResourceRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
-import { GrowthStore, KnowledgeStore } from "../growth/index.js";
-import { ALL_TOOL_HANDLERS, KNOWLEDGE_TOOL_HANDLERS, type ToolHandler } from "./tools.js";
+import { ALL_TOOL_HANDLERS, type ToolHandler } from "./tools.js";
 import { loadCustomTools } from "./custom-tools.js";
-import { buildMergedInstructions, MERGED_PERSONA_RESOURCE_URI } from "./instructions.js";
+import { loadAgentsMd } from "./instructions.js";
 
 const MODULE_DIR = path.dirname(fileURLToPath(import.meta.url));
 
@@ -50,8 +50,6 @@ export function defaultCustomToolsDir(): string {
 }
 
 export interface CreateServerOptions {
-  /** Growth-layer root override (tests only — production uses the ~/.web-copy-analyzer/ default). */
-  rootDir?: string;
   agentsMdPath?: string;
   customToolsDir?: string;
   /** Injected for deterministic tests; defaults to console.error (MCP stdio reserves stdout for protocol messages). */
@@ -60,8 +58,6 @@ export interface CreateServerOptions {
 
 export interface CreatedServer {
   server: Server;
-  growth: GrowthStore;
-  knowledge: KnowledgeStore;
   handlers: readonly ToolHandler[];
   loadedCustomToolNames: string[];
   customToolFailures: string[];
@@ -71,31 +67,25 @@ export interface CreatedServer {
 
 export async function createServer(opts: CreateServerOptions = {}): Promise<CreatedServer> {
   const log = opts.log ?? ((msg: string) => console.error(msg));
-  const growth = new GrowthStore({ rootDir: opts.rootDir });
-  const knowledge = new KnowledgeStore({ rootDir: opts.rootDir });
   const agentsMdPath = opts.agentsMdPath ?? defaultAgentsMdPath();
   const customToolsDir = opts.customToolsDir ?? defaultCustomToolsDir();
 
-  const instructionsText = await buildMergedInstructions(agentsMdPath, growth);
-  // 문제표 #20: surface any session-only degradation (e.g. an unreadable
-  // voice.md at startup) on stderr — stdout is reserved for MCP protocol
-  // messages, and this is the only channel available before a client connects.
-  for (const warning of growth.getSessionOnlyWarnings()) log(warning);
+  const instructionsText = await loadAgentsMd(agentsMdPath);
 
   const { loaded: customHandlers, failures } = await loadCustomTools(customToolsDir);
-  for (const failure of failures) log(failure); // 문제표 #15
+  for (const failure of failures) log(failure);
   log(
     customHandlers.length > 0
       ? `custom-tools 로드됨: ${customHandlers.map((h) => h.definition.name).join(", ")}`
       : "custom-tools 로드됨: 없음"
   );
 
-  const handlers: ToolHandler[] = [...ALL_TOOL_HANDLERS, ...KNOWLEDGE_TOOL_HANDLERS, ...customHandlers];
+  const handlers: ToolHandler[] = [...ALL_TOOL_HANDLERS, ...customHandlers];
   const handlerByName = new Map(handlers.map((h) => [h.definition.name, h] as const));
 
   const server = new Server(
-    { name: "web-copy-analyzer", version: "0.1.0" },
-    { capabilities: { tools: {}, resources: {} }, instructions: instructionsText }
+    { name: "web-copy-analyzer", version: "2.0.0" },
+    { capabilities: { tools: {} }, instructions: instructionsText }
   );
 
   server.setRequestHandler(ListToolsRequestSchema, async () => ({
@@ -112,38 +102,15 @@ export async function createServer(opts: CreateServerOptions = {}): Promise<Crea
       return { content: [{ type: "text", text: `unknown tool: ${request.params.name}` }], isError: true };
     }
     try {
-      const result = await handler.execute((request.params.arguments ?? {}) as Record<string, unknown>, { growth, knowledge });
+      const result = await handler.execute((request.params.arguments ?? {}) as Record<string, unknown>);
       return { content: [{ type: "text", text: JSON.stringify(result) }] };
     } catch (err) {
       return { content: [{ type: "text", text: (err as Error).message }], isError: true };
     }
   });
 
-  server.setRequestHandler(ListResourcesRequestSchema, async () => ({
-    resources: [
-      {
-        uri: MERGED_PERSONA_RESOURCE_URI,
-        name: "merged-persona",
-        description: "AGENTS.md merged with the user growth layer (user-first, design.md §6-2)",
-        mimeType: "text/markdown",
-      },
-    ],
-  }));
-
-  server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
-    if (request.params.uri !== MERGED_PERSONA_RESOURCE_URI) {
-      throw new Error(`unknown resource: ${request.params.uri}`);
-    }
-    // Rebuilt live (not the startup snapshot) so a resource read after a
-    // remember()/save_persona() call in the same session reflects it.
-    const text = await buildMergedInstructions(agentsMdPath, growth);
-    return { contents: [{ uri: MERGED_PERSONA_RESOURCE_URI, mimeType: "text/markdown", text }] };
-  });
-
   return {
     server,
-    growth,
-    knowledge,
     handlers,
     loadedCustomToolNames: customHandlers.map((h) => h.definition.name),
     customToolFailures: failures,

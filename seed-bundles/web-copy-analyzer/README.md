@@ -13,7 +13,7 @@
 ## 모델 불문 설치형
 
 이 번들은 특정 LLM 제공자에 종속되지 않습니다. 결정론 로직(fetch·파싱·채점·
-저장·비교)은 전부 로컬 Node.js 연산이고, **판단(진단·리라이트·페르소나 합성)은
+비교)은 전부 로컬 Node.js 연산이고, **판단(진단·리라이트·페르소나 합성)은
 당신이 쓰는 코딩 에이전트/MCP 클라이언트의 호스트 모델**이 맡습니다. API 키가
 필요 없습니다 — 이미 쓰고 있는 Claude/GPT/Gemini 등 코딩 에이전트가 그대로
 분석가 역할을 합니다.
@@ -32,11 +32,11 @@ node app/dist/cli.js parse-sections '{"html":"<html>...</html>"}'
 ### 2. 코딩 에이전트가 worker/agent.md를 읽고 CLI를 도구로 구동 (Codex/Manus 등)
 
 `worker/agent.md`를 시스템 지시문(AGENTS.md/CLAUDE.md)으로 등록하면, 에이전트가
-`node app/dist/cli.js <command> '<json>'` 형태로 서브커맨드를 호출합니다 —
-`fetch-page`, `parse-sections`, `readability-scorecard`, `diagnose-section`,
-`rewrite-section`, `compare-report`, `persona save|list|get|delete`,
-`remember`, `save-workflow`, `search-knowledge`, `knowledge-neighbors`,
-`learn-knowledge`.
+`node app/dist/cli.js <command> '<json>'` 형태로 결정론 분석 도구 6종을
+호출합니다 — `fetch-page`, `parse-sections`, `readability-scorecard`,
+`diagnose-section`, `rewrite-section`, `compare-report`. 진단·리라이트에는
+`memory/PERSONAS.md`에서 고른 페르소나를 `persona` 인자로 함께 넘깁니다(예:
+`diagnose-section '{"parsed_page":…,"persona":{"name":…,"attributes":{…}}}'`).
 
 ### 3. MCP 서버로 등록 (Claude Desktop 등)
 
@@ -62,13 +62,11 @@ node app/dist/cli.js parse-sections '{"html":"<html>...</html>"}'
 ## AI Worker
 
 - `worker/agent.md` — 카피라이팅 분석가의 정체성·휴리스틱(H1~H12)·작업 흐름·
-  주의 케이스를 담은 단일 소스 지시문. MCP `instructions`/named agent 모두 이
-  문서로부터 나옵니다.
-- `worker/knowledge/` — 자기학습 지식 그래프. 시드 12개 노드(`graph.json`)는
-  읽기 전용 검증 지식이고, 런타임에 확인한 일반화 가능한 지식은
-  `~/.web-copy-analyzer/knowledge/`(성장 레이어)에 누적되어 재시작 후에도
-  살아남습니다. `search_knowledge`/`knowledge_neighbors`는 이 병합본을
-  조회합니다.
+  주의 케이스·메모리 사용 원칙을 담은 단일 소스 지시문. MCP `instructions`/named
+  agent 모두 이 문서로부터 나옵니다.
+- `memory/knowledge/` — 엔진 없는 지식 그래프. 12개 노드(`.md`, `[[위키링크]]`
+  엣지)와 `INDEX.md`로 구성됩니다. 세션 시작 시 `INDEX.md`만 읽고, 필요한 노드만
+  열어 링크를 따라 확장합니다(검색 엔진·자동 조회 코드 없음 — 데이터만).
 - `worker/skills/` — 페르소나 인터뷰, 전체 진단 루프 같은 절차 정의.
 - `worker/harness/` — 하네스별(플레인 CLI/MCP/플러그인) 구동 가이드.
 
@@ -76,26 +74,29 @@ node app/dist/cli.js parse-sections '{"html":"<html>...</html>"}'
 
 ```txt
 AGENTS.md       폴더 진입점 — 로드 순서·도구 스코프·범위 밖 규칙
-memory/         학습 루프 (MEMORY/USER/PROJECT/DECISIONS/COPY-PATTERNS, 순수 마크다운 기반)
+memory/         학습 루프 (MEMORY/USER/PROJECT/DECISIONS/PERSONAS/COPY-PATTERNS)
+memory/knowledge/  지식 노드 (12개 + INDEX, 엔진 없는 그래프)
 app/            결정론 코어(파싱/채점/prep) + MCP 서버 + CLI (dist/ 프리빌드)
-worker/         agent.md, knowledge/(그래프 강화), skills/, harness/, mcp/
+worker/         agent.md, skills/, harness/, mcp/
 plugin/         Claude Code 플러그인 (named agent + MCP 번들)
 examples/       샘플 페르소나·랜딩페이지 HTML + 실제 실행 결과
 docs/           빌드 로그, 비용/보안/한계 가이드
 ```
 
-학습 루프는 두 표현으로 하나다: `memory/`는 어떤 코딩 에이전트든 런타임 0으로 읽는
-**기반**(완료 후 `메모리 업데이트 후보` 제안, 자동 확정 금지)이고, `worker/knowledge/`
-지식 그래프 + 성장 레이어(`~/.web-copy-analyzer/`)는 CLI/MCP로 자동화하는 **런타임 강화**다.
-자세한 로드 순서는 `AGENTS.md` 참고.
+학습 루프는 **표준 `memory/` 하나**다: 어떤 코딩 에이전트든 런타임 0으로 읽고,
+완료 후 배운 점을 `메모리 업데이트 후보`로 제안한다(자동 확정 금지). 지식은
+`memory/knowledge/`에 엔진 없는 노드(데이터)로만 담기며, 세션 시작 시 `INDEX.md`만
+읽고 필요한 노드만 연다. 별도 성장 레이어·런타임 저장소는 없다. 자세한 로드 순서는
+`AGENTS.md` 참고.
 
 ## 안전·한계
 
 - `fetch_page`는 SSRF 가드로 사설망·루프백·메타데이터 주소를 기본 차단합니다.
 - 진단·리라이트는 로컬에서만 처리되며, 미공개 페이지·매출 수치를 외부로
   보내지 않습니다.
-- `remember`/`learn_knowledge`는 PII·미공개 매출 등 민감 정보를 자동 거부합니다.
-- 저장된 타깃 페르소나 없이는 진단을 시작하지 않습니다. 후기·증언 원문은
+- `memory/`에는 PII·미공개 매출/전환 실측치·원문 발췌를 기록하지 않습니다
+  (agent.md ④ 위생 규칙 — 행동 규칙으로 강제).
+- 타깃 페르소나 없이는 진단을 시작하지 않습니다. 후기·증언 원문은
   절대 다시 쓰지 않습니다.
 - 프렙 툴(`diagnose_section`/`rewrite_section`)은 LLM을 호출하지 않고 판단
   재료(payload)만 반환합니다 — 실제 판단 품질은 호스트 모델에 달려 있습니다.

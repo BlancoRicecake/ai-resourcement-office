@@ -1,9 +1,7 @@
 # DECISIONS
 
 사용자가 승인·보류·거절한 리라이트 방향과 반복 적용할 기준을 저장하는 파일이다.
-
-> 런타임 경로에서는 성장 레이어의 `decisions.log`(`remember` kind: `decision`/`persona_pref`)가
-> 이 기록을 자동 누적한다. 순수 폴더 읽기 경로에서는 여기에 `DECISIONS.md 후보`로 제안해 반영한다.
+새 결정은 여기에 `DECISIONS.md 후보`로 제안해 반영한다(자동 확정 금지).
 
 ## 결정 기록
 

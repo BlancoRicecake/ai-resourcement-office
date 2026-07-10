@@ -16,26 +16,17 @@ const ROOT = path.dirname(APP_DIR); // bundle root
 const AGENT_MD_PATH = path.join(ROOT, "worker", "agent.md");
 const OUT_PATH = path.join(ROOT, "plugin", "agents", "web-copy-analyzer.md");
 
-// The 12 MCP wire tool names (worker/mcp/tools.ts), namespaced per
+// The 6 deterministic MCP wire tool names (app/mcp/tools.ts), namespaced per
 // Claude Code's mcp__<server-name>__<tool-name> convention. <server-name>
 // must match the mcpServers key registered in plugin/.claude-plugin/plugin.json.
 const MCP_SERVER_NAME = "web-copy-analyzer";
 const WIRE_TOOL_NAMES = [
-  "save_persona",
-  "list_personas",
-  "get_persona",
-  "delete_persona",
   "fetch_page",
   "parse_sections",
   "readability_scorecard",
   "diagnose_section",
   "rewrite_section",
   "compare_report",
-  "remember",
-  "save_workflow",
-  "search_knowledge",
-  "knowledge_neighbors",
-  "learn_knowledge",
 ];
 
 function main() {

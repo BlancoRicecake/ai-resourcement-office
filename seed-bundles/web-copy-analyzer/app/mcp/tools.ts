@@ -1,18 +1,21 @@
 /**
- * The 12 MCP tool handlers (design.md §2-3) — thin wiring only (둘째 원칙: no
- * new business logic here that doesn't already live in core/ or growth/).
- * Each handler: (1) applies schema defaults + validates the wire-format
- * input, (2) translates snake_case wire args into the camelCase shape the
- * core/growth function expects, (3) calls that function, (4) translates the
- * result back to snake_case for the wire response.
+ * The 6 deterministic MCP tool handlers — thin wiring only (no business logic
+ * here that doesn't already live in core/). Each handler: (1) applies schema
+ * defaults + validates the wire-format input, (2) translates snake_case wire
+ * args into the camelCase shape the core function expects, (3) calls that
+ * function, (4) translates the result back to snake_case for the wire
+ * response.
+ *
+ * There is NO growth/persona store: diagnose_section / rewrite_section take a
+ * persona object inline and normalize it with the pure core `definePersona`.
  */
 
 import {
   ALL_TOOL_DEFINITIONS,
-  KNOWLEDGE_TOOL_DEFINITIONS,
   buildDiagnosisContext,
   buildRewriteContext,
   compareReport,
+  definePersona,
   parseSections,
   readabilityScorecard,
   type ToolDefinition,
@@ -24,25 +27,32 @@ import type {
   ParseSectionsInput,
   ParsedPage,
   Persona,
+  PersonaDraft,
   RewriteContextInput,
   Section,
 } from "../core/types.js";
-import type { GrowthStore, KnowledgeStore } from "../growth/index.js";
 import { applyDefaults, validateToolInput } from "./validate.js";
 import { toCamelDeep, toSnakeDeep } from "./wire.js";
 
-export interface ToolContext {
-  growth: GrowthStore;
-  knowledge: KnowledgeStore;
-}
-
 export interface ToolHandler {
   definition: ToolDefinition;
-  execute(wireArgs: Record<string, unknown>, ctx: ToolContext): Promise<unknown>;
+  execute(wireArgs: Record<string, unknown>): Promise<unknown>;
+}
+
+/** Wire persona input (examples/input/persona.json shape). */
+interface PersonaWireInput {
+  name: string;
+  attributes: {
+    role: string;
+    goals?: string[];
+    pains: string[];
+    vocabulary: string[];
+    buying_triggers?: string[];
+  };
 }
 
 function byName(name: string): ToolDefinition {
-  const def = [...ALL_TOOL_DEFINITIONS, ...KNOWLEDGE_TOOL_DEFINITIONS].find((d) => d.name === name);
+  const def = ALL_TOOL_DEFINITIONS.find((d) => d.name === name);
   if (!def) throw new Error(`no tool definition for '${name}' (core/tool-schemas.ts drifted from mcp/tools.ts)`);
   return def;
 }
@@ -53,61 +63,21 @@ function prepareInput(def: ToolDefinition, rawArgs: unknown): Record<string, unk
   return withDefaults as Record<string, unknown>;
 }
 
-// ---------------------------------------------------------------------------
-// persona management (growth-layer)
-// ---------------------------------------------------------------------------
-
-const savePersonaTool: ToolHandler = {
-  definition: byName("save_persona"),
-  async execute(wireArgs, ctx) {
-    const args = prepareInput(this.definition, wireArgs) as {
-      name: string;
-      attributes: { role: string; goals?: string[]; pains: string[]; vocabulary: string[]; buying_triggers?: string[] };
-      overwrite?: boolean;
-    };
-    const result = await ctx.growth.savePersona({
-      draft: {
-        name: args.name,
-        role: args.attributes.role,
-        goals: args.attributes.goals,
-        pains: args.attributes.pains,
-        vocabulary: args.attributes.vocabulary,
-        buyingTriggers: args.attributes.buying_triggers,
-      },
-      overwrite: args.overwrite,
-    });
-    return toSnakeDeep(result);
-  },
-};
-
-const listPersonasTool: ToolHandler = {
-  definition: byName("list_personas"),
-  async execute(_wireArgs, ctx) {
-    const personas = await ctx.growth.listPersonas();
-    return toSnakeDeep({ personas });
-  },
-};
-
-const getPersonaTool: ToolHandler = {
-  definition: byName("get_persona"),
-  async execute(wireArgs, ctx) {
-    const args = prepareInput(this.definition, wireArgs) as { id: string };
-    const persona = await ctx.growth.getPersona(args.id);
-    return toSnakeDeep(persona);
-  },
-};
-
-const deletePersonaTool: ToolHandler = {
-  definition: byName("delete_persona"),
-  async execute(wireArgs, ctx) {
-    const args = prepareInput(this.definition, wireArgs) as { id: string };
-    const result = await ctx.growth.deletePersona(args.id);
-    return toSnakeDeep(result);
-  },
-};
+/** Normalize an explicit persona wire object into a validated core Persona. */
+function resolvePersona(input: PersonaWireInput): Persona {
+  const draft: PersonaDraft = {
+    name: input.name,
+    role: input.attributes.role,
+    goals: input.attributes.goals,
+    pains: input.attributes.pains,
+    vocabulary: input.attributes.vocabulary,
+    buyingTriggers: input.attributes.buying_triggers,
+  };
+  return definePersona(draft);
+}
 
 // ---------------------------------------------------------------------------
-// core prep/deterministic tools
+// deterministic analysis tools
 // ---------------------------------------------------------------------------
 
 const fetchPageTool: ToolHandler = {
@@ -140,23 +110,16 @@ const readabilityScorecardTool: ToolHandler = {
   },
 };
 
-async function resolvePersona(ctx: ToolContext, personaId: string): Promise<Persona> {
-  // 문제표 #8/#9 are surfaced as PersonaNotFoundError/PersonaCorruptError,
-  // which the server's tools/call handler turns into an MCP tool error
-  // result carrying the exact user-facing message from growth/types.ts.
-  return ctx.growth.getPersona(personaId);
-}
-
 const diagnoseSectionTool: ToolHandler = {
   definition: byName("diagnose_section"),
-  async execute(wireArgs, ctx) {
+  async execute(wireArgs) {
     const args = prepareInput(this.definition, wireArgs) as {
       parsed_page: unknown;
       section_id?: string;
-      persona_id: string;
+      persona: PersonaWireInput;
       scope?: "section" | "above_fold";
     };
-    const persona = await resolvePersona(ctx, args.persona_id);
+    const persona = resolvePersona(args.persona);
     const input: DiagnosisContextInput = {
       parsedPage: toCamelDeep<ParsedPage>(args.parsed_page),
       sectionId: args.section_id,
@@ -170,9 +133,13 @@ const diagnoseSectionTool: ToolHandler = {
 
 const rewriteSectionTool: ToolHandler = {
   definition: byName("rewrite_section"),
-  async execute(wireArgs, ctx) {
-    const args = prepareInput(this.definition, wireArgs) as { parsed_page: unknown; section_id: string; persona_id: string };
-    const persona = await resolvePersona(ctx, args.persona_id);
+  async execute(wireArgs) {
+    const args = prepareInput(this.definition, wireArgs) as {
+      parsed_page: unknown;
+      section_id: string;
+      persona: PersonaWireInput;
+    };
+    const persona = resolvePersona(args.persona);
     const input: RewriteContextInput = {
       parsedPage: toCamelDeep<ParsedPage>(args.parsed_page),
       sectionId: args.section_id,
@@ -199,92 +166,14 @@ const compareReportTool: ToolHandler = {
   },
 };
 
-// ---------------------------------------------------------------------------
-// growth tools
-// ---------------------------------------------------------------------------
-
-const rememberTool: ToolHandler = {
-  definition: byName("remember"),
-  async execute(wireArgs, ctx) {
-    const args = prepareInput(this.definition, wireArgs) as { kind: string; content: string; context?: string };
-    const result = await ctx.growth.remember({ kind: args.kind as never, content: args.content, context: args.context });
-    return toSnakeDeep(result);
-  },
-};
-
-const saveWorkflowTool: ToolHandler = {
-  definition: byName("save_workflow"),
-  async execute(wireArgs, ctx) {
-    const args = prepareInput(this.definition, wireArgs) as { name: string; steps: string[] };
-    const result = await ctx.growth.saveWorkflow({ name: args.name, steps: args.steps });
-    return toSnakeDeep(result);
-  },
-};
-
-// ---------------------------------------------------------------------------
-// knowledge graph tools (search_knowledge / knowledge_neighbors / learn_knowledge)
-// ---------------------------------------------------------------------------
-
-const searchKnowledgeTool: ToolHandler = {
-  definition: byName("search_knowledge"),
-  async execute(wireArgs, ctx) {
-    const args = prepareInput(this.definition, wireArgs) as { query: string; max_results?: number };
-    const results = await ctx.knowledge.searchKnowledge(args.query, args.max_results);
-    return toSnakeDeep({ results });
-  },
-};
-
-const knowledgeNeighborsTool: ToolHandler = {
-  definition: byName("knowledge_neighbors"),
-  async execute(wireArgs, ctx) {
-    const args = prepareInput(this.definition, wireArgs) as { node_id: string; depth?: number };
-    const result = await ctx.knowledge.knowledgeNeighbors(args.node_id, args.depth);
-    return toSnakeDeep(result);
-  },
-};
-
-const learnKnowledgeTool: ToolHandler = {
-  definition: byName("learn_knowledge"),
-  async execute(wireArgs, ctx) {
-    const args = prepareInput(this.definition, wireArgs) as {
-      title: string;
-      body: string;
-      tags?: string[];
-      links?: string[];
-      evidence?: string[];
-    };
-    const result = await ctx.knowledge.learnKnowledge({
-      title: args.title,
-      body: args.body,
-      tags: args.tags,
-      links: args.links,
-      evidence: args.evidence,
-    });
-    return toSnakeDeep(result);
-  },
-};
-
-/** The 3 additive knowledge-graph handlers (beyond design.md §2-3's 12). */
-export const KNOWLEDGE_TOOL_HANDLERS: readonly ToolHandler[] = [
-  searchKnowledgeTool,
-  knowledgeNeighborsTool,
-  learnKnowledgeTool,
-];
-
-/** All 12 tools, in the same order as design.md §2-3 / core/tool-schemas.ts ALL_TOOL_DEFINITIONS. */
+/** All 6 deterministic tools, in the same order as core/tool-schemas.ts ALL_TOOL_DEFINITIONS. */
 export const ALL_TOOL_HANDLERS: readonly ToolHandler[] = [
-  savePersonaTool,
-  listPersonasTool,
-  getPersonaTool,
-  deletePersonaTool,
   fetchPageTool,
   parseSectionsTool,
   readabilityScorecardTool,
   diagnoseSectionTool,
   rewriteSectionTool,
   compareReportTool,
-  rememberTool,
-  saveWorkflowTool,
 ];
 
 export type { Section };

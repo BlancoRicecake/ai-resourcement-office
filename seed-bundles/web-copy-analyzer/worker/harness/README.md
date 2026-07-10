@@ -37,14 +37,15 @@ node dist/cli.js parse-sections '{"html":"<html>...</html>"}'
    | `diagnose-section` | `diagnose_section` |
    | `rewrite-section` | `rewrite_section` |
    | `compare-report` | `compare_report` |
-   | `persona save\|list\|get\|delete` | `save_persona`/`list_personas`/`get_persona`/`delete_persona` |
-   | `remember` | `remember` |
-   | `save-workflow` | `save_workflow` |
+
+   `diagnose-section`/`rewrite-section`에는 `memory/PERSONAS.md`에서 고른 페르소나를
+   `persona` 인자(`{ name, attributes: { role, pains, vocabulary, … } }`)로 함께
+   넘긴다. 별도 persona 저장소 커맨드는 없다.
 
 4. 예시 프롬프트:
 
-   > 이 URL(https://example.com)의 랜딩페이지 카피를, 저장된 "부트스트랩 창업자"
-   > 페르소나 기준으로 진단해줘.
+   > 이 URL(https://example.com)의 랜딩페이지 카피를, `memory/PERSONAS.md`의
+   > "부트스트랩 창업자" 페르소나 기준으로 진단해줘.
 
    에이전트는 `worker/agent.md`의 ③ 작업 흐름을 따라 `fetch-page` →
    `parse-sections` → `readability-scorecard` → `diagnose-section` → …
@@ -59,7 +60,7 @@ node dist/cli.js parse-sections '{"html":"<html>...</html>"}'
 
 ## 권한 원칙
 
-- 워커에게 필요한 것은 `node` 실행 권한과, 페르소나/기억을 저장할
-  `~/.web-copy-analyzer/` 읽기/쓰기 권한뿐이다.
+- 워커에게 필요한 것은 `node` 실행 권한과 이 번들 폴더의 `memory/` 읽기/쓰기
+  권한뿐이다(홈 디렉터리 저장소·상태 키 없음).
 - `fetch-page`가 외부 URL에 접근한다(SSRF 가드로 사설/로컬 주소는 기본 차단).
   그 외 네트워크 접근은 없다 — 진단·리라이트·비교는 전부 로컬 결정론 연산이다.

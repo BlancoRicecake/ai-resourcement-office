@@ -1,32 +1,38 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { applyDefaults, validateToolInput, ToolInputValidationError } from "../validate.js";
-import { FETCH_PAGE_TOOL, REMEMBER_TOOL, SAVE_PERSONA_TOOL } from "../../core/tool-schemas.js";
+import { COMPARE_REPORT_TOOL, DIAGNOSE_SECTION_TOOL, FETCH_PAGE_TOOL } from "../../core/tool-schemas.js";
+
+const VALID_PERSONA = {
+  name: "Sam",
+  attributes: { role: "founder", pains: ["no time"], vocabulary: ["MRR"] },
+};
 
 test("validateToolInput: rejects additionalProperties per §5", () => {
   assert.throws(
-    () => validateToolInput(REMEMBER_TOOL.inputSchema, { kind: "decision", content: "x", extra_field: 1 }),
+    () => validateToolInput(DIAGNOSE_SECTION_TOOL.inputSchema, { parsed_page: {}, persona: VALID_PERSONA, extra_field: 1 }),
     ToolInputValidationError
   );
 });
 
-test("validateToolInput: rejects content exceeding maxLength (core does not itself check this)", () => {
+test("validateToolInput: rejects a rewritten_text exceeding maxLength (core does not itself check this)", () => {
   assert.throws(
-    () => validateToolInput(REMEMBER_TOOL.inputSchema, { kind: "decision", content: "x".repeat(2001) }),
+    () =>
+      validateToolInput(COMPARE_REPORT_TOOL.inputSchema, {
+        before: {},
+        after: [{ section_id: "s1", rewritten_text: "x".repeat(20001) }],
+      }),
     ToolInputValidationError
   );
 });
 
 test("validateToolInput: rejects missing required fields", () => {
-  assert.throws(() => validateToolInput(SAVE_PERSONA_TOOL.inputSchema, { name: "x" }), ToolInputValidationError);
+  assert.throws(() => validateToolInput(DIAGNOSE_SECTION_TOOL.inputSchema, { parsed_page: {} }), ToolInputValidationError);
 });
 
-test("validateToolInput: accepts a well-formed save_persona input", () => {
+test("validateToolInput: accepts a well-formed diagnose_section input with an inline persona", () => {
   assert.doesNotThrow(() =>
-    validateToolInput(SAVE_PERSONA_TOOL.inputSchema, {
-      name: "Sam",
-      attributes: { role: "founder", pains: ["no time"], vocabulary: ["MRR"] },
-    })
+    validateToolInput(DIAGNOSE_SECTION_TOOL.inputSchema, { parsed_page: {}, persona: VALID_PERSONA })
   );
 });
 

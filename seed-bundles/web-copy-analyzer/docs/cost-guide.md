@@ -2,9 +2,10 @@
 
 ## 결정론 툴 — $0
 
-`fetch_page`/`parse_sections`/`readability_scorecard`/`compare_report`/persona
-관리/성장 레이어 저장은 전부 로컬 Node.js 연산이다. API 키가 없고, 어떤
-외부 LLM도 호출하지 않는다. 몇 번을 실행하든 비용은 0원이다.
+결정론 분석 도구 6종(`fetch_page`/`parse_sections`/`readability_scorecard`/
+`diagnose_section`/`rewrite_section`/`compare_report`)은 전부 로컬 Node.js
+연산이다. API 키가 없고, 어떤 외부 LLM도 호출하지 않는다. 몇 번을 실행하든
+비용은 0원이다.
 
 ## 판단은 호스트 모델 토큰 비용 — prep-tool 패턴
 

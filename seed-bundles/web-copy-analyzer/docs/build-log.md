@@ -26,27 +26,62 @@
   페르소나 없음·손상/보존 실패/이름 충돌 등)는 문장 안에 조건을 직접 서술하고,
   루브릭 R1~R7은 agent.md ③ 8단계에 그대로 인라인했다.
 
-## 지식 그래프 (두 뿌리)
+## 지식 노드 (엔진 없는 그래프)
 
-- **seed 뿌리**: `worker/knowledge/` — H1~H12 휴리스틱을 12개 마크다운 노드로
-  증류(`graph.json`은 `npm run gen:graph`로 노드 frontmatter에서 자동 생성).
-  읽기 전용, 번들 업데이트 시 덮임.
-- **learned 뿌리**: `~/.web-copy-analyzer/knowledge/` — 런타임에 `learn_knowledge`로
-  기록되는 일반화 가능한 도메인 지식. 업데이트에 영향받지 않음.
-- `search_knowledge`/`knowledge_neighbors`는 seed+learned 병합본을 조회한다.
+- `memory/knowledge/` — H1~H12 휴리스틱을 12개 마크다운 노드로 증류. 노드는
+  frontmatter(`id`·`title`·`tags`·`source`·`confidence`) + 본문 + `[[위키링크]]`
+  엣지로 구성되고, `INDEX.md`가 노드당 한 줄 색인을 담는다.
+- 검색 엔진·자동 조회 코드는 없다(데이터만이 표준, `knowledge-arch.md` 결정).
+  에이전트가 `INDEX.md`만 읽고 필요한 노드를 열어 `[[링크]]`를 따라간다 — 전부-로드
+  비용을 런타임 0으로 "지금 필요한 양"에 비례하게 만든다.
+- 런타임 학습분은 `memory/COPY-PATTERNS.md`(인박스)에 쌓였다가 일반화 가능한 교훈이
+  확인되면 `source: learned` 노드로 승격된다(agent.md ⑤).
 
-## 검증
+## 검증 (v2.0.0)
 
-- `npm test` — 155개 테스트 그린 (core/growth/mcp 전 계층: 파서·채점·prep
-  컨텍스트·persona·hygiene·knowledge-store·merge·MCP wire/validate/custom-tools).
-- `npm run build` — typecheck → 지식 그래프 생성 → esbuild 번들(cli.js/mcp.js)
-  → `plugin/agents/web-copy-analyzer.md` 생성(15개 MCP 툴 네임스페이스 확인).
+- `npm test` — 96개 테스트 그린 (core/mcp 계층: 파서·채점·prep 컨텍스트·persona·
+  compare·fetch + MCP wire/validate/custom-tools/server). growth·knowledge-engine
+  테스트는 해당 레이어 제거와 함께 삭제됨(v1의 155개에서 감소는 의도된 결과).
+- `npm run build` — typecheck → esbuild 번들(cli.js/mcp.js) →
+  `plugin/agents/web-copy-analyzer.md` 생성(6개 MCP 툴 네임스페이스 확인).
 - CLI 스모크: `node app/dist/cli.js parse-sections`/`readability-scorecard`/
-  `diagnose-section`을 실제 샘플 HTML에 실행해 `examples/output/` 생성(아래
-  참고) — 결정론 툴 출력이 진짜 CLI 실행 결과임을 확인.
+  `diagnose-section`(명시적 persona 입력)을 실제 샘플 HTML에 실행해
+  `examples/output/` 생성 — 결정론 툴 출력이 진짜 CLI 실행 결과임을 확인.
+
+## v2.0.0 재구성 (표준 이전 작업물 → 표준 준수)
+
+이 번들은 팀의 번들 표준(`agent-factory/bundle-standard.md` §2.5 지식 노드 컨벤션,
+`knowledge-arch.md`의 "그래프는 데이터만, 엔진 코드 없음" 결정)이 확정되기 **전에**
+만들어졌다. v2.0.0에서 표준에 완전히 맞췄다(breaking restructure — slug 고정, 런타임
+데이터 스키마 변경):
+
+- **지식 이동**: `worker/knowledge/*.md` 12개 노드를 `memory/knowledge/`로 이동하고
+  `INDEX.md`를 추가. `graph.json`과 `gen:graph` 스크립트 제거.
+- **엔진/성장 레이어 제거**: `app/core/knowledge.ts`, `app/growth/` 전체,
+  비결정론 도구 9종(`search_knowledge`·`knowledge_neighbors`·`learn_knowledge`·
+  `save_persona`·`list_personas`·`get_persona`·`delete_persona`·`remember`·
+  `save_workflow`) 삭제. 결정론 도구 6종만 유지(CLI/MCP).
+- **페르소나 명시적 입력**: `diagnose_section`/`rewrite_section`이 persona 저장소를
+  조회하지 않고 `persona` 객체를 인자로 받는다(`examples/input/persona.json` wire
+  형식). MCP `persona://merged` 리소스 제거, `instructions`는 `worker/agent.md`
+  원문만.
+- **학습 루프 표준화**: 성장 레이어의 역할을 표준 `memory/` 파일로 흡수 —
+  `memory/PERSONAS.md`(신규) 추가, 위생·업데이트 후보 규칙을 행동 규칙으로 존치.
+
+### v1 → v2 마이그레이션 노트
+
+v1을 실행하며 홈 디렉터리 성장 레이어(기본값 `~/.web-copy-analyzer/`)에 쌓인 런타임
+데이터가 있다면, 다음과 같이 이 번들의 `memory/` 파일로 옮긴다(v2는 그 경로를 더 이상
+읽지 않는다):
+
+- `~/.web-copy-analyzer/personas/` → `memory/PERSONAS.md`
+- `~/.web-copy-analyzer/voice.md`(브랜드 보이스·금지 표현) → `memory/USER.md`
+- `~/.web-copy-analyzer/decisions.log` → `memory/DECISIONS.md`
+- `~/.web-copy-analyzer/workflows/` → `worker/skills/` 또는 `memory/COPY-PATTERNS.md`
+- `~/.web-copy-analyzer/knowledge/`(learned 노드) → `memory/knowledge/`의 노드
+  (`source: learned` 유지)와 `INDEX.md` 한 줄 추가
 
 ## Next Improvements
 
 - 로컬 Chromium 렌더 옵션(SPA 폴백) 구현.
-- 웹 쇼룸(결정론 스코어카드 전용, LLM 기능 제외)은 별도 트랙.
 - 다국어 리라이트 톤 가이드 확장.

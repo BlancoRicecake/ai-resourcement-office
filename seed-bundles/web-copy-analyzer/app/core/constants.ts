@@ -41,12 +41,6 @@ export const MAX_SECTION_ID_LEN = 40;
 export const MAX_REWRITTEN_TEXT_LEN = 20_000;
 export const MAX_RATIONALE_LEN = 2_000;
 export const MAX_AFTER_ITEMS = 50;
-export const MAX_REMEMBER_CONTENT_LEN = 2_000;
-export const MAX_REMEMBER_CONTEXT_LEN = 2_000;
-export const MAX_WORKFLOW_STEPS = 50;
-export const MAX_WORKFLOW_STEP_LEN = 500;
-/** `parsed_page` arg total serialized size cap (§2-3 주석). */
-export const MAX_PARSED_PAGE_SERIALIZED_BYTES = 2_000_000;
 
 // --- ReDoS / quadratic-parse hardening (html-parser.ts) ---
 // `parse_sections` receives up to DEFAULT_MAX_BYTES (5 MB) of attacker HTML.
@@ -144,26 +138,3 @@ export const PROOF_KEYWORD_HINTS: readonly string[] = [
 
 // --- FAQ detection ---
 export const FAQ_KEYWORD_HINTS: readonly string[] = ["faq", "frequently asked", "questions"];
-
-// --- 성장 레이어 위생 규칙 (§6-4) — referenced by later phase, kept here for
-// single-source-of-truth once growth layer lands. Not used by this phase's code. ---
-export const GROWTH_FORBIDDEN_PHRASE_CAP = 100;
-export const GROWTH_DECISION_LOG_CAP = 500;
-
-// --- knowledge graph (search_knowledge / knowledge_neighbors / learn_knowledge) ---
-/** knowledge_neighbors depth is capped here regardless of the requested depth. */
-export const KNOWLEDGE_MAX_NEIGHBOR_DEPTH = 3;
-export const KNOWLEDGE_DEFAULT_SEARCH_RESULTS = 10;
-export const KNOWLEDGE_MAX_SEARCH_RESULTS = 50;
-/** Chars of body prose returned in a search/neighbor summary snippet. */
-export const KNOWLEDGE_SNIPPET_LEN = 160;
-// learn_knowledge wire-input caps (mirrored in core/tool-schemas.ts, enforced by mcp/validate.ts).
-export const MAX_KNOWLEDGE_QUERY_LEN = 200;
-export const MAX_KNOWLEDGE_TITLE_LEN = 200;
-export const MAX_KNOWLEDGE_BODY_LEN = 20_000;
-export const MAX_KNOWLEDGE_TAGS = 20;
-export const MAX_KNOWLEDGE_TAG_LEN = 60;
-export const MAX_KNOWLEDGE_LINKS = 30;
-export const MAX_KNOWLEDGE_LINK_LEN = 120;
-export const MAX_KNOWLEDGE_EVIDENCE = 20;
-export const MAX_KNOWLEDGE_EVIDENCE_LEN = 500;

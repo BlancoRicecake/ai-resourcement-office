@@ -1,18 +1,12 @@
 /**
- * definePersona — pure validation/normalization (design.md §2-2, no side effects).
+ * definePersona — pure validation/normalization (no side effects).
  *
- * Scope note (design ambiguity resolved): design.md §2-2 lists savePersona /
- * listPersonas / getPersona / deletePersona as core functions with file
- * read/write side effects against the `~/.web-copy-analyzer/` growth layer
- * (§6-1). Per this phase's assignment ("later phases handle
- * adapters/growth/plugin"), growth-layer persistence is out of scope here —
- * only the pure, side-effect-free definePersona (validate + normalize a
- * PersonaDraft into a Persona) is implemented in this phase. Consequently,
- * buildDiagnosisContext / buildRewriteContext in prep-context.ts accept an
- * already-resolved `Persona` object rather than a `persona_id` + file read —
- * the persona_id -> Persona resolution (and 문제표 #8/#9 missing/corrupt-file
- * handling) is a growth-layer adapter concern for a later phase to wire in
- * front of these pure functions.
+ * There is no persona store: personas are an EXPLICIT INPUT to the
+ * diagnose_section / rewrite_section tools (mcp/tools.ts), which call
+ * definePersona to validate + normalize a PersonaDraft into a Persona before
+ * passing it to buildDiagnosisContext / buildRewriteContext (prep-context.ts).
+ * The host agent selects or interviews a persona from memory/PERSONAS.md and
+ * passes it inline — no persona_id lookup or file read is involved.
  */
 
 import { MAX_ID_LEN, MAX_NAME_LEN } from "./constants.js";
