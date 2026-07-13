@@ -2,8 +2,13 @@ const { workers, teams } = window.AIRO_DATA;
 
 const workerGrid = document.querySelector("#workerGrid");
 const teamGrid = document.querySelector("#teamGrid");
+const workerCount = document.querySelector("#workerCount");
+const workerHeading = document.querySelector("#workerHeading");
+const workerFilterStatus = document.querySelector("#workerFilterStatus");
+const affiliationFilters = document.querySelectorAll("[data-affiliation-filter]");
 const workerBySlug = Object.fromEntries(workers.map((worker) => [worker.slug, worker]));
 const teamBySlug = Object.fromEntries(teams.map((team) => [team.slug, team]));
+let activeAffiliation = "all";
 
 const agentSprites = {
   "review-analysis-worker": {
@@ -236,6 +241,28 @@ const agentSprites = {
       [22, 9, 1, 2, "#b8482a"]
     ]
   },
+  "content-marketer": {
+    bg: "#efe7dd",
+    pixels: [
+      [8, 3, 8, 2, "#2d211c"],
+      [7, 5, 10, 7, "#d9a177"],
+      [9, 7, 2, 1, "#1a1815"],
+      [14, 7, 2, 1, "#1a1815"],
+      [11, 10, 3, 1, "#8f4b37"],
+      [6, 13, 12, 6, "#b8783a"],
+      [8, 14, 8, 4, "#fffdf7"],
+      [7, 19, 4, 2, "#7a4f22"],
+      [13, 19, 4, 2, "#7a4f22"],
+      [18, 11, 5, 8, "#fffdf7"],
+      [18, 11, 5, 1, "#b8482a"],
+      [19, 13, 3, 1, "#6a655b"],
+      [19, 15, 3, 1, "#6a655b"],
+      [19, 17, 2, 1, "#6a655b"],
+      [22, 8, 1, 1, "#1a1815"],
+      [21, 9, 1, 1, "#6a4a2e"],
+      [20, 10, 1, 1, "#6a4a2e"]
+    ]
+  },
   "agent-training-camp": {
     bg: "#e8ece9",
     pixels: [
@@ -345,13 +372,27 @@ function pixelAgent(worker) {
 }
 
 function renderWorkers() {
-  workerGrid.innerHTML = workers
+  const visibleWorkers = activeAffiliation === "all"
+    ? workers
+    : workers.filter((worker) => worker.affiliation === activeAffiliation);
+
+  workerHeading.textContent = activeAffiliation === "all"
+    ? "AI 에이전트 직원"
+    : `${activeAffiliation} 직원들`;
+  workerFilterStatus.textContent = activeAffiliation === "all"
+    ? `전체 ${visibleWorkers.length}명`
+    : `${activeAffiliation} · ${visibleWorkers.length}명`;
+
+  workerGrid.innerHTML = visibleWorkers
     .map(
-      (worker, index) => `
+      (worker) => `
         <article class="card worker-card" data-slug="${worker.slug}" role="button" tabindex="0" aria-haspopup="dialog" aria-label="${worker.name} 상세 보기">
           <div class="card-top">
-            <span class="category-chip">${worker.category}</span>
-            <span class="card-no">W-${String(index + 1).padStart(2, "0")}</span>
+            <span class="card-labels">
+              <span class="category-chip">${worker.category}</span>
+              <span class="affiliation-chip" data-affiliation="${worker.affiliation}">${worker.affiliation}</span>
+            </span>
+            <span class="card-no">W-${String(workers.indexOf(worker) + 1).padStart(2, "0")}</span>
           </div>
           <div class="worker-main">
             ${pixelAgent(worker)}
@@ -376,6 +417,36 @@ function renderWorkers() {
     )
     .join("");
 }
+
+function setAffiliationFilter(affiliation) {
+  activeAffiliation = affiliation;
+
+  affiliationFilters.forEach((filter) => {
+    const isActive = filter.dataset.affiliationFilter === affiliation;
+
+    if (filter.tagName === "BUTTON") {
+      filter.setAttribute("aria-pressed", String(isActive));
+    } else if (isActive) {
+      filter.setAttribute("aria-current", "true");
+    } else {
+      filter.removeAttribute("aria-current");
+    }
+
+    filter.classList.toggle("is-active", isActive);
+  });
+
+  renderWorkers();
+}
+
+affiliationFilters.forEach((filter) => {
+  filter.addEventListener("click", () => {
+    setAffiliationFilter(filter.dataset.affiliationFilter);
+
+    if (filter.tagName === "BUTTON") {
+      document.querySelector("#workers").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+});
 
 const modal = document.querySelector("#workerModal");
 const modalBody = modal.querySelector(".modal-body");
@@ -413,7 +484,10 @@ function openWorkerModal(slug) {
     <div class="modal-hero">
       ${pixelAgent(worker)}
       <div>
-        <span class="category-chip">${worker.category}</span>
+        <span class="card-labels">
+          <span class="category-chip">${worker.category}</span>
+          <span class="affiliation-chip" data-affiliation="${worker.affiliation}">${worker.affiliation}</span>
+        </span>
         <h3 id="workerModalTitle">${worker.name}</h3>
         <p>${worker.summary}</p>
         <div class="modal-meta">
@@ -652,5 +726,6 @@ function renderTeams() {
     .join("");
 }
 
-renderWorkers();
+workerCount.textContent = String(workers.length);
+setAffiliationFilter("all");
 renderTeams();

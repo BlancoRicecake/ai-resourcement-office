@@ -140,6 +140,30 @@ button {
   font-weight: 600;
 }
 
+.nav-filter {
+  padding: 9px 13px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.nav-filter:hover,
+.nav-filter.is-active,
+.nav-links a.is-active {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+
+.nav-filter:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 .nav-links a:hover {
   background: var(--surface-2);
   color: var(--ink);
@@ -455,7 +479,15 @@ h3 {
   margin-bottom: 16px;
 }
 
+.card-labels {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
 .category-chip,
+.affiliation-chip,
 .pill {
   display: inline-flex;
   align-items: center;
@@ -465,6 +497,19 @@ h3 {
   font-size: 12.5px;
   font-weight: 600;
   white-space: nowrap;
+}
+
+.affiliation-chip {
+  border: 1px solid var(--line-strong);
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 11.5px;
+}
+
+.affiliation-chip[data-affiliation="허씨네"] {
+  border-color: #d7c6df;
+  background: #f0e9f3;
+  color: #6d4e78;
 }
 
 .category-chip {

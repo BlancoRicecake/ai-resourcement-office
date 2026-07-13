@@ -1,0 +1,32 @@
+{
+  "slug": "content-marketer",
+  "version": "1.0.0",
+  "title": "콘텐츠 발행 패키지 생성기",
+  "worker": "콘텐츠 마케터",
+  "category": "마케팅",
+  "difficulty": "Beginner",
+  "runtime": "Claude/Codex Local",
+  "requiredKeys": [],
+  "estimatedCost": "Depends on the user's selected model and platform plan; optional publishing connectors use the user's own accounts",
+  "requirements": "A host model that can load Markdown instructions; no separate runtime or API key is required for draft-only mode",
+  "includes": [
+    "agent instructions",
+    "memory files",
+    "knowledge-node index",
+    "editorial planning rules",
+    "research and evidence rules",
+    "channel format rules",
+    "tone options",
+    "revision rules",
+    "claim safety rules",
+    "publish connector guides",
+    "growth-marketer interface",
+    "sample input",
+    "sample work order",
+    "full-length sample output",
+    "manual evaluation scenarios",
+    "docs"
+  ],
+  "downloadUrl": "./downloads/content-marketer.zip",
+  "disclaimer": "Users run this package with their own environment, model account, API keys, publishing accounts, and memory files. Actual publishing happens only after user confirmation."
+}
