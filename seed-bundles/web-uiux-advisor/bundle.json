@@ -1,0 +1,26 @@
+{
+  "slug": "web-uiux-advisor",
+  "version": "1.0.0",
+  "title": "웹 UI·UX 리뷰·자문가",
+  "worker": "UI·UX 자문가",
+  "category": "디자인",
+  "difficulty": "Beginner",
+  "runtime": "Local",
+  "requiredKeys": [],
+  "estimatedCost": "결정론 도구 없음(전부 호스트 모델 토큰). 사용자가 선택한 모델·플랜과 리뷰 분량에 비례하며, URL fetch·스크린샷 해석은 호스트 런타임 능력에 따라 추가 토큰이 든다.",
+  "includes": [
+    "agent instructions",
+    "knowledge graph seed (31 nodes + INDEX)",
+    "review intake / landing-page-review / evidence-based-audit / feedback-handoff-prompt skills",
+    "learning-loop memory files",
+    "design-tool integrations guide (Figma / Pencil / browser)",
+    "LLM handoff prompt generation",
+    "harness guide",
+    "sample review input",
+    "sample review report",
+    "docs"
+  ],
+  "requirements": "코딩 에이전트 런타임(Claude Code, Codex 등) 또는 LLM 채팅. 별도 설치·빌드 불필요.",
+  "downloadUrl": "./downloads/web-uiux-advisor.zip",
+  "disclaimer": "Users run this package with their own environment, model account, and budget. This worker reviews and advises only; it does not implement screens. Review findings are evidence-based signals, not a substitute for real-user testing, and aesthetic trend judgments have a shelf life. Some workflow structures are adapted from github.com/MengTo/Skills (MIT, Meng To)."
+}
