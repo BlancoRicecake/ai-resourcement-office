@@ -1,0 +1,24 @@
+{
+  "slug": "outreach-target-researcher",
+  "version": "1.0.0",
+  "title": "Outreach Target Researcher — standardizes an outreach target as an ICP, then produces an outreach-ready lead list + tracking sheet and a work report",
+  "worker": "Outreach Target Researcher",
+  "category": "마케팅",
+  "difficulty": "Intermediate",
+  "runtime": "Local",
+  "requiredKeys": [],
+  "estimatedCost": "No required API keys. Web discovery uses Exa/Jina (keyless tiers) and social discovery uses Agent-Reach against the user's own logged-in sessions. Cost is host-model tokens plus the network time of slow, read-only discovery; see docs/cost-guide.md for per-channel throughput and Exa/Jina usage notes.",
+  "includes": [
+    "agent instructions (identity, [H1-H14] heuristics, S1-S10 success criteria, absolute rules, learning loop)",
+    "knowledge graph seed (14 nodes + INDEX)",
+    "8 skills: icp-setup, onboarding-setup, auth-preflight, dedup-gate, contact-extraction, qualification-scoring, output-assembly, erasure-handling",
+    "learning-loop memory files (MEMORY / USER / PROJECT / DECISIONS / RUNS / RESEARCH)",
+    "per-target ledger convention (plain-text default, optional SQLite backend)",
+    "lead-list output: an outreach-ready leads workbook (.xlsx) — action-first columns, frozen panes, autofilter, color coding, hyperlinks, an appended 'Outreach Tracking' block (outreach_status/channel_used/contacted_on/next_follow_up/owner/notes with status-driven row colors), and a Summary dashboard sheet with an Outreach Funnel — when a spreadsheet library (openpyxl/pandas) is available, else a CSV fallback with the identical 16-column schema, plus the work report delivered as both Markdown (.md) and a self-contained, offline HTML (.html) view",
+    "docs (security-notes / limitations / cost-guide)",
+    "worked example: nail-art design tool -> handmade nail-tip makers (ICP, leads list .xlsx/CSV, work report in .md and self-contained .html)"
+  ],
+  "requirements": "A tool-capable agent runtime (Claude Code, Codex, etc.) with shell/code execution + filesystem + network access is REQUIRED. Agent-Reach (CLI), web fetch, and the on-disk ledger all depend on it. A pure no-tool LLM chat is an UNSUPPORTED runtime for this worker. Optional SQLite is not a separate server: it is a single file (sqlite3 binary or Python's built-in sqlite3) inside the same shell that already runs Agent-Reach.",
+  "downloadUrl": "./downloads/outreach-target-researcher.zip",
+  "disclaimer": "This worker discovers PUBLIC business/creator contact points for review only. It never sends outreach, stores no passwords, and is read-only by default. It requires provenance (source URL + capture timestamp) on every lead, checks a do-not-contact / erasure suppression list, and excludes private personal accounts. The legality of any outreach you send is YOUR responsibility, not this worker's; see docs/security-notes.md for jurisdiction summaries (GDPR, Korea PIPA, Network Act, CAN-SPAM, CASL). This is not legal advice. Some discovery relies on third-party tools (Agent-Reach, insane-search, Exa, Jina) that keep their own attribution and terms."
+}

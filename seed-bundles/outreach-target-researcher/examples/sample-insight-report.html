@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work Report — handmade-nailtip-makers (run 1)</title>
+<style>
+  /* Self-contained: all styles inline, no external resources, no fonts, no CDN, no JS.
+     Opens offline in any browser by double-clicking. Light theme by default,
+     optional prefers-color-scheme dark. */
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --border: #e2e5ea;
+    --text: #1c2128;
+    --muted: #5b6470;
+    --faint: #8a929e;
+    --accent: #2f5bd0;
+    --tile-accent: #2f5bd0;
+    --bar-track: #eceef2;
+    --bar-fill: #4f7ce0;
+    --green-bg: #e4f6ea; --green-fg: #1a7a3d; --green-bd: #b7e3c4;
+    --amber-bg: #fdf1dc; --amber-fg: #9a6a12; --amber-bd: #f0d6a0;
+    --red-bg: #fce4e4;   --red-fg: #b02a2a;   --red-bd: #f0bcbc;
+    --grey-bg: #eceef2;  --grey-fg: #5b6470;  --grey-bd: #d5d9df;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171c;
+      --surface: #1c2128;
+      --border: #2c333c;
+      --text: #e6e9ee;
+      --muted: #a6afba;
+      --faint: #7b8592;
+      --accent: #7aa2f7;
+      --tile-accent: #7aa2f7;
+      --bar-track: #262d36;
+      --bar-fill: #4f7ce0;
+      --green-bg: #16351f; --green-fg: #6fd68c; --green-bd: #26542f;
+      --amber-bg: #362a13; --amber-fg: #e6b45a; --amber-bd: #574318;
+      --red-bg: #3a1c1c;   --red-fg: #f08a8a;   --red-bd: #5a2727;
+      --grey-bg: #262d36;  --grey-fg: #a6afba;  --grey-bd: #39414b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 2rem 1rem 3rem;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    font-size: 15px;
+  }
+  main { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 1.6rem; margin: 0 0 .25rem; }
+  h2 {
+    font-size: 1.15rem; margin: 2.2rem 0 .8rem;
+    padding-bottom: .35rem; border-bottom: 2px solid var(--border);
+  }
+  h3 { font-size: .98rem; margin: 1.4rem 0 .5rem; color: var(--muted); }
+  p { margin: .5rem 0; }
+  a { color: var(--accent); text-decoration: none; word-break: break-word; }
+  a:hover { text-decoration: underline; }
+  code {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: .85em; background: var(--bar-track);
+    padding: .08em .35em; border-radius: 4px;
+  }
+  .caveat {
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px; padding: .7rem .9rem; margin: 1rem 0 1.5rem;
+    color: var(--muted); font-size: .9rem;
+  }
+  .sub { color: var(--muted); font-size: .95rem; margin-top: 0; }
+
+  /* §1 metric tiles */
+  .tiles {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: .9rem; margin: 1rem 0 1.2rem;
+  }
+  .tile {
+    background: var(--surface); border: 1px solid var(--border);
+    border-top: 3px solid var(--tile-accent);
+    border-radius: 8px; padding: .9rem 1rem;
+  }
+  .tile .num { font-size: 1.8rem; font-weight: 700; line-height: 1.1; }
+  .tile .lbl { font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--faint); margin-top: .2rem; }
+  .tile.headline .num { font-size: 1rem; font-weight: 600; }
+
+  /* badges */
+  .badge {
+    display: inline-block; font-size: .78rem; font-weight: 600;
+    padding: .12em .6em; border-radius: 999px; border: 1px solid transparent;
+    white-space: nowrap;
+  }
+  .badge.success { background: var(--green-bg); color: var(--green-fg); border-color: var(--green-bd); }
+  .badge.partial { background: var(--amber-bg); color: var(--amber-fg); border-color: var(--amber-bd); }
+  .badge.failed  { background: var(--red-bg);   color: var(--red-fg);   border-color: var(--red-bd); }
+  .badge.unauth  { background: var(--grey-bg);  color: var(--grey-fg);  border-color: var(--grey-bd); }
+  .badge.fit     { background: var(--surface);  color: var(--accent);   border-color: var(--accent); font-variant-numeric: tabular-nums; }
+
+  /* tables */
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; margin: .6rem 0 1rem; font-size: .92rem; }
+  th, td { text-align: left; padding: .5rem .7rem; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: .82rem; text-transform: uppercase; letter-spacing: .03em; }
+  tbody tr:nth-child(odd) td { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+
+  /* CSS bar viz (no JS) */
+  .bars { margin: .6rem 0 1rem; }
+  .bar-row { display: grid; grid-template-columns: 130px 1fr 42px; align-items: center; gap: .6rem; margin: .35rem 0; }
+  .bar-row .k { font-size: .88rem; color: var(--muted); }
+  .bar-track { background: var(--bar-track); border-radius: 5px; height: 14px; overflow: hidden; }
+  .bar-fill { background: var(--bar-fill); height: 100%; border-radius: 5px; }
+  .bar-fill.g { background: var(--green-fg); }
+  .bar-fill.a { background: var(--amber-fg); }
+  .bar-fill.r { background: var(--faint); }
+  .bar-row .v { font-size: .85rem; color: var(--faint); text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* §5 lead cards */
+  .cards { display: grid; gap: 1rem; margin: 1rem 0; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 10px; padding: 1rem 1.1rem;
+  }
+  .card .head { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .5rem; }
+  .card .name { font-weight: 700; font-size: 1.02rem; }
+  .card .meta { color: var(--muted); font-size: .85rem; }
+  .card .chip {
+    display: inline-block; font-size: .74rem; padding: .1em .5em;
+    border-radius: 5px; background: var(--bar-track); color: var(--muted);
+  }
+  .card .breakdown { font-family: ui-monospace, Menlo, monospace; font-size: .8rem; color: var(--faint); }
+  .card .angle { margin: .5rem 0 .4rem; }
+  .card .links a { margin-right: 1rem; font-size: .88rem; }
+
+  /* §7 muted footer */
+  footer {
+    margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid var(--border);
+    color: var(--faint); font-size: .84rem;
+  }
+  footer h2 { color: var(--faint); border: none; font-size: 1rem; margin-bottom: .4rem; }
+  footer strong { color: var(--muted); }
+  ul { margin: .4rem 0; padding-left: 1.2rem; }
+  li { margin: .25rem 0; }
+
+  @media print {
+    body { background: #fff; color: #000; padding: 0; }
+    .tile, .card, table, .caveat { break-inside: avoid; }
+    a { color: #000; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <h1>Work Report — handmade-nailtip-makers (run 1)</h1>
+  <p class="sub">Target: handmade nail-tip makers for a nail-art design / stencil tool. Illustrative
+  example that pairs with <code>sample-icp.yaml</code> and <code>sample-leads.csv</code>.</p>
+
+  <div class="caveat">
+    This sample is rendered in English for illustration. At runtime the deliverable language follows
+    the <strong>user's language</strong> — a Korean user gets a Korean report, and so on. Only the
+    section headings and the CSV column keys stay in stable English.
+  </div>
+
+  <!-- §1 Executive Summary → metric tiles -->
+  <h2>1. Executive Summary</h2>
+  <div class="tiles">
+    <div class="tile">
+      <div class="num">3</div>
+      <div class="lbl">Qualified leads</div>
+    </div>
+    <div class="tile">
+      <div class="num">3</div>
+      <div class="lbl">Producing channels</div>
+    </div>
+    <div class="tile">
+      <div class="num">27<span style="font-size:1rem;color:var(--faint)">/30</span></div>
+      <div class="lbl">Top fit (Mina)</div>
+    </div>
+    <div class="tile headline">
+      <div class="num">Shape-reproducibility pain across ko / en / zh</div>
+      <div class="lbl">Headline insight</div>
+    </div>
+  </div>
+  <ul>
+    <li><strong>Objective:</strong> find solo / small-studio handmade nail-tip <strong>makers</strong>
+      (producers, not wearers) who show active demand for a shape-consistency / stencil tool.</li>
+    <li><strong>Result:</strong> <strong>3 qualified leads</strong> shipped, from
+      <strong>web (Exa/Jina), Instagram, and Xiaohongshu</strong>.</li>
+    <li><strong>Headline insight:</strong> the sharpest demand is a <em>shape-reproducibility</em> pain
+      — makers can't reliably redo the same set — voiced across all three languages.</li>
+    <li><strong>Recommendation:</strong> approach the 3 now on the reproduce-the-exact-shape angle;
+      then decide whether to <strong>(A) relax the threshold</strong> or
+      <strong>(B) expand the search</strong> to grow the list past 3.</li>
+  </ul>
+
+  <!-- §2 Objective & Scope -->
+  <h2>2. Objective &amp; Scope</h2>
+  <ul>
+    <li><strong>Target definition (identity axis):</strong> solo / small-studio makers who
+      <em>produce</em> handmade nail tips (穿戴甲 / 수제 네일팁), excluding wearers, resellers, and
+      mass-brands.</li>
+    <li><strong>Target definition (demand axis):</strong> an evidenced signal of pain/desire around
+      making tips — shape consistency, speed, hand-fatigue, design replication.</li>
+    <li><strong>Channels searched:</strong> web (Exa/Jina), Instagram, Xiaohongshu; X and Reddit
+      attempted (see §4).</li>
+    <li><strong>Filters:</strong> language = ko / en / zh (soft; <code>unknown</code> bucketed, not
+      excluded); region = none hard; recency window = 12 months.</li>
+    <li><strong>Target count (ceiling):</strong> 25. This is a <strong>ceiling, not a floor</strong> —
+      a short qualified list is the intended outcome when the frontier is thin, not a shortfall to
+      pad.</li>
+    <li><strong>Run:</strong> date 2026-07-15 · run-id <code>handmade-nailtip-makers/run-1</code>.</li>
+  </ul>
+
+  <!-- §3 Method -->
+  <h2>3. Method</h2>
+  <ul>
+    <li><strong>Tools / channels:</strong> web semantic search (Exa) + site entry (Jina); social
+      discovery via Agent-Reach (Instagram, Xiaohongshu, X); Reddit via the user's session.</li>
+    <li><strong>Dedup (net-new vs ledger):</strong> every candidate's normalized key was checked
+      against <code>ledger-keys.txt</code> and <code>do-not-contact.txt</code> <strong>before</strong>
+      any extraction — the model never loaded the ledger body. 12 candidates were dropped as
+      already-in-ledger; 0 hit the suppression list; the two seed accounts were excluded and their
+      keys added.</li>
+    <li><strong>Scoring rubric:</strong> six transparent axes — identity match, intent strength,
+      real-person trust, contactability, recency, filter conformance — <strong>each scored 1-5, so
+      <code>fit_total</code> ranges 6-30</strong>. No black-box totals; the per-axis breakdown ships
+      in the CSV <code>fit_breakdown</code> column.</li>
+    <li><strong>Exclusions:</strong> DNC / erasure list honored; private personal accounts excluded;
+      non-producers (consumers buying press-ons, resellers/dropshippers) filtered by role.</li>
+  </ul>
+
+  <!-- §4 Results at a Glance → badges + tables + CSS bars -->
+  <h2>4. Results at a Glance</h2>
+  <p><strong>Candidates seen → passed gate → qualified:</strong> 41 seen → 29 passed
+  dedup/suppression → <strong>3 qualified and shipped.</strong> Most of the 29 that passed the gate
+  were consumers or resellers, removed by role — the list was <strong>not</strong> padded to hit the
+  ceiling of 25.</p>
+
+  <h3>Fit-score distribution (of the 3 qualified, max 30)</h3>
+  <div class="bars">
+    <div class="bar-row"><span class="k">25-30 (strong)</span>
+      <div class="bar-track"><div class="bar-fill g" style="width:33%"></div></div><span class="v">1</span></div>
+    <div class="bar-row"><span class="k">20-24 (solid)</span>
+      <div class="bar-track"><div class="bar-fill" style="width:66%"></div></div><span class="v">2</span></div>
+    <div class="bar-row"><span class="k">&lt; 20</span>
+      <div class="bar-track"><div class="bar-fill r" style="width:0%"></div></div><span class="v">0</span></div>
+  </div>
+
+  <h3>Per-channel status</h3>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Channel</th><th>Status</th><th>Count</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr><td>Web (Exa/Jina)</td><td><span class="badge success">success</span></td><td>1</td>
+        <td>Domain-first gate skipped 6 known/marketplace domains before fetch.</td></tr>
+      <tr><td>Instagram</td><td><span class="badge success">success</span></td><td>1</td>
+        <td>Hashtag + bio discovery.</td></tr>
+      <tr><td>Xiaohongshu</td><td><span class="badge partial">partial</span></td><td>1</td>
+        <td>Session dropped to <code>authentication required</code> mid-run; 1 gathered before stop;
+        re-login branch offered.</td></tr>
+      <tr><td>Reddit</td><td><span class="badge unauth">unauthenticated</span></td><td>0</td>
+        <td>Not logged in; user chose to exclude (<strong>not</strong> "0 results").</td></tr>
+      <tr><td>X</td><td><span class="badge failed">discovery-failed</span></td><td>0</td>
+        <td>Agent-Reach fetch error — a tool failure, <strong>not</strong> evidence of "no leads."
+        Retry next run.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="sub"><code>discovery-failed</code> and <code>unauthenticated</code> are
+  <strong>not</strong> "0 results" — the distinction is mandatory.</p>
+
+  <h3>Language distribution</h3>
+  <div class="bars">
+    <div class="bar-row"><span class="k">ko</span>
+      <div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><span class="v">1</span></div>
+    <div class="bar-row"><span class="k">en</span>
+      <div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><span class="v">1</span></div>
+    <div class="bar-row"><span class="k">zh</span>
+      <div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><span class="v">1</span></div>
+    <div class="bar-row"><span class="k">unknown</span>
+      <div class="bar-track"><div class="bar-fill r" style="width:0%"></div></div><span class="v">0</span></div>
+  </div>
+  <p class="sub">Language is a <strong>soft filter</strong> — <code>unknown</code> leads are bucketed
+  for user review, never auto-excluded. (ko 0.99 · en 0.96 · zh 0.98 confidence.)</p>
+
+  <h3>Intent-strength distribution</h3>
+  <div class="bars">
+    <div class="bar-row"><span class="k">strong</span>
+      <div class="bar-track"><div class="bar-fill g" style="width:66%"></div></div><span class="v">2</span></div>
+    <div class="bar-row"><span class="k">medium</span>
+      <div class="bar-track"><div class="bar-fill a" style="width:33%"></div></div><span class="v">1</span></div>
+    <div class="bar-row"><span class="k">weak</span>
+      <div class="bar-track"><div class="bar-fill r" style="width:0%"></div></div><span class="v">0</span></div>
+  </div>
+
+  <!-- §5 Key Findings → cards -->
+  <h2>5. Key Findings (Segment Insights)</h2>
+  <p><strong>Common expressions &amp; hashtags</strong> (for the user's later messaging — not written
+  by this worker):</p>
+  <ul>
+    <li>Recurring pain phrasings: "can't get the same shape twice", "한 세트 만드는 데 손목이 너무
+      아파요", "每次想复刻之前的款式都做不出一样的".</li>
+    <li>Productive hashtags: <code>#수제네일팁</code>, <code>#handmadenailtips</code>,
+      <code>手工美甲片</code>, <code>穿戴甲 制作</code>.</li>
+    <li>Consumer-leaning tags to keep excluding: <code>#pressonhaul</code>, <code>#nailswap</code>.</li>
+  </ul>
+  <p><strong>Where they cluster &amp; notable patterns:</strong> producers concentrate on Instagram
+  (ko) and Xiaohongshu (zh) with WIP/process posts; the web channel surfaces the ones with an
+  own-domain shop. The shape-reproducibility pain recurs across all three languages — a cross-market
+  signal, not a local one.</p>
+
+  <h3>Top leads (why they scored highest)</h3>
+  <div class="cards">
+
+    <div class="card">
+      <div class="head">
+        <span class="name">Mina (Tips by Mina)</span>
+        <span class="badge fit">Fit 27/30</span>
+        <span class="chip">web</span>
+        <span class="chip">email</span>
+        <span class="badge success">confirmed</span>
+      </div>
+      <div class="breakdown">id:5 intent:5 human:5 contact:5 recency:4 filter:3</div>
+      <p class="meta">Highest because every axis is strong: a clear producer identity, an explicit
+      consistency pain, an own-domain email (top contactability), and a solo one-person brand —
+      <strong>treated as a true positive, the top fit, not filtered as "a brand."</strong></p>
+      <p class="angle"><strong>Angle:</strong> reproduce-the-exact-shape stencil (her stated "redoing
+      a set 3x" pain).</p>
+      <p class="links">
+        <a href="https://tipsbymina.example.com" target="_blank" rel="noopener">Site</a>
+        <a href="mailto:hello@tipsbymina.example.com">hello@tipsbymina.example.com</a>
+        <a href="https://tipsbymina.example.com/blog/consistency" target="_blank" rel="noopener">Demand evidence</a>
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <span class="name">jiwoo.nailtip</span>
+        <span class="badge fit">Fit 24/30</span>
+        <span class="chip">instagram</span>
+        <span class="chip">linktree</span>
+        <span class="badge partial">probable</span>
+      </div>
+      <div class="breakdown">id:5 intent:5 human:4 contact:3 recency:5 filter:2</div>
+      <p class="meta">Solo Korean maker, fresh hand-fatigue post; <code>probable</code> because
+      identity rests on bio + content with no strong cross-domain anchor.</p>
+      <p class="angle"><strong>Angle:</strong> speed / hand-fatigue benefit — approach in Korean.</p>
+      <p class="links">
+        <a href="https://instagram.com/jiwoo.nailtip" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://linktr.ee/jiwoonailtip" target="_blank" rel="noopener">Linktree</a>
+        <a href="https://instagram.com/reel/abc123" target="_blank" rel="noopener">Demand evidence</a>
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="head">
+        <span class="name">美甲片小工坊 (nail_atelier_xhs)</span>
+        <span class="badge fit">Fit 20/30</span>
+        <span class="chip">xiaohongshu</span>
+        <span class="chip">handle</span>
+        <span class="badge unauth">single</span>
+      </div>
+      <div class="breakdown">id:4 intent:4 human:4 contact:2 recency:3 filter:3</div>
+      <p class="meta">Producer with a design-replication wish; contactability low (handle only, no
+      public email).</p>
+      <p class="angle"><strong>Angle:</strong> design-replication template benefit.</p>
+      <p class="links">
+        <a href="https://xiaohongshu.com/user/nailatelier" target="_blank" rel="noopener">Xiaohongshu profile</a>
+        <a href="https://xiaohongshu.com/note/xyz789" target="_blank" rel="noopener">Demand evidence</a>
+      </p>
+    </div>
+
+  </div>
+  <p class="sub">All three are <strong>producers</strong> (role-checked), not consumers or resellers,
+  and each carries evidence on <strong>both</strong> ICP axes plus provenance (source URL + capture
+  timestamp).</p>
+
+  <!-- §6 Recommendations & Next Steps -->
+  <h2>6. Recommendations &amp; Next Steps</h2>
+  <ul>
+    <li><strong>Approach angles per segment:</strong> reproduce-the-exact-shape stencil (web / en shop
+      owners); speed &amp; hand-fatigue relief (Instagram / ko solo makers); design-replication
+      templates (Xiaohongshu / zh studios).</li>
+    <li><strong>3 qualified vs target 25</strong> — the frontier is thin on producers. Decide:
+      <strong>(A) relax the threshold</strong> (accept <code>medium</code>-intent producers) or
+      <strong>(B) expand the search</strong> (retry X, log in to Reddit, add Threads/TikTok fallback,
+      add adjacent hashtags <code>#customnails</code>, <code>ネイルチップ 作り方</code>).</li>
+    <li><strong>Frontier-exhaustion note:</strong> producers are sparse relative to consumers on these
+      channels this run; a third option is to <strong>(C) expand the definition</strong> to include
+      small studios (2-4 makers), not only solo. Advancing the cursor and appending the 3 leads +
+      their keys are proposed as <strong>memory update candidates</strong> (no auto-commit).</li>
+  </ul>
+
+  <!-- §7 Appendix → muted footer -->
+  <footer>
+    <h2>7. Appendix</h2>
+    <ul>
+      <li><strong>Coverage caveats:</strong> Reddit is <code>unauthenticated</code> and X is
+        <code>discovery-failed</code> this run — <strong>neither is "0 results."</strong> The producer
+        frontier was only partially explored (Xiaohongshu stopped early on auth). Absence of leads on
+        a failed/unauthenticated channel is not evidence of absence.</li>
+      <li><strong>Provenance &amp; freshness:</strong> every shipped lead carries a source URL +
+        capture timestamp (ISO 8601) and a post/refresh date; the demand signals here are within the
+        12-month recency window.</li>
+      <li><strong>Compliance:</strong> <strong>public business/creator contacts only</strong> — no
+        private personal accounts, no leaked or gated data. The DNC / erasure suppression list was
+        honored (0 hits this run). This worker builds the list and never sends outreach;
+        <strong>the legality of any outreach the user sends is the user's responsibility</strong>
+        (see <code>docs/security-notes.md</code>). This is not legal advice.</li>
+      <li><strong>Data:</strong> the full 3-lead dataset with all 16 columns is in
+        <code>examples/sample-leads.csv</code>.</li>
+    </ul>
+  </footer>
+
+</main>
+</body>
+</html>

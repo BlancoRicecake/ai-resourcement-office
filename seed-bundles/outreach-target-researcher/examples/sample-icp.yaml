@@ -1,0 +1,78 @@
+# Sample ICP — nail-art design tool -> handmade nail-tip makers
+# Produced by ICP Setup (worker/skills/icp-setup.md), confirmed by the user.
+# Lives at memory/targets/<slug>/icp.yaml. Illustrative example.
+
+slug: handmade-nailtip-makers
+
+product:
+  one_liner: >
+    A nail-art design tool that turns a photo/sketch into a precise filing-and-painting stencil,
+    so handmade nail-tip makers can reproduce a design consistently and faster.
+  serves: solo and small-studio nail-tip makers who produce custom press-on / handmade tip sets
+
+# --- ICP axis 1: identity (who they are) ---
+identity_axis:
+  who: independent handmade nail-tip / press-on makers (producers, not wearers)
+  scale: solo or small studio (a person or a few makers) — solo brand is a PLUS, not a minus
+  # role signal is REQUIRED (see [[demand-false-positive]])
+  role: producer
+  role_signal:
+    producer_says:   # target
+      - "sources blank/UV-gel tips, files and paints them, sells finished sets"
+      - "posts work-in-progress, tools, process; runs a shop"
+    consumer_says:   # NOT target
+      - "asks where to buy cute press-ons to wear"
+      - "reviews tips they purchased; no making activity"
+    reseller_says:   # EXCLUDE (mass/dropship)
+      - "lists many SKUs, no craft, generic catalog"
+
+# --- ICP axis 2: demand-intent (signals they want what we offer) ---
+demand_axis:
+  signals:
+    - strong: "explicit pain about reproducing a design by hand / inconsistent results"
+    - strong: "asking for a tool/template/stencil to make tips faster or more precisely"
+    - medium: "posts about hand fatigue, time per set, or re-doing tips"
+    - weak: "general nail-art posting with no stated pain"
+  recency_window: prefer signals within the last 12 months (older decays; not excluded)
+
+seeds:
+  # attribute source only — EXCLUDED from output (see [[seed-generalization]])
+  - handle: "instagram:jane.handmade.nails"
+    why_match: "solo maker, own-domain shop, posts WIP + filing pain, uses #수제네일팁"
+  - url: "https://tipsbymina.example.com"
+    why_match: "one-person brand, contact page with own-domain email, custom-set portfolio"
+
+channels:
+  # per-channel keywords / hashtags / exclusion terms (drafted then confirmed)
+  instagram:
+    hashtags: ["#수제네일팁", "#handmadenailtips", "#pressonnails", "#手作りネイルチップ", "#美甲片"]
+    exclude: ["#pressonhaul", "#nailswap"]   # consumer-leaning
+  xiaohongshu:
+    keywords: ["手工美甲片", "穿戴甲 制作", "美甲片 模板"]
+  x:
+    keywords: ["handmade press on maker", "nail tip stencil", "reproduce nail design tool"]
+    exclude: ["-buy", "-shop haul"]
+  reddit:
+    subreddits: ["r/Nails", "r/RedditLaqueristas"]
+    keywords: ["making press ons", "consistent tips", "filing jig"]
+  web:
+    exa_queries: ["handmade press-on nail maker shop contact", "custom nail tip studio order"]
+    exclude_sites: ["aliexpress.com", "etsy.com/search"]  # marketplace listings, not makers' own pages
+
+filters:
+  languages: ["ko", "en", "ja", "zh"]   # soft signal; unknown -> separate bucket, not excluded
+  region: global (KR / JP / CN / EN-speaking prioritized)
+  scale: solo or small studio
+  recency_window_months: 12
+
+target_count: 25   # CEILING, not a floor. If fewer qualify, hand over the few and ask relax/expand.
+
+storage_backend: plaintext   # SQLite optional (chosen at onboarding)
+
+weights:   # six-axis fit weights (default equal); re-weight per campaign
+  identity_match: 1
+  intent_strength: 1
+  real_person_trust: 1
+  contactability: 1
+  recency: 1
+  filter_conformance: 1
