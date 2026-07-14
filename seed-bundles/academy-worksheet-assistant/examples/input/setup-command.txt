@@ -1,0 +1,1 @@
+python setup.py --non-interactive --dry-run --subject "사용자 선택 과목" --school-level "중학교" --grade 1 --exam-year 2026 --curriculum "사용자 지정 교육과정" --output-formats hwp,pdf

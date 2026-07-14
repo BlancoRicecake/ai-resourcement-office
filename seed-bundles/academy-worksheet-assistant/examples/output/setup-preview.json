@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "worker": "학원 문제지 조교",
+  "setup_status": "complete",
+  "knowledge_status": "pending",
+  "subject": "사용자 선택 과목",
+  "school_level": "중학교",
+  "grade": "1",
+  "exam_year": "2026",
+  "curriculum": "사용자 지정 교육과정",
+  "curriculum_source": null,
+  "default_school": null,
+  "publisher": null,
+  "textbook_title": null,
+  "input_format": "pdf",
+  "output_formats": [
+    "hwp",
+    "pdf"
+  ],
+  "layout_notes": null
+}

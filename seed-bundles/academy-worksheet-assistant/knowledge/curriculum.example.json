@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "subject": "사용자가 선택한 과목",
+  "curriculum": "사용자가 지정한 교육과정",
+  "sources": [
+    {
+      "title": "공식 교육과정 문서 제목",
+      "authority": "발행 기관",
+      "reference": "로컬 파일 경로 또는 URL"
+    }
+  ],
+  "units": [
+    {
+      "code": "U01",
+      "title": "단원명",
+      "standards": [
+        {
+          "code": "STD-01",
+          "statement": "성취기준을 자기 언어로 짧게 구조화"
+        }
+      ]
+    }
+  ],
+  "approval": {
+    "status": "pending",
+    "approved_by": null,
+    "approved_at": null
+  }
+}
