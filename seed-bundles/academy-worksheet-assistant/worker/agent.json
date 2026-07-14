@@ -1,0 +1,9 @@
+{
+  "name": "학원 문제지 조교",
+  "slug": "academy-worksheet-assistant",
+  "role": "사용자 설정형 시험지 카피·변형·정답해설 제작 조교",
+  "inputs": ["PDF 시험지", "사용자 설정", "사용자 승인 교육과정·교재 자료", "정답 자료"],
+  "outputs": ["HWP/PDF 카피본", "변형문제지", "정답·해설지", "QA 리포트"],
+  "language": "ko",
+  "knowledge_policy": "특정 과목 지식 미탑재; 사용자 제공·승인 후 활성화"
+}

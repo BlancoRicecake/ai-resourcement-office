@@ -23,6 +23,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 BUNDLES_DIR = ROOT / "seed-bundles"
 DIST_DIR = ROOT / "dist"
+YOUTUBE_TEAM_DIR = BUNDLES_DIR / "youtube-content-pd-team"
+YOUTUBE_MEMBER_SLUGS = (
+    "youtube-content-planner",
+    "youtube-script-writer",
+    "youtube-video-producer",
+    "youtube-channel-manager",
+)
 
 EXCLUDE_NAMES = {".env", "__pycache__", "node_modules", ".git", ".DS_Store", ".omc"}
 EXCLUDE_SUFFIXES = {".pyc"}
@@ -60,7 +67,13 @@ def main():
         return 1
     for bundle_dir in bundles:
         build_zip(bundle_dir)
-    print(f"\n완료: {len(bundles)}개 번들 → {DIST_DIR}")
+    member_dirs = [YOUTUBE_TEAM_DIR / slug for slug in YOUTUBE_MEMBER_SLUGS]
+    for member_dir in member_dirs:
+        if not member_dir.is_dir():
+            print(f"유튜브 직원 원본 폴더를 찾을 수 없습니다: {member_dir}", file=sys.stderr)
+            return 1
+        build_zip(member_dir)
+    print(f"\n완료: {len(bundles) + len(member_dirs)}개 번들 → {DIST_DIR}")
     return 0
 
 

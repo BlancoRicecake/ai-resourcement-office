@@ -1,0 +1,27 @@
+{
+  "slug": "academy-worksheet-assistant",
+  "version": "1.0.0",
+  "title": "학원 문제지 조교",
+  "worker": "학원 문제지 조교",
+  "category": "교육",
+  "difficulty": "Intermediate",
+  "runtime": "Windows + Claude/Codex Local + Python",
+  "requiredKeys": [],
+  "estimatedCost": "결정론 스크립트는 무료. 호스트 모델 토큰 비용과 사용자가 선택한 외부 검색 도구 비용은 별도.",
+  "includes": [
+    "사용자 주도 과목·교육과정 초기 설정 마법사",
+    "Claude Code·Codex 초보자용 처음 사용하기 안내",
+    "사용자 자료 투입 폴더(user-materials)",
+    "PDF 시험지 추출·문항 구조화 파이프라인",
+    "HWP·PDF 카피본 및 정답·해설지 빌더",
+    "사용자 승인 교육과정 지식팩 스키마",
+    "변형문제 품질·독립 검수 출고 게이트",
+    "learning-loop memory files",
+    "agent instructions and skills",
+    "sample setup input and actual dry-run output",
+    "docs"
+  ],
+  "requirements": "Windows, Python 3.11+, HWP 출력 시 한컴오피스. 텍스트 레이어가 있는 PDF 입력.",
+  "downloadUrl": "./downloads/academy-worksheet-assistant.zip",
+  "disclaimer": "특정 과목 지식은 기본 탑재되지 않습니다. 사용자가 제공·승인한 교육과정과 교재 자료에 기반하며, 변형문제와 해설은 교사 검토가 필요합니다. 학교 시험지·교재의 저작권과 사용 권한은 사용자가 확인해야 합니다."
+}

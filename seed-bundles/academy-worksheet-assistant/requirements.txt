@@ -1,0 +1,4 @@
+pymupdf>=1.24
+pyhwpx>=0.44
+pywin32>=306
+pillow>=10
