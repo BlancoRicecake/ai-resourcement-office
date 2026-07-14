@@ -439,6 +439,7 @@ window.AIRO_DATA = {
       name: "UI·UX 자문가",
       slug: "web-uiux-advisor",
       category: "디자인",
+      affiliation: "허씨네",
       summary:
         "기획안이나 기존 화면(URL·스크린샷·HTML)을 넣으면, 현업 UI/UX 프레임워크(Nielsen 휴리스틱·Laws of UX·WCAG)로 진단해 위치·근거·심각도·개선안을 담은 리뷰 리포트를 만든다. 화면을 구현하지 않는 리뷰·자문 전문.",
       skills: ["휴리스틱 화면 리뷰", "기획 단계 설계 자문", "레퍼런스·근거 인용"],
