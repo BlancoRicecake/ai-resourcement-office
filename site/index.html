@@ -58,7 +58,9 @@
           </span>
         </a>
         <div class="nav-links" aria-label="주요 메뉴">
-          <a href="#workers">직원</a>
+          <a href="#workers" data-affiliation-filter="all" aria-current="true">직원</a>
+          <button class="nav-filter" type="button" data-affiliation-filter="김씨네" aria-pressed="false">김씨네 직원들</button>
+          <button class="nav-filter" type="button" data-affiliation-filter="허씨네" aria-pressed="false">허씨네 직원들</button>
           <a href="#teams">팀</a>
           <a href="./guide.html">채용 가이드</a>
           <a href="#standard">표준</a>
@@ -93,7 +95,7 @@
               <span>누적 방문자 수</span>
             </div>
             <div>
-              <span class="metric">10</span>
+              <span class="metric" id="workerCount">0</span>
               <span>보유 중인 AI 직원</span>
             </div>
             <div>
@@ -112,8 +114,9 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">01 / WORKERS</p>
-            <h2>AI 에이전트 직원</h2>
+            <h2 id="workerHeading">AI 에이전트 직원</h2>
           </div>
+          <p id="workerFilterStatus" aria-live="polite">전체 직원</p>
         </div>
         <div class="grid" id="workerGrid"></div>
       </section>

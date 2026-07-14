@@ -4,6 +4,7 @@ window.AIRO_DATA = {
       name: "컨텐츠 기획자",
       slug: "youtube-content-planner",
       category: "기획",
+      affiliation: "김씨네",
       summary:
         "채널 방향, 타깃 시청자, 주제 후보, 시리즈 구조, 영상 목적을 설계한다.",
       skills: ["채널 전략", "주제 발굴", "시리즈 기획"],
@@ -48,6 +49,7 @@ window.AIRO_DATA = {
       name: "영상 원고 작가",
       slug: "youtube-script-writer",
       category: "원고",
+      affiliation: "김씨네",
       summary:
         "후킹, 구성, 멘트, 전환 문장, CTA를 담은 촬영 가능한 영상 원고를 작성한다.",
       skills: ["후킹 작성", "원고 구성", "CTA 설계"],
@@ -87,6 +89,7 @@ window.AIRO_DATA = {
       name: "영상 제작자",
       slug: "youtube-video-producer",
       category: "제작",
+      affiliation: "김씨네",
       summary:
         "촬영 구성, B-roll, 화면 큐, 편집 가이드, 썸네일 방향을 정리한다.",
       skills: ["촬영 큐", "편집 가이드", "썸네일 방향"],
@@ -131,6 +134,7 @@ window.AIRO_DATA = {
       name: "채널 매니저",
       slug: "youtube-channel-manager",
       category: "운영",
+      affiliation: "김씨네",
       summary:
         "업로드 메타데이터, 제목/썸네일 실험, YouTube Studio 지표 분석, 다음 영상 개선안을 만든다.",
       skills: ["업로드 패키징", "지표 분석", "개선안 작성"],
@@ -175,6 +179,7 @@ window.AIRO_DATA = {
       name: "그로스 마케터",
       slug: "growth-marketer",
       category: "마케팅",
+      affiliation: "김씨네",
       summary:
         "시장 리서치를 먼저 수행한 뒤 수익 시간축을 판단하고 성장 실험, 실행 지시서, 메모리 후보를 정리한다.",
       skills: ["리서치 선행", "수익 시간축 판단", "성장 실험 설계"],
@@ -216,9 +221,55 @@ window.AIRO_DATA = {
       }
     },
     {
+      name: "콘텐츠 마케터",
+      slug: "content-marketer",
+      category: "마케팅",
+      affiliation: "김씨네",
+      summary:
+        "콘텐츠 결 기획부터 채널별 제작, (연결 시) 발행, 성과 회고까지 스스로 도는 실행 직원. 그로스 마케터의 작업 지시서나 단독 요청을 받아 일한다.",
+      skills: ["콘텐츠 기획·캘린더", "채널별 제작", "발행·성과 회고"],
+      tools: ["Claude / Codex Local", "Markdown"],
+      output: "콘텐츠 발행 패키지",
+      downloadUrl: "./downloads/content-marketer.zip",
+      details: {
+        workflow: [
+          "그로스 마케터의 작업 지시서를 해석하거나, 단독 요청에서 부족한 제품·타깃·핵심 메시지만 확인한다.",
+          "검색 의도·고객 언어·콘텐츠 공백·핵심 주장 출처를 조사하고 주장 검증표를 만든다.",
+          "브리프·필러·캘린더·채널·톤·CTA를 통합 제작안 한 번으로 제안해 컨펌받는다.",
+          "채널 규격에 맞춘 전체 초안을 쓰고, 수치·인용·제품 기능·일반화 주장을 발행 전에 다시 감사한다.",
+          "가격·효능·법적 표현 같은 컨펌 지점을 분리하고, 발행은 수동 게시 또는 커넥터로 하되 실제 게시 직전 승인받는다.",
+          "발행 후 성과 데이터를 받으면 결과 보고서와 다음 콘텐츠 제안, 메모리 업데이트 후보를 정리한다."
+        ],
+        setup: [
+          "필수 API 키 없음 — Claude/Codex 등 사용하는 런타임에 worker/agent.md 지시문을 넣는다.",
+          "제품 설명, 타깃 독자, 목표 행동(가입·신청·구매), 사용할 채널을 준비한다.",
+          "그로스 마케터의 작업 지시서, 브랜드 톤 가이드, memory/ 파일 내용이 있으면 함께 제공한다.",
+          "발행은 기본이 수동 게시이며, 커넥터를 연결해도 실제 게시는 게시 직전 사용자 컨펌 후에만 이뤄진다."
+        ],
+        advanced: [
+          {
+            title: "그로스 마케터 연동",
+            body:
+              "성장 실험 설계서의 하위 실행 직원 작업 지시서를 그대로 입력하면 실험명, 가설, 타깃, 메시지, 성공 기준을 읽어 콘텐츠를 만들고, 결과를 실험 회고에 쓸 수 있는 보고서 형식으로 돌려준다."
+          },
+          {
+            title: "발행 커넥터 tier",
+            body:
+              "기본은 세팅 없이 발행 패키지(수동 게시)다. 원하면 본인 CMS·뉴스레터·SNS·예약 도구 계정을 연결해 직접 발행하되, 실제 게시는 항상 컨펌 게이트를 거친다. 블로그·뉴스레터는 자동 발행이 현실적이고 인스타·스레드·링크드인은 API 제약을 정직하게 고지한다."
+          },
+          {
+            title: "주장 안전 & 브랜드 보이스",
+            body:
+              "허위 후기·가짜 통계·기만적 한정 수량은 요청받아도 만들지 않는다. 수치·인용·고객 사례·제품 기능·일반화 표현을 주장 검증표로 관리하고, 승인된 톤·금지 표현·반응 좋은 패턴만 memory/ 후보로 정리한다."
+          }
+        ]
+      }
+    },
+    {
       name: "직무 분석가",
       slug: "job-role-analyst",
       category: "에이전트 설계",
+      affiliation: "김씨네",
       summary:
         "만들고 싶은 에이전트 아이디어를 실제 직무 구조로 해부해, 제작 전 단계의 '직무 기반 에이전트 설계서'를 만든다.",
       skills: ["직무 매핑", "업무 프로세스 설계", "추가 에이전트 제안"],
@@ -256,6 +307,7 @@ window.AIRO_DATA = {
       name: "에이전트 훈련소",
       slug: "agent-training-camp",
       category: "에이전트 설계",
+      affiliation: "김씨네",
       summary:
         "새로 만든 에이전트가 실전 투입되기 전, 직무에 맞는 공신력 있는 지식을 합법적으로 수집·실무 번역해 신임 에이전트의 memory에 적재한다.",
       skills: ["합법적 지식 수집", "학술→실무 번역", "메모리 적재 설계"],
@@ -298,6 +350,7 @@ window.AIRO_DATA = {
       name: "에이전트 기술 전문가",
       slug: "agent-tech-specialist",
       category: "에이전트 설계",
+      affiliation: "김씨네",
       summary:
         "에이전트 제작 기술(MCP·런타임·모델·설계 패턴)의 변화를 추적해 팀에 유의미한 것만 브리핑하고, 제작 과제의 기술 자문과 팀 번들 보수 교육 제안을 담당하는 기술 참모.",
       skills: ["기술 동향 브리핑", "제작 과제 기술 자문", "보수 교육 제안"],
@@ -346,6 +399,7 @@ window.AIRO_DATA = {
       name: "카피라이팅 분석가",
       slug: "web-copy-analyzer",
       category: "카피분석",
+      affiliation: "허씨네",
       summary:
         "사이트 URL(또는 HTML)과 타깃 구매자 페르소나를 넣으면, 그 페르소나의 눈으로 랜딩페이지 반응을 진단하고 전환 카피 리라이트 리포트를 만든다.",
       skills: ["전환 카피 진단", "페르소나 기반 리라이트", "가독성·구조 채점"],
