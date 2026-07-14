@@ -1592,3 +1592,15 @@ h3 {
     font-size: 28px;
   }
 }
+
+/* 채용 횟수 뱃지 — hire-count.js가 /api/downloads(디바이스 1회 dedup) 값으로 그린다 */
+.hire-count {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #b8482a;
+  border: 1px solid rgba(184, 72, 42, 0.35);
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  margin-right: 0.4rem;
+  white-space: nowrap;
+}
