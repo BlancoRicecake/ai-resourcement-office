@@ -11,6 +11,28 @@ const teamBySlug = Object.fromEntries(teams.map((team) => [team.slug, team]));
 let activeAffiliation = "all";
 
 const agentSprites = {
+  "outreach-target-researcher": {
+    bg: "#f0e9f3",
+    pixels: [
+      [8, 3, 8, 2, "#3a2a3f"],
+      [7, 5, 10, 6, "#d9a177"],
+      [9, 7, 2, 1, "#1a1815"],
+      [14, 7, 2, 1, "#1a1815"],
+      [11, 9, 3, 1, "#8f4b37"],
+      [6, 12, 12, 7, "#6d4e78"],
+      [8, 13, 8, 5, "#fffdf7"],
+      [11, 13, 2, 5, "#b8482a"],
+      [7, 19, 4, 2, "#3a2a3f"],
+      [13, 19, 4, 2, "#3a2a3f"],
+      [17, 6, 3, 1, "#1a1815"],
+      [16, 7, 1, 3, "#1a1815"],
+      [20, 7, 1, 3, "#1a1815"],
+      [17, 10, 3, 1, "#1a1815"],
+      [18, 8, 1, 1, "#b8482a"],
+      [20, 11, 1, 1, "#1a1815"],
+      [21, 12, 1, 2, "#1a1815"]
+    ]
+  },
   "review-analysis-worker": {
     bg: "#f7e1d6",
     pixels: [
