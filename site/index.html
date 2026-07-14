@@ -46,19 +46,10 @@
         }
       }
     </script>
-    <!-- Amplitude Analytics + Session Replay (클라이언트 전용, 페이지당 1회 초기화) -->
+    <!-- Amplitude Analytics + Session Replay (클라이언트 전용, 페이지당 1회 초기화)
+         init은 CSP(script-src 'self') 준수를 위해 외부 파일(amplitude-init.js)로 분리 -->
     <script src="https://cdn.amplitude.com/script/0bbcd35d4f486ca5c80831ce586f36.js"></script>
-    <script>
-      if (window.amplitude) {
-        if (window.sessionReplay) {
-          window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
-        }
-        window.amplitude.init("0bbcd35d4f486ca5c80831ce586f36", {
-          autocapture: true,
-          fetchRemoteConfig: true,
-        });
-      }
-    </script>
+    <script src="./amplitude-init.js"></script>
   </head>
   <body>
     <header class="site-header">
