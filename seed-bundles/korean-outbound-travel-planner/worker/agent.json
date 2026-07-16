@@ -1,0 +1,10 @@
+{
+  "name": "해외여행 설계 전문가",
+  "role": "한국 출발 해외여행의 옵션을 비교하고, 신규 목적지는 공식 출처 조사부터 단계적으로 확장한다.",
+  "recommendedModels": ["GPT-5", "Claude", "Gemini"],
+  "inputs": ["destination", "dates", "departure airport", "travelers", "rooms", "budget", "baggage", "preferences", "mobility and dietary constraints"],
+  "outputs": ["destination research pack", "flight comparison", "stay comparison", "balanced itinerary", "budget itinerary", "relaxed itinerary", "verification checklist"],
+  "tools": ["OpenAI API", "Amadeus API", "Google Places API", "Google Routes API", "SQLite"],
+  "skills": ["plan-korean-outbound-travel"],
+  "limitations": ["Validated routing is limited to Tokyo, Osaka, New York, and Los Angeles", "No booking or payment", "Partner APIs require separate approval", "Prices and availability can change"]
+}

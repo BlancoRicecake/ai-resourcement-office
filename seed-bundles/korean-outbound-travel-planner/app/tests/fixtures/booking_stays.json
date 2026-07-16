@@ -1,0 +1,26 @@
+{
+  "request_id": "fixture-stay",
+  "data": [
+    {
+      "id": 10004,
+      "name": "Fixture Booking Hotel",
+      "accommodation_type": "hotel",
+      "address": "Tokyo Fixture Address",
+      "coordinates": { "latitude": 35.69, "longitude": 139.76 },
+      "price": { "currency": "KRW", "total": 310000 },
+      "products": [
+        {
+          "id": "room-1",
+          "room": { "name": "Double Room" },
+          "policies": { "cancellation": { "description": "무료 취소 가능" } },
+          "deep_link_url": "https://example.com/booking-hotel"
+        }
+      ],
+      "review_score": 8.9,
+      "review_count": 820,
+      "deep_link_url": "https://example.com/booking-hotel"
+    }
+  ],
+  "metadata": { "next_page": null }
+}
+

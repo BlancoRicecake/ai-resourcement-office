@@ -1,0 +1,20 @@
+{
+  "places": [
+    {
+      "id": "fixture-place-1",
+      "displayName": { "text": "Fixture Museum" },
+      "formattedAddress": "1 Fixture Street, Tokyo",
+      "location": { "latitude": 35.7, "longitude": 139.77 },
+      "rating": 4.7,
+      "userRatingCount": 1250,
+      "priceLevel": "PRICE_LEVEL_MODERATE",
+      "currentOpeningHours": { "weekdayDescriptions": ["월요일: 오전 9:00~오후 5:00"] },
+      "businessStatus": "OPERATIONAL",
+      "googleMapsUri": "https://maps.google.com/?cid=fixture",
+      "websiteUri": "https://example.com/museum",
+      "accessibilityOptions": { "wheelchairAccessibleEntrance": true },
+      "types": ["museum", "tourist_attraction"]
+    }
+  ]
+}
+

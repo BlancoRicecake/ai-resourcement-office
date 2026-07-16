@@ -1,0 +1,25 @@
+{
+  "sessionToken": "fixture-flight-session",
+  "status": "RESULT_STATUS_COMPLETE",
+  "content": {
+    "results": {
+      "legs": {
+        "leg-1": { "id": "leg-1", "durationInMinutes": 145, "stopCount": 0, "segmentIds": ["seg-1"] },
+        "leg-2": { "id": "leg-2", "durationInMinutes": 155, "stopCount": 0, "segmentIds": ["seg-2"] }
+      },
+      "itineraries": {
+        "itinerary-1": {
+          "id": "itinerary-1",
+          "legIds": ["leg-1", "leg-2"],
+          "pricingOptions": [
+            {
+              "price": { "amount": "540000", "unit": "PRICE_UNIT_WHOLE" },
+              "items": [{ "deepLink": "https://example.com/skyscanner-flight" }]
+            }
+          ]
+        }
+      }
+    }
+  }
+}
+

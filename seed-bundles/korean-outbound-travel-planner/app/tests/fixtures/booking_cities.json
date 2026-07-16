@@ -1,0 +1,6 @@
+{
+  "request_id": "fixture-city",
+  "data": [{ "id": -246227, "name": "Tokyo", "country": "jp" }],
+  "metadata": { "next_page": null }
+}
+

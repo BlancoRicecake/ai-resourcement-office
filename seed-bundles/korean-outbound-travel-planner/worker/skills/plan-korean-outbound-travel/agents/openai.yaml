@@ -1,0 +1,4 @@
+interface:
+  display_name: "한국인 해외여행 설계"
+  short_description: "새 목적지 조사부터 동선까지 점진적으로 설계"
+  default_prompt: "Use $plan-korean-outbound-travel to turn my travel idea into a progressive Korean-friendly plan, bootstrapping unvalidated destinations and exposing assumptions and verification links."

@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "id": "42",
+      "price": { "currency": "KRW", "grandTotal": "512000" },
+      "itineraries": [
+        {
+          "duration": "PT2H25M",
+          "segments": [
+            {
+              "departure": { "iataCode": "ICN", "at": "2026-10-15T09:10:00+09:00" },
+              "arrival": { "iataCode": "NRT", "at": "2026-10-15T11:35:00+09:00" },
+              "carrierCode": "KE",
+              "number": "701",
+              "duration": "PT2H25M"
+            }
+          ]
+        },
+        {
+          "duration": "PT2H35M",
+          "segments": [
+            {
+              "departure": { "iataCode": "NRT", "at": "2026-10-18T14:00:00+09:00" },
+              "arrival": { "iataCode": "ICN", "at": "2026-10-18T16:35:00+09:00" },
+              "carrierCode": "KE",
+              "number": "704",
+              "duration": "PT2H35M"
+            }
+          ]
+        }
+      ],
+      "travelerPricings": [
+        {
+          "fareDetailsBySegment": [
+            { "includedCheckedBags": { "quantity": 1 } },
+            { "includedCheckedBags": { "quantity": 1 } }
+          ]
+        }
+      ]
+    }
+  ],
+  "dictionaries": { "carriers": { "KE": "Korean Air" } }
+}
+

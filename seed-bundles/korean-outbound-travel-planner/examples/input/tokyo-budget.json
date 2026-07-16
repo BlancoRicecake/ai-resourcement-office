@@ -1,0 +1,22 @@
+{
+  "destination_country": "JP",
+  "destination_city": "도쿄",
+  "destination_code": "TYO",
+  "origin_airport": "ICN",
+  "departure_date": "2026-10-15",
+  "return_date": "2026-10-18",
+  "date_flexibility_days": 1,
+  "adults": 1,
+  "children": 0,
+  "rooms": 1,
+  "budget_krw": 1200000,
+  "checked_baggage": true,
+  "cabin_class": "ECONOMY",
+  "stay_types": ["hotel", "guesthouse"],
+  "pace": "balanced",
+  "interests": ["미술관", "현지 음식", "카페"],
+  "dietary_needs": [],
+  "mobility_needs": [],
+  "save_profile": false
+}
+

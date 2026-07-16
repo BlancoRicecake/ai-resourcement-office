@@ -1,0 +1,28 @@
+{
+  "flight": {
+    "price": 0.40,
+    "duration": 0.25,
+    "stops": 0.15,
+    "connection_risk": 0.10,
+    "baggage_certainty": 0.10
+  },
+  "stay": {
+    "price": 0.30,
+    "location_efficiency": 0.25,
+    "review_confidence": 0.20,
+    "preference_fit": 0.15,
+    "cancellation_flexibility": 0.10
+  },
+  "places": {
+    "balanced": { "preference_fit": 0.35, "travel_efficiency": 0.30, "review_confidence": 0.20, "cost": 0.15 },
+    "budget": { "preference_fit": 0.25, "travel_efficiency": 0.20, "review_confidence": 0.15, "cost": 0.40 },
+    "relaxed": { "preference_fit": 0.25, "travel_efficiency": 0.30, "review_confidence": 0.15, "low_fatigue": 0.30 }
+  },
+  "cost_assumptions": {
+    "child_cost_multiplier": 0.7,
+    "local_transit_per_boarding_krw": {
+      "JP": 2000,
+      "US": 3500
+    }
+  }
+}

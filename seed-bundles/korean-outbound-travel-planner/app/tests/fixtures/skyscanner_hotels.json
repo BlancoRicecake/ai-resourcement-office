@@ -1,0 +1,28 @@
+{
+  "sessionToken": "fixture-hotel-session",
+  "status": "RESULT_STATUS_COMPLETE",
+  "content": {
+    "results": {
+      "hotelsPricingOptions": {
+        "price-1": {
+          "id": "price-1",
+          "hotelId": "hotel-1",
+          "roomName": "City Double",
+          "price": { "amount": "420000", "unit": "PRICE_UNIT_WHOLE" },
+          "deepLink": "https://example.com/skyscanner-hotel"
+        }
+      },
+      "hotelContent": {
+        "hotel-1": {
+          "hotelName": "Fixture Skyscanner Hotel",
+          "type": "HOTEL",
+          "address": "Tokyo Fixture Address",
+          "location": { "latitude": 35.68, "longitude": 139.77 },
+          "guestRating": { "score": 4.6 },
+          "reviewCount": 640
+        }
+      }
+    }
+  }
+}
+

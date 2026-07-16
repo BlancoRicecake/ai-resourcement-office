@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="검증된 도시의 여행을 설계하고 새로운 목적지는 공식 출처 기반 초기세팅부터 시작합니다." />
+    <title>여행설계실 · 한국인 해외여행 에이전트</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="{{ url_for('static', path='/styles.css') }}?v=0.3.1" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
+    <script src="{{ url_for('static', path='/app.js') }}?v=0.3.1" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="여행설계실 홈">
+        <span class="brand-mark">旅</span>
+        <span><b>여행설계실</b><small>KOREAN OUTBOUND PLANNER</small></span>
+      </a>
+      <nav>
+        <a href="#conversation">여행 설계</a>
+        <a href="#providers">연결 상태</a>
+        <a href="{{ api_docs }}">API 문서</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">VALIDATED CITIES · NEW DESTINATION RESEARCH · FROM KOREA</p>
+          <h1>가격표가 아니라,<br /><em>여행의 판단 근거</em>를 만듭니다.</h1>
+          <p class="hero-lead">
+            항공·숙소·장소를 한 번에 비교하고 이동시간, 수하물, 취소 조건과 피로도까지 계산해
+            세 가지 실행 가능한 일정을 제안합니다. 처음 만나는 목적지는 공식 정보 수집부터 시작합니다.
+          </p>
+          <div class="hero-notes">
+            <span>외부 예약</span><span>KRW 기준</span><span>로컬 프로필</span><span>부분 실패 허용</span>
+          </div>
+        </div>
+        <aside class="principle-card">
+          <p>검색 원칙 01</p>
+          <strong>“전 세계 최저가”라고 말하지 않습니다.</strong>
+          <span>연결된 공급자의 현재 검색 결과를 조회 시각과 함께 보여줍니다.</span>
+        </aside>
+      </section>
+
+      <section id="conversation" class="conversation-shell">
+        <div class="conversation-main">
+          <div class="section-heading">
+            <span>01</span>
+            <div><h2>한 문장으로 시작하세요</h2><p>아는 만큼만 말하면, 필요한 순간에 한 가지만 더 여쭤봅니다.</p></div>
+          </div>
+          <div class="starter-examples" aria-label="여행 요청 예시">
+            <button type="button" data-example="8월에 친구랑 LA 가고 싶어">8월 · 친구와 LA</button>
+            <button type="button" data-example="처음이라 잘 모르겠어. 그냥 일본에 가고 싶어">첫 일본 여행 추천</button>
+            <button type="button" data-example="도쿄 3박 4일, 직항 필수이고 숙소는 저렴했으면 좋겠어">상세 조건 한 번에</button>
+            <button type="button" data-example="가을에 파리로 6박 7일 가고 싶어">새 목적지 조사 시작</button>
+          </div>
+          <div id="conversation-messages" class="conversation-messages" aria-live="polite">
+            <article class="message assistant"><b>여행설계실</b><p>어디쯤, 언제쯤, 누구와 가고 싶나요? 개략적으로 말해도 괜찮아요.</p></article>
+          </div>
+          <div id="draft-preview" class="draft-preview hidden"></div>
+          <div id="next-question" class="next-question hidden"></div>
+          <form id="conversation-form" class="conversation-form">
+            <label for="conversation-input" class="sr-only">여행 요청</label>
+            <textarea id="conversation-input" rows="3" maxlength="5000" placeholder="예: 8월에 친구와 LA로 6박 7일 가고 싶어. 직항이었으면 좋겠고 유니버설은 꼭 갈래."></textarea>
+            <div class="conversation-actions">
+              <label><input id="conversation-consent" type="checkbox" /> 이 기기에 여행 초안 저장</label>
+              <button id="conversation-submit" class="primary-button" type="submit">초안 만들기 →</button>
+            </div>
+          </form>
+        </div>
+        <aside id="constraint-panel" class="constraint-panel">
+          <p class="panel-label">LIVE TRIP BRIEF</p>
+          <h3>아직 정리된 조건이 없어요</h3>
+          <p>문장을 입력하면 확정·제안·미정 조건을 구분해 보여드립니다.</p>
+        </aside>
+      </section>
+
+      <details class="advanced-details">
+        <summary>상세 조건 직접 편집</summary>
+
+      <section id="planner" class="planner-grid">
+        <form id="trip-form" class="trip-form">
+          <div class="section-heading">
+            <span>01</span>
+            <div><h2>여행 조건</h2><p>핵심 조건부터 입력하세요. 나머지는 합리적인 기본값을 사용합니다.</p></div>
+          </div>
+
+          <fieldset>
+            <legend>어디로 떠나나요?</legend>
+            <div class="field-row two">
+              <label>국가
+                <select id="destination-country" name="destination_country"></select>
+              </label>
+              <label>도시
+                <select id="destination-city" name="destination_city"></select>
+              </label>
+            </div>
+            <div class="field-row two">
+              <label>출발 공항
+                <select name="origin_airport">
+                  <option value="ICN">인천 ICN</option>
+                  <option value="GMP">김포 GMP</option>
+                  <option value="PUS">부산 PUS</option>
+                  <option value="CJU">제주 CJU</option>
+                </select>
+              </label>
+              <label>객실 수
+                <input name="rooms" type="number" min="1" max="5" value="1" />
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>언제, 누구와 가나요?</legend>
+            <div class="field-row two">
+              <label>출국일<input id="departure-date" name="departure_date" type="date" required /></label>
+              <label>귀국일<input id="return-date" name="return_date" type="date" required /></label>
+            </div>
+            <div class="field-row three">
+              <label>성인<input name="adults" type="number" min="1" max="9" value="1" /></label>
+              <label>아동<input name="children" type="number" min="0" max="8" value="0" /></label>
+              <label>날짜 유연성
+                <select name="date_flexibility_days">
+                  <option value="0">고정</option><option value="1">±1일</option><option value="3">±3일</option><option value="7">±7일</option>
+                </select>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>무엇을 중요하게 보나요?</legend>
+            <label>총 여행 예산 (원)
+              <input name="budget_krw" type="number" min="100000" step="100000" value="2000000" />
+            </label>
+            <div class="field-row two">
+              <label>기본 여행 속도
+                <select name="pace"><option value="balanced">균형형</option><option value="budget">비용 절약형</option><option value="relaxed">여유형</option></select>
+              </label>
+              <label>좌석 등급
+                <select name="cabin_class"><option value="ECONOMY">일반석</option><option value="PREMIUM_ECONOMY">프리미엄 일반석</option><option value="BUSINESS">비즈니스</option></select>
+              </label>
+            </div>
+            <label>관심사 <span class="hint">쉼표로 구분</span>
+              <input name="interests" value="명소, 현지 음식, 카페" />
+            </label>
+            <label>꼭 가고 싶은 장소 <span class="hint">쉼표로 구분 · 일정에서 고정</span>
+              <input name="must_visit_places" placeholder="예: 그리피스 천문대, 게티 센터" />
+            </label>
+            <label>숙소 유형</label>
+            <div class="checks">
+              <label><input type="checkbox" name="stay_types" value="hotel" checked /> 호텔</label>
+              <label><input type="checkbox" name="stay_types" value="motel" /> 모텔</label>
+              <label><input type="checkbox" name="stay_types" value="guesthouse" /> 게스트하우스</label>
+              <label><input type="checkbox" name="stay_types" value="ryokan" /> 료칸</label>
+              <label><input type="checkbox" name="stay_types" value="hostel" /> 호스텔</label>
+              <label><input type="checkbox" name="stay_types" value="vacation_rental" /> 휴가용 임대</label>
+            </div>
+            <div class="field-row two">
+              <label>식이·알레르기<input name="dietary_needs" placeholder="예: 채식, 견과류 알레르기" /></label>
+              <label>이동·접근성 조건<input name="mobility_needs" placeholder="예: 계단 최소화" /></label>
+            </div>
+            <div class="checks privacy-checks">
+              <label><input type="checkbox" name="checked_baggage" /> 위탁수하물 필요</label>
+              <label><input type="checkbox" name="save_profile" /> 이 취향을 이 기기의 로컬 DB에 저장</label>
+            </div>
+          </fieldset>
+
+          <button id="submit-button" class="primary-button" type="submit">
+            <span>여행안 계산하기</span><span aria-hidden="true">→</span>
+          </button>
+          <p class="form-footnote">여권번호·결제정보·계정 비밀번호는 입력하지 마세요.</p>
+        </form>
+
+        <aside class="process-panel">
+          <p class="panel-label">AGENT WORKFLOW</p>
+          <ol>
+            <li><span>1</span><div><b>조건 해석</b><small>예산·수하물·객실·취향</small></div></li>
+            <li><span>2</span><div><b>현재 옵션 조회</b><small>공급자별 가격과 재고</small></div></li>
+            <li><span>3</span><div><b>결정론적 비교</b><small>시간·비용·위험·피로</small></div></li>
+            <li><span>4</span><div><b>세 가지 일정</b><small>균형 · 절약 · 여유</small></div></li>
+          </ol>
+          <div id="status-box" class="status-box" aria-live="polite">조건을 입력하면 비교를 시작합니다.</div>
+        </aside>
+      </section>
+      </details>
+
+      <section id="results" class="results hidden" aria-live="polite">
+        <div class="results-header">
+          <div><p class="eyebrow">YOUR TRAVEL BLUEPRINT</p><h2 id="result-title">여행 설계 결과</h2></div>
+          <div class="result-actions">
+            <button id="refresh-button" class="secondary-button">가격·재고 새로고침</button>
+            <button id="replan-button" class="secondary-button">우천 기준 재계획</button>
+          </div>
+        </div>
+        <div id="mode-banner"></div>
+        <div id="narrative"></div>
+        <div id="warnings"></div>
+
+        <section class="result-block verification-block">
+          <div class="section-heading"><span>02</span><div><h2>가격·사실 검증</h2><p>API가 없어도 동일 조건을 비교 플랫폼과 공식 사이트에서 바로 확인할 수 있습니다.</p></div></div>
+          <div id="evidence-summary"></div>
+          <div id="verification-links" class="verification-grid"></div>
+        </section>
+
+        <section class="result-block">
+          <div class="section-heading"><span>03</span><div><h2>항공 비교</h2><p>총액·시간·환승·수하물을 함께 평가합니다.</p></div></div>
+          <div id="flights" class="offer-grid"></div>
+        </section>
+        <section class="result-block">
+          <div class="section-heading"><span>04</span><div><h2>숙소 비교</h2><p>객실 수·위치·평점·취소 조건과 검증 상태를 표시합니다.</p></div></div>
+          <div id="stays" class="offer-grid"></div>
+        </section>
+        <section class="result-block itinerary-block">
+          <div class="section-heading"><span>05</span><div><h2>동선 최적화 일정</h2><p>같은 여행을 세 가지 기준으로 비교하세요.</p></div></div>
+          <div id="variant-tabs" class="variant-tabs" role="tablist"></div>
+          <div class="route-map-panel">
+            <div class="route-map-header">
+              <div><h3>최적화 동선 지도</h3><p>선택한 일정의 방문 순서와 권역을 지도에서 확인합니다.</p></div>
+              <label>표시 범위
+                <select id="route-day-select" aria-label="지도에 표시할 일정 날짜"></select>
+              </label>
+            </div>
+            <div id="route-map" role="region" aria-label="최적화된 여행 동선 지도"></div>
+            <div id="route-map-legend" class="route-map-legend"></div>
+            <p class="map-note">지도 선은 방문 순서를 잇는 개요이며 실제 도로·대중교통 경로는 각 장소의 지도 링크에서 최종 확인하세요.</p>
+          </div>
+          <div id="itineraries"></div>
+        </section>
+        <section class="result-block checks-block">
+          <h3>출발 전 최종 확인</h3>
+          <div id="unresolved"></div>
+          <p><a href="https://www.0404.go.kr/" target="_blank" rel="noopener">외교부 해외안전여행 ↗</a> · 입국 여부와 안전은 공식 기관에서 최종 확인하세요.</p>
+        </section>
+      </section>
+
+      <section id="providers" class="providers-section">
+        <div class="section-heading"><span>06</span><div><h2>데이터 연결 상태</h2><p>키가 없는 영역은 계획용 추정치와 공식 검증 링크로 보완합니다.</p></div></div>
+        <div id="provider-health" class="provider-grid"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>AI력 사무소 다운로드형 워커 번들 · 사용자의 환경과 비용으로 실행됩니다.</p>
+      <p>가격·재고·영업시간은 변동될 수 있습니다.</p>
+    </footer>
+  </body>
+</html>
